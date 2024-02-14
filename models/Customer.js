@@ -18,10 +18,13 @@ const CustomerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  avatar: {
+    type: String,
+  },
   date: {
     type: Date,
     default: Date.now,
   },
 });
 
-module.exports = Customer = mongoose.model('customer', CustomerSchema);
+module.exports = Customer = mongoose.model("customer", CustomerSchema);
