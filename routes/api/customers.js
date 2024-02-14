@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require("express-validator");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const config = require("config");
-const jwt = require('jsonwebtoken')
+const { check, validationResult } = require("express-validator");
 
 const Customer = require("../../models/Customer");
 
@@ -38,7 +38,7 @@ router.post(
       if (customer) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "User already exists" }] });
+          .json({ errors: [{ msg: "Customer already exists" }] });
       }
 
       // Get user gravatar
