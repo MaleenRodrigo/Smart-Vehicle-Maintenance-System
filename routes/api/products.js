@@ -12,6 +12,9 @@ const Product = require("../../models/product");
 
 http://localhost:8070/product/add
 
+
+//add product
+
 router.route("/add").post((req,res)=>{
     const name = req.body.name;
     const brand = req.body.brand;
@@ -37,7 +40,7 @@ router.route("/add").post((req,res)=>{
 })
 
 
-http://localhost:8070/student/
+//display products
 
 route.route("/").get((req,res)=>{
     product.find().then((products)=>{
@@ -48,12 +51,30 @@ route.route("/").get((req,res)=>{
 })
 
 
+//update product
+
+http://localhost:8070/student/update
+router.route("/update/:id").put(async (req,res)=> {
+    let userId = req.params.id;
+    const {name, brand, model, description, price, stock} = req.body;
+
+    const updateProduct = {
+        name,
+        brand,
+        model,
+        description,
+        price,
+        stock
+    }
+    const update = await product.findByIdAndUpdate(productId, updateProduct)
+})
+
 
 // router.get('/', (req, res) => res.send('Products route'));
 // [
 //     check("name", "Product name is required!").not().isEmpty(),
 //     check("brand", "Product brand is required!").not().isEmpty(),
-//     check("model","Product model is required!").not().isEmpty(),
+//     check("model","Pro duct model is required!").not().isEmpty(),
 //     check("description","Product description is required!").not().isEmpty(),
 //     check("price","Product price is required!").not().isEmpty(),
 // ],
