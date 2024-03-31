@@ -11,5 +11,11 @@ const Product = require("../../models/product");
 // @desc Test route
 // @access Public
 router.get('/', (req, res) => res.send('Products route'));
-
+[
+    check("name", "Product name is required!").not().isEmpty(),
+    check("brand", "Product brand is required!").not().isEmpty(),
+    check("model","Product model is required!").not().isEmpty(),
+    check("description","Product description is required!").not().isEmpty(),
+    check("price","Product price is required!").not().isEmpty(),
+]
 module.exports = router;
