@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
@@ -17,5 +16,7 @@ router.get('/', (req, res) => res.send('Products route'));
     check("model","Product model is required!").not().isEmpty(),
     check("description","Product description is required!").not().isEmpty(),
     check("price","Product price is required!").not().isEmpty(),
-]
+],
+
+
 module.exports = router;
