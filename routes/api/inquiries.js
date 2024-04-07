@@ -66,4 +66,26 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+
+// @route   GET api/inquiries/:id
+// @desc    Get inquiry by ID
+// @access  Private
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const inquiry = await Inquiry.findById(req.params.id);
+
+    if (!inquiry) {
+      return res.status(400).json({ msg: "Inquiry Not Found!" });
+    }
+
+    res.json(inquiry);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == "ObjectId") {
+      return res.status(400).json({ msg: "Inquiry Not Found!" });
+    }
+    res.status(500).send("Server Error!");
+  }
+});
+
 module.exports = router;
