@@ -66,7 +66,6 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-
 // @route   GET api/inquiries/:id
 // @desc    Get inquiry by ID
 // @access  Private
@@ -79,6 +78,31 @@ router.get("/:id", auth, async (req, res) => {
     }
 
     res.json(inquiry);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == "ObjectId") {
+      return res.status(400).json({ msg: "Inquiry Not Found!" });
+    }
+    res.status(500).send("Server Error!");
+  }
+});
+
+
+// @route   DELETE api/inquiries/:id
+// @desc    Delete an inquiry
+// @access  Private
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    const inquiry = await Inquiry.findById(req.params.id);
+
+    // If inquiry not found
+    if (!inquiry) {
+      return res.status(400).json({ msg: "Inquiry Not Found!" });
+    }
+
+    await inquiry.deleteOne();
+
+    res.json({ msg: "Inquiry Removed!" });
   } catch (err) {
     console.error(err.message);
     if (err.kind == "ObjectId") {
