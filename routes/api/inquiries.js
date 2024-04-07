@@ -97,6 +97,7 @@ router.put("/:id", [
     check("title", "Title is required!").not().isEmpty(),
     check("description", "Description is required!").not().isEmpty(),
     check("inquiryType", "Inquiry Type is required!").not().isEmpty(),
+    check("status", "Status is required!").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
