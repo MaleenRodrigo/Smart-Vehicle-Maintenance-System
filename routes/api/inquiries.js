@@ -9,7 +9,7 @@ const Inquiry = require("../../models/Inquiry");
 
 // @route POST api/inquiries
 // @desc Create an inquiry
-// @access Public
+// @access Private
 router.post("/", [
   auth,
   [
@@ -27,7 +27,9 @@ router.post("/", [
 
     try {
       // Getting the user who creates the inquiry
-      const customer = await Customer.findById(req.customer.id).select("-password");
+      const customer = await Customer.findById(req.customer.id).select(
+        "-password"
+      );
 
       // Creating an new inquiry
       const newInquiry = new Inquiry({
@@ -51,9 +53,17 @@ router.post("/", [
   },
 ]);
 
-// @route GET api/inquiries
-// @desc Test route
-// @access Public
-router.get("/", (req, res) => res.send("Inquiries route success"));
+// @route   GET api/inquiries
+// @desc    Get all inquiries
+// @access  Private
+router.get("/", auth, async (req, res) => {
+  try {
+    const inquiries = await Inquiry.find().sort({ date: -1 });
+    res.json(inquiries);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error!");
+  }
+});
 
 module.exports = router;
