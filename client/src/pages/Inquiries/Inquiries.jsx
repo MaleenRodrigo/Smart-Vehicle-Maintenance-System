@@ -1,12 +1,13 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
+import inquiryBG from "../../assets/inquirybg.jpg";
 
 const Inquiries = () => {
   return (
     <>
       <Navbar />
-      <section className="bg-white :bg-gray-900 ">
-        <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+      <section className="bg-white :bg-gray-900">
+        <div className="px-4 mx-auto max-w-2xl py-32">
           <h2 className="mb-4 text-xl font-bold text-gray-900 :text-white">
             Make an new inquiry
           </h2>
