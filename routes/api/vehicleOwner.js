@@ -1,4 +1,5 @@
 const express = require("express");
+const { ExpressValidator } = require("express-validator");
 const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
@@ -6,11 +7,12 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
 
-const Customer = require("../../models/Customer");
+const VehicleOwner = require("../../models/VehicleOwner");
 
-// @route POST api/customers
-// @desc Register customer
-// @access Public
+// @route   POST api/vehicleOwner
+// @desc    Register Vehicle Owner
+// @access  Public
+
 router.post(
   "/",
   [
@@ -20,11 +22,13 @@ router.post(
       "password",
       "Please enter a password with 6 or more characters!"
     ).isLength({ min: 6 }),
-    check("Please enter your mobile number!").isLength({ max: 10 }),
+    check("phone", "Please enter a valid mobile number!").isLength({
+      min: 10,
+      max: 10,
+    }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -32,23 +36,19 @@ router.post(
     const { name, email, password, phone } = req.body;
 
     try {
-      // Check if customer exists
-      let customer = await Customer.findOne({ email });
+      let vehicleOwner = await VehicleOwner.findOne({ email });
 
-      if (customer) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Customer already exists" }] });
+      if (vehicleOwner) {
+        res.status(400).json({ errors: [{ msg: "User already exists" }] });
       }
 
-      // Get user gravatar
       const avatar = gravatar.url(email, {
         s: "200",
         r: "pg",
         d: "mm",
       });
 
-      customer = new Customer({
+      vehicleOwner = new VehicleOwner({
         name,
         email,
         avatar,
@@ -56,31 +56,30 @@ router.post(
         phone,
       });
 
-      // Encrypt password
       const salt = await bcrypt.genSalt(10);
 
-      customer.password = await bcrypt.hash(password, salt);
-      await customer.save();
+      vehicleOwner.password = await bcrypt.hash(password, salt);
 
-      // Return jsonwebtoken
+      await vehicleOwner.save();
+
       const payload = {
-        customer: {
-          id: customer.id,
+        user: {
+          id: vehicleOwner.id,
         },
       };
 
       jwt.sign(
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 3600000 },
+        { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          return res.json({ token });
+          res.json({ token });
         }
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error!");
+      res.status(500).send("Server error");
     }
   }
 );
