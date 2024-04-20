@@ -20,6 +20,7 @@ app.use("/api/profiles", require("./routes/api/profiles"));
 app.use("/api/inquiries", require("./routes/api/inquiries"));
 app.use("/api/cardpayments", require("./routes/api/cardpayments"));
 app.use("/api/invoice", require("./routes/api/invoice"));
+app.use("/api/rentalVehicles", require("./routes/api/rentalVehicles"));
 
 //chamiG
 app.use('/api/jobs', require('./routes/api/jobRoutes'));

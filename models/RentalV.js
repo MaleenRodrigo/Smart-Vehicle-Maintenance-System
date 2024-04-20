@@ -1,22 +1,12 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
+const RentalSchema = new mongoose.Schema({
 
-const RentalOSchema = new Schema({
-
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: "customers",
-    },
-    vehicle_category : {
+    vehiclecategory : {
         type : String,
         required : true
     },
-    location : {
-        type : String,
-        required : true
-    },
-    vehicle_name : {
+    vehiclemodel : {
         type : String,
         required : true
     },
@@ -24,15 +14,8 @@ const RentalOSchema = new Schema({
         type : String,
         required : true
     },
-    vehicle_mileage_s : {
-        type : Number,
-        required : true
-    },
-    vehicle_mileage_f : {
-        type : Number,
-        required : true
-    },
-    passengers_No: {
+    
+    passengersno: {
         type : Number,
         required : true
     },
@@ -40,30 +23,20 @@ const RentalOSchema = new Schema({
         type : String,
         required : true
     },
-    timePeriod: {
-        type : Date,
+    distance: {
+        type : String,
         required: true
     },
-    additional_details: {
+    additionaldetails: {
         type : String,
         
     },
-    rental_price: {
-        type : Number,
-        required: true
-    },
-    vehicle_returning : {
-        type : Date,
-        required : true
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
-    status: {
-        type: String,
-    },
-
+    
+    
 });
 
-module.exports = RentalO = mongoose.model("rentalo", RentalOSchema);
+module.exports = Rental = mongoose.model("rental", RentalSchema);
+
+
+
+
