@@ -1,5 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/db");
+const errorHandler = require('./middleware/errorMiddleware');
 
 const app = express();
 
@@ -19,6 +20,13 @@ app.use("/api/profiles", require("./routes/api/profiles"));
 app.use("/api/inquiries", require("./routes/api/inquiries"));
 app.use("/api/cardpayments", require("./routes/api/cardpayments"));
 app.use("/api/invoice", require("./routes/api/invoice"));
+
+//chamiG
+app.use('/api/jobs', require('./routes/api/jobRoutes'));
+app.use('/api/candidates', require('./routes/api/candidateRoutes'));
+app.use('/api/advertisements', require('./routes/api/advertisementRoutes'));
+
+
 
 const PORT = process.env.PORT || 5000;
 
