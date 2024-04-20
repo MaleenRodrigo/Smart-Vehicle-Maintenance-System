@@ -4,7 +4,7 @@ const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 
 // Models
-const Customer = require("../../models/Customer");
+const Customer = require("../../models/VehicleOwner");
 const Inquiry = require("../../models/Inquiry");
 
 // @route POST api/inquiries
@@ -110,7 +110,7 @@ router.put("/:id", [
 
     try {
       const inquiry = await Inquiry.findByIdAndUpdate(id, req.body);
-        
+
       if (!inquiry) {
         return res.status(400).json({ msg: "Inquiry Not Found!" });
       }

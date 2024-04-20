@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const CustomerSchema = new mongoose.Schema({
+const vehicleOwnerSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -27,4 +27,4 @@ const CustomerSchema = new mongoose.Schema({
   },
 });
 
-module.exports = Customer = mongoose.model("customer", CustomerSchema);
+module.exports = VehicleOwner = mongoose.model("VehicleOwner",vehicleOwnerSchema);

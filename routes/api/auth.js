@@ -1,40 +1,39 @@
 const express = require("express");
 const router = express.Router();
-const config = require("config");
-const { check, validationResult } = require("express-validator");
+const auth = require("../../middleware/auth");
+const VehicleOwner = require("../../models/VehicleOwner");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-const auth = require("../../middleware/auth");
-const Customer = require("../../models/Customer");
+const config = require("config");
+const { check, validationResult } = require("express-validator");
 
 // @route GET api/auth
 // @desc Test route
 // @access Public
 router.get("/", auth, async (req, res) => {
   try {
-    const customer = await Customer.findById(req.customer.id).select(
+    const vehicleOwner = await VehicleOwner.findById(req.user.id).select(
       "-password"
     );
-    res.json(customer);
+    res.json(vehicleOwner);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error!!!");
+    res.status(500).send("Server Error!");
   }
 });
 
-// @route POST api/auth
-// @desc Authenticate customer & get token (login)
-// @access Public
+// @route   POST api/auth
+// @desc    Authenticate user & get token
+// @access  Public
+
 router.post(
   "/",
   [
     check("email", "Please include valid email!").isEmail(),
-    check("password", "Password is required!").exists(),
+    check("password", "Password is required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -42,43 +41,36 @@ router.post(
     const { email, password } = req.body;
 
     try {
-      // Check if customer exists
-      let customer = await Customer.findOne({ email });
+      let vehicleOwner = await VehicleOwner.findOne({ email });
 
-      if (!customer) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid credentials!" }] });
+      if (!vehicleOwner) {
+        res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
-      // Check the password that matches with exact password
-      const isMatch = await bcrypt.compare(password, customer.password);
+      const isMatch = await bcrypt.compare(password, vehicleOwner.password);
 
       if (!isMatch) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Password doesn't match!" }] });
+        res.status(400).json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
-      // Return jsonwebtoken
       const payload = {
-        customer: {
-          id: customer.id,
+        user: {
+          id: vehicleOwner.id,
         },
       };
 
       jwt.sign(
         payload,
         config.get("jwtSecret"),
-        { expiresIn: 3600000 },
+        { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          return res.json({ token });
+          res.json({ token });
         }
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error!");
+      res.status(500).send("Server error");
     }
   }
 );
