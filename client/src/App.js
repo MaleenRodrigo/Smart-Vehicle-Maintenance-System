@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Home/Homepage";
 import Inquiries from "./pages/Inquiries/Inquiries";
 import { Crisp } from "crisp-sdk-web";
+import Product from "./pages/Products/product";
+import Shop from "./pages/Shop/shop";
+
 
 function App() {
   useEffect(() => {
@@ -20,6 +23,8 @@ function App() {
           <Route exact path="/signin" Component={Login} />
           <Route exact path="/signup" Component={Register} />
           <Route exact path="/inquiry" Component={Inquiries} />
+          <Route exact path="/product" Component={Product} />
+          <Route exact path="/shop" Component={Shop} />
         </Routes>
       </>
     </Router>

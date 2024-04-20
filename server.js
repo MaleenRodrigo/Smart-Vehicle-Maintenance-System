@@ -14,7 +14,7 @@ app.get("/", (req, res) => res.send("API running"));
 // Define Routes
 app.use("/api/customers", require("./routes/api/customers"));
 app.use("/api/auth", require("./routes/api/auth"));
-// app.use("/api/products", require("./routes/api/products"));
+app.use("/api/products", require("./routes/api/products"));
 app.use("/api/profiles", require("./routes/api/profiles"));
 app.use("/api/inquiries", require("./routes/api/inquiries"));
 app.use("/api/cardpayments", require("./routes/api/cardpayments"));
