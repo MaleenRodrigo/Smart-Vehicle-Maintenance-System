@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { regitster } from "../../actions/auth";
 
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+
+const notify = () => toast.success("Successfully toasted!");
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -44,7 +47,7 @@ const Register = () => {
         const body = JSON.stringify(newUser);
 
         const res = await axios.post("/api/customers", body, config);
-        console.log(res.data);
+        notify();
       } catch (err) {
         console.log("NOT REGISRERD");
         // console.log(err.response.data);

@@ -26,7 +26,7 @@ const Profile = () => {
                 >
                   {" "}
                   {/* <i className="fas fa-plus"> </i>&nbsp;&nbsp;Add New Card */}
-                  <Link to="/Card">Add New Card</Link>
+                  <Link to="/profile/card">Add New Card</Link>
                 </a>
               </div>
             </div>

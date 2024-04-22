@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
-// import inquiryBG from "../../assets/inquirybg.jpg";
+import inquiryBG from "../../assets/inquirybg.jpg";
 import toast, { Toaster } from "react-hot-toast";
 
 const notify = () => toast.success("Successfully toasted!");
@@ -108,6 +108,10 @@ const Inquiries = () => {
               Submit Inquiry
             </button>
           </form>
+        </div>
+        <div>
+          <button onClick={notify}>Make me a toast</button>
+          <Toaster />
         </div>
       </section>
     </>
