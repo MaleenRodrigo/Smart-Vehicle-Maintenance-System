@@ -1,6 +1,9 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
-import inquiryBG from "../../assets/inquirybg.jpg";
+// import inquiryBG from "../../assets/inquirybg.jpg";
+import toast, { Toaster } from "react-hot-toast";
+
+const notify = () => toast.success("Successfully toasted!");
 
 const Inquiries = () => {
   return (
@@ -100,6 +103,7 @@ const Inquiries = () => {
             <button
               type="submit"
               className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary rounded-lg"
+              onClick={notify}
             >
               Submit Inquiry
             </button>
