@@ -19,11 +19,12 @@ const Card = () => {
             Card Number
           </label>
           <input
-            type="Number"
-            id="emacardNumberil"
+            type="text"
+            id="nameOnCard"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500"
-            placeholder="name@flowbite.com"
             required
+            maxLength="16"
+            minLength="16"
           />
         </div>
         <div className="mb-5">
@@ -48,7 +49,7 @@ const Card = () => {
             Expiration
           </label>
           <input
-            type="text"
+            type="date"
             id="expiration"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500"
             required
@@ -63,9 +64,9 @@ const Card = () => {
             CCV
           </label>
           <input
-            type="Number"
-            maxLength={3}
-            minLength={3}
+            type="text"
+            maxLength="3"
+            minLength="3"
             id="ccv"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500"
             required
