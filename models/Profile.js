@@ -15,25 +15,61 @@ const ProfileSchema = new mongoose.Schema({
     required: true,
   },
 
-  userlicense: [
+  licensenumber: {
+    type: String,
+    required: true,
+  },
+  expirydate: {
+    type: Date,
+    required: true,
+  },
+  issueddate: {
+    type: Date,
+    required: true,
+  },
+
+  vehicle: [
     {
+      make: {
+        type: String,
+        required: true,
+      },
+      model: {
+        type: String,
+        required: true,
+      },
+      year: {
+        type: String,
+        required: true,
+      },
+      registrationnumber: {
+        type: String,
+        required: true,
+      },
+      fueltype: {
+        type: String,
+      },
+      dailyusage: {
+        type: String,
+        required: true,
+      },
+      //Vehicle License
+
       licensenumber: {
         type: String,
         required: true,
       },
-      expirydate: {
+      licenseissued: {
         type: Date,
         required: true,
       },
-      issueddate: {
+      licenseexpiry: {
         type: Date,
         required: true,
       },
-    },
-  ],
 
-  vehicleinsurance: [
-    {
+      //Vehicle Insurance
+
       insurancenumber: {
         type: String,
         required: true,

@@ -37,6 +37,9 @@ router.post(
     [
       check("nic", "NIC is required").not().isEmpty(),
       check("address", "Address is required").not().isEmpty(),
+      check("licensenumber", "License Number is required").not().isEmpty(),
+      check("expirydate", "Expiry Date is required").not().isEmpty(),
+      check("issueddate", "Issued Date is required").not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -45,13 +48,16 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { nic, address } = req.body;
+    const { nic, address, licensenumber, expirydate, issueddate } = req.body;
 
     // build a profile
     const profileFields = {
       user: req.user.id,
       nic: nic,
       address: address,
+      licensenumber: licensenumber,
+      expirydate: expirydate,
+      issueddate: issueddate,
     };
 
     try {
@@ -124,92 +130,61 @@ router.delete("/", auth, async (req, res) => {
   }
 });
 
-// @route   PUT api/profile/userlicense
-// @desc    Add User License
+// @route   PUT api/profile/vehicle
+// @desc    Add Vehicle
 // @access  Private
 
 router.put(
-  "/userlicense",
+  "/vehicle",
   auth,
   [
+    check("make", "Make is required").not().isEmpty(),
+    check("model", "Model is required").not().isEmpty(),
+    check("year", "Year is required").not().isEmpty(),
+    check("registrationnumber", "Registration Number is required")
+      .not()
+      .isEmpty(),
+    check("fueltype", "Fuel Type is required").not().isEmpty(),
+    check("dailyusage", "Daily Usage is required").not().isEmpty(),
     check("licensenumber", "License Number is required").not().isEmpty(),
-    check("expirydate", "Expiry Date is required").not().isEmpty(),
-    check("issueddate", "Issued Date is required").not().isEmpty(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    const { licensenumber, expirydate, issueddate } = req.body;
-
-    const newUserL = {
-      licensenumber,
-      expirydate,
-      issueddate,
-    };
-
-    try {
-      const profile = await Profile.findOne({ user: req.user.id });
-      profile.userlicense.unshift(newUserL);
-
-      await profile.save();
-      res.json(profile);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
-    }
-  }
-);
-
-// @route   DELETE api/profile/userlicense/ul_id
-// @desc    Delete User License from profile
-// @access  Private
-
-router.delete("/userlicense/:ul_id", auth, async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id });
-
-    //Get remove index
-
-    const removeIndex = profile.userlicense
-      .map((item) => item.id)
-      .indexOf(req.params.ul_id);
-
-    profile.userlicense.splice(removeIndex, 1);
-    await profile.save();
-
-    res.json(profile);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-
-
-// @route   PUT api/profile/vehicleinsurance
-// @desc    Add Vehicle Insurance
-// @access  Private
-
-router.put(
-  "/vehicleinsurance",
-  auth,
-  [
-    check("insurancenumber", "License Number is required").not().isEmpty(),
+    check("licenseissued", "License Issued Date is required").not().isEmpty(),
+    check("licenseexpiry", "License Expiry Date is required").not().isEmpty(),
+    check("insurancenumber", "Insurance Number is required").not().isEmpty(),
     check("insurancetype", "Insurance Type is required").not().isEmpty(),
     check("expirydate", "Expiry Date is required").not().isEmpty(),
     check("issueddate", "Issued Date is required").not().isEmpty(),
-
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { insurancenumber,insurancetype, expirydate, issueddate } = req.body;
+    const {
+      make,
+      model,
+      year,
+      registrationnumber,
+      fueltype,
+      dailyusage,
+      licensenumber,
+      licenseissued,
+      licenseexpiry,
+      insurancenumber,
+      insurancetype,
+      expirydate,
+      issueddate,
+    } = req.body;
 
-    const newUserI = {
+    const newVehicle = {
+      make,
+      model,
+      year,
+      registrationnumber,
+      fueltype,
+      dailyusage,
+      licensenumber,
+      licenseissued,
+      licenseexpiry,
       insurancenumber,
       insurancetype,
       expirydate,
@@ -218,7 +193,7 @@ router.put(
 
     try {
       const profile = await Profile.findOne({ user: req.user.id });
-      profile.vehicleinsurance.unshift(newUserI);
+      profile.vehicle.unshift(newVehicle);
 
       await profile.save();
       res.json(profile);
@@ -229,22 +204,20 @@ router.put(
   }
 );
 
-
-// @route   DELETE api/profile/vehicleinsurance/vi_id
-// @desc    Delete Vehicle Insurance from profile
+// @route   DELETE api/profile/vehicle/:v_id
+// @desc    Delete Vehicle from profile
 // @access  Private
 
-router.delete("/vehicleinsurance/:vi_id", auth, async (req, res) => {
+router.delete("/vehicle/:v_id", auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id });
 
-    //Get remove index
-
-    const removeIndex = profile.vehicleinsurance
+    // Get remove index
+    const removeIndex = profile.vehicle
       .map((item) => item.id)
-      .indexOf(req.params.vi_id);
+      .indexOf(req.params.v_id);
 
-    profile.vehicleinsurance.splice(removeIndex, 1);
+    profile.vehicle.splice(removeIndex, 1);
     await profile.save();
 
     res.json(profile);
