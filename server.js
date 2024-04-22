@@ -13,9 +13,12 @@ app.use(express.json({ extended: false }));
 app.get("/", (req, res) => res.send("API running"));
 
 // Define Routes
+
+//Maleen
 app.use("/api/vehicleOwner", require("./routes/api/vehicleOwner"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/profile", require("./routes/api/profile"));
+
 app.use("/api/products", require("./routes/api/products"));
 app.use("/api/inquiries", require("./routes/api/inquiries"));
 app.use("/api/cardpayments", require("./routes/api/cardpayments"));

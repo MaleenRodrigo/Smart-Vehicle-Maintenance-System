@@ -32,7 +32,7 @@ const ProfileSchema = new mongoose.Schema({
     },
   ],
 
-  userinsurance: [
+  vehicleinsurance: [
     {
       insurancenumber: {
         type: String,
