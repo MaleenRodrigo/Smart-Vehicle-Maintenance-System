@@ -6,7 +6,8 @@ import Homepage from "./pages/Home/Homepage";
 import Inquiries from "./pages/Inquiries/Inquiries";
 import { Crisp } from "crisp-sdk-web";
 import Product from "./pages/Products/product";
-import Shop from "./pages/Shop/shop";
+import Shop from "./pages/Shop/Shop";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/signup" Component={Register} />
           <Route exact path="/inquiry" Component={Inquiries} />
           <Route exact path="/product" Component={Product} />
+          <Route exact path="/profile" Component={Profile} />
           <Route exact path="/shop" Component={Shop} />
         </Routes>
       </>
