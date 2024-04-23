@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
-const CardModle = require("../../models/CardPayment");
+const CardPaymentModle = require("../../models/CardPayment");
 const CardPayment = require("../../models/CardPayment");
 
 // @route POST api/cardpayment

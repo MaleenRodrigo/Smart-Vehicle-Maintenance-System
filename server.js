@@ -1,6 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/db");
-const errorHandler = require('./middleware/errorMiddleware');
+const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
 
@@ -23,12 +23,10 @@ app.use("/api/invoice", require("./routes/api/invoice"));
 app.use("/api/rentalVehicles", require("./routes/api/rentalVehicles"));
 
 //chamiG
-app.use('/api/jobs', require('./routes/api/jobRoutes'));
-app.use('/api/candidates', require('./routes/api/candidateRoutes'));
-app.use('/api/advertisements', require('./routes/api/advertisementRoutes'));
-
-
-
+app.use("/api/jobs", require("./routes/api/jobRoutes"));
+app.use("/api/candidates", require("./routes/api/candidateRoutes"));
+app.use("/api/advertisements", require("./routes/api/advertisementRoutes"));
+app.use("/api/card", require("./routes/api/card"));
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
