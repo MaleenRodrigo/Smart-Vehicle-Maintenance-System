@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const checkObjectId = require("../middleware/checkObjectId");
-const Reservation = require("../models/reservation"); // Capitalized Reservation to match the export
+const checkObjectId = require("../../middleware/checkObjectId");
+const Reservation = require("../../models/Reservation"); // Capitalized Reservation to match the export
 
 // @route    POST api/users
 // @desc     Register user
@@ -9,7 +9,8 @@ const Reservation = require("../models/reservation"); // Capitalized Reservation
 router.post("/", async (req, res) => {
   const { ownername, vehiclenum, services, servicedate } = req.body;
   try {
-    const reserve = new Reservation({ // Capitalized Reservation to match the model
+    const reserve = new Reservation({
+      // Capitalized Reservation to match the model
       ownername,
       vehiclenum,
       services,
@@ -29,8 +30,7 @@ router.post("/", async (req, res) => {
 // @access   Public
 router.get("/:res_id", checkObjectId("res_id"), async (req, res) => {
   try {
-    const reservation = await Reservation
-      .findById(req.params.res_id) // Changed to findById to find by _id
+    const reservation = await Reservation.findById(req.params.res_id) // Changed to findById to find by _id
       .populate(["ownername", "vehiclenum"]); // Populate fields directly from the reservation document
 
     if (!reservation)
