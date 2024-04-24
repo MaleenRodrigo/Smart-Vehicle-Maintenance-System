@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../api/auth";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,8 +20,14 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("Successfullty logged in");
-    console.log(formData);
+    // console.log(formData);
+    const user = await login(formData);
+    if (user) {
+      localStorage.setItem("token", user.token);
+      navigate("/profile");
+      // dispatch(loginSuccess(user));
+    }
+    // console.log(user.token);
   };
 
   return (

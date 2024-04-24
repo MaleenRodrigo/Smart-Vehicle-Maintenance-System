@@ -4,7 +4,7 @@ const auth = require("../../middleware/auth"); // Assuming auth middleware for a
 const { check, validationResult } = require("express-validator");
 
 const vehicleModel = require("../../models/RentalV");
-
+const app = express();
 async function getVehicleTypeCount() {
   try {
     const vehicles = await RentalV.find();
