@@ -3,10 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 
 // Import your Chart model (replace with your actual model path)
-const Chart = require("../models/Chart");
+const Chart = require("../models/BasicChart");
 
 // GET all charts
-router.get("/charts", async (req, res) => {
+router.get("/chartparam", async (req, res) => {
   try {
     const charts = await Chart.find();
     res.json(charts);

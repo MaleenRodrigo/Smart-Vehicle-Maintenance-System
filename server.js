@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db");
 var cors = require("cors");
+const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
 app.use(cors()); // Use this after the variable declaration
@@ -32,9 +33,10 @@ app.use("/api/jobs", require("./routes/api/jobRoutes"));
 app.use("/api/candidates", require("./routes/api/candidateRoutes"));
 app.use("/api/advertisements", require("./routes/api/advertisementRoutes"));
 
-//savinda
-app.use("/api/reservation", require("./routes/api/reservation"));
-//app.use('/api/serviceCenter', require('./routes/api/serviceCenter'));
+app.use(
+  "/api/rentalVehicleReport",
+  require("./routes/api/rentalVehicleReport")
+);
 
 const PORT = process.env.PORT || 5000;
 

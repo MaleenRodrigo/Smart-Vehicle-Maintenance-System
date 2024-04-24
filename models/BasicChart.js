@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const chartSchema = new mongoose.Schema({
+const BasicChartSchema = new mongoose.Schema({
   coordinates: {
     x: { type: Number, required: true },
     y: { type: Number, required: true },
@@ -11,6 +11,10 @@ const chartSchema = new mongoose.Schema({
   createdDate: { type: Date, default: Date.now },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
+
+  lastchange: {
+    timestamps: true,
+  },
 });
 
 module.exports = mongoose.model("BasicChart", BasicChartSchema);
