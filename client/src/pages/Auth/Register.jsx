@@ -46,7 +46,7 @@ const Register = () => {
 
         const body = JSON.stringify(newUser);
 
-        const res = await axios.post("/api/customers", body, config);
+        const res = await axios.post("/api/vehicleOwner", body, config);
         notify();
       } catch (err) {
         console.log("NOT REGISRERD");
