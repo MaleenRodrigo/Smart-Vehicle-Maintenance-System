@@ -58,7 +58,7 @@ export const RentalService = () => {
             }
             <div className=' mt-28 flex h-10 px-8 '>
             <a
-                href="../Rentals/CarsMain"
+                href="../../rentalservice/CarsMain"
                 className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
               >
                Cars
@@ -80,7 +80,7 @@ export const RentalService = () => {
             }
             <div className=' mt-28 flex h-10 px-8 '>
             <a
-                href="#"
+                href="../../rentalservice/JeepsMain"
                 className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
               >
                Jeeps
@@ -102,7 +102,7 @@ export const RentalService = () => {
             }
             <div className=' mt-28 flex h-10 px-8 '>
             <a
-                href="#"
+                href="../../rentalservice/VansMain"
                 className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
               >
                Vans
