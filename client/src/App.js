@@ -19,7 +19,7 @@ import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 
-
+import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 function App() {
   useEffect(() => {
     Crisp.configure("472b8c52-0771-4647-8563-c4c3ead5b1ce");
@@ -47,8 +47,6 @@ function App() {
           <Route exact path="/carsdetails" Component={CarsDetails} />
           <Route exact path="/vansdetails" Component={VansDetails} />
           <Route exact path="/jeepsdetails" Component={JeepsDetails} />
-
-          
         </Routes>
       </>
     </Router>

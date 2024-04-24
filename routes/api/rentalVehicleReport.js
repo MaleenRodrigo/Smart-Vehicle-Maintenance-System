@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require("../../middleware/auth"); // Assuming auth middleware for authentication
 const { check, validationResult } = require("express-validator");
 
-const vehicleModel = require("../../models/RentalV");
+const RentalV = require("../../models/RentalV");
 
 async function getVehicleTypeCount() {
   try {
@@ -22,12 +22,13 @@ async function getVehicleTypeCount() {
   }
 }
 
-app.get("/vehicle-type-count", async (req, res) => {
-  const vehicleTypes = await getVehicleTypeCount();
-  if (vehicleTypes) {
+router.get("/VehicleTypeCount", auth, async (req, res) => {
+  try {
+    const vehicleTypes = await getVehicleTypeCount();
     res.json(vehicleTypes);
-  } else {
-    res.sendStatus(500);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
   }
 });
 

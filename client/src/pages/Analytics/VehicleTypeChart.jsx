@@ -1,11 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 
+import {
+  Chart as ChartJS,
+  CategorySclae,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategorySclae,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 function VehicleTypeChart() {
   const [vehicleTypes, setVehicleTypes] = useState({});
 
   useEffect(() => {
-    fetch("/vehicle-type-count")
+    fetch("../../../routes/api/rentalVehicleReport/vehicle-type-count")
       .then((response) => response.json())
       .then((data) => setVehicleTypes(data))
       .catch((err) => console.error(err));
