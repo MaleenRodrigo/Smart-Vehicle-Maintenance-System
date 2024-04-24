@@ -1,5 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/db");
+const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
 
@@ -29,10 +30,6 @@ app.use("/api/rentalVehicles", require("./routes/api/rentalVehicles"));
 app.use("/api/jobs", require("./routes/api/jobRoutes"));
 app.use("/api/candidates", require("./routes/api/candidateRoutes"));
 app.use("/api/advertisements", require("./routes/api/advertisementRoutes"));
-
-//savinda
-app.use("/api/reservation", require("./routes/api/reservation"));
-//app.use('/api/serviceCenter', require('./routes/api/serviceCenter'));
 
 const PORT = process.env.PORT || 5000;
 
