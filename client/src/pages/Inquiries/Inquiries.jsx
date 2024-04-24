@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import inquiryBG from "../../assets/inquirybg.jpg";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
+import { createInquiry } from "../../api/inquiry";
 
-const notify = () => toast.success("Successfully toasted!");
+const success = () => toast.success("Successfully Added");
+const errorNotify = () => toast.error("Something wrong");
+const token = localStorage.getItem("token");
+console.log("token => ", token);
 
 const Inquiries = () => {
+  const navigate = useNavigate();
   const [inquiryData, setInquiryData] = useState({
     phone: "",
     title: "",
@@ -30,19 +35,13 @@ const Inquiries = () => {
     };
 
     try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          // "x-auth-token":
-        },
-      };
+      await createInquiry(newInquiry, token);
 
-      const body = JSON.stringify(newInquiry);
-
-      const res = await axios.post("/api/inquiries", body, config);
-      console.log(res.data);
+      success();
+      navigate("/profile");
     } catch (err) {
-      console.log(err.response.data);
+      console.log("inquiry creating error => ", err);
+      errorNotify();
     }
   };
 
@@ -55,41 +54,7 @@ const Inquiries = () => {
             Make an new inquiry
           </h2>
           <form onSubmit={(e) => onSubmit(e)}>
-            <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-              <div className="w-full">
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 :text-white"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
-                  placeholder="Enter your email"
-                  required
-                />
-              </div>
-              <div className="w-full">
-                <label
-                  htmlFor="phone"
-                  className="block mb-2 text-sm font-medium text-gray-900 :text-white"
-                >
-                  Phone number
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  id="phone"
-                  value={phone}
-                  onChange={(e) => onChange(e)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
-                  placeholder="Enter phone number"
-                  required
-                />
-              </div>
+            <div className="flex flex-col gap-4 sm:grid-cols-2 sm:gap-6">
               <div className="sm:col-span-2">
                 <label
                   htmlFor="title"
@@ -133,6 +98,24 @@ const Inquiries = () => {
                   <option value="other">Other</option>
                 </select>
               </div>
+              <div className="w-full">
+                <label
+                  htmlFor="phone"
+                  className="block mb-2 text-sm font-medium text-gray-900 :text-white"
+                >
+                  Phone number
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  id="phone"
+                  value={phone}
+                  onChange={(e) => onChange(e)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
+                  placeholder="Enter phone number"
+                  required
+                />
+              </div>
 
               <div className="sm:col-span-2">
                 <label
@@ -155,15 +138,11 @@ const Inquiries = () => {
             <button
               type="submit"
               className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary rounded-lg"
-              onClick={notify}
+              // onClick={notify}
             >
               Submit Inquiry
             </button>
           </form>
-        </div>
-        <div>
-          <button onClick={notify}>Make me a toast</button>
-          <Toaster />
         </div>
       </section>
     </>

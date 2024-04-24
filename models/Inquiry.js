@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const InquirySchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "customers",
+    ref: "vehicleowners",
   },
   email: {
     type: String,

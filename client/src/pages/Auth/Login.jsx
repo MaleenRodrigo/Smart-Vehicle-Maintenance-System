@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../api/auth";
 
@@ -25,10 +25,14 @@ const Login = () => {
     if (user) {
       localStorage.setItem("token", user.token);
       navigate("/profile");
-      // dispatch(loginSuccess(user));
     }
     // console.log(user.token);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) navigate("/profile");
+  });
 
   return (
     <>

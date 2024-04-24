@@ -27,4 +27,7 @@ const vehicleOwnerSchema = new mongoose.Schema({
   },
 });
 
-module.exports = VehicleOwner = mongoose.model("VehicleOwner",vehicleOwnerSchema);
+module.exports = VehicleOwner = mongoose.model(
+  "VehicleOwner",
+  vehicleOwnerSchema
+);
