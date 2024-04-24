@@ -32,4 +32,19 @@ router.get("/VehicleTypeCount", auth, async (req, res) => {
   }
 });
 
+export const BarChartData = {
+  // const VehicleTypesX = Object.keys(vehicleTypes);  // ["car", "van", "bus"]
+  // const NoOfVehiclesY = Object.values(vehicleTypes);  // [10, 20, 30]
+
+  labels: Object.keys(vehicleTypes), // ["car", "van", "bus"]
+  datasets: [
+    {
+      label: "Number of Vehicles",
+      data: Object.values(vehicleTypes), // [10, 20, 30]
+      backgroundColor: "grey",
+      borderColor: "blue",
+      corderWidth: 1,
+    },
+  ],
+};
 module.exports = router;
