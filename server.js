@@ -25,12 +25,12 @@ app.use("/api/invoice", require("./routes/api/invoice"));
 app.use("/api/rentalVehicles", require("./routes/api/rentalVehicles"));
 
 //chamiG
-app.use('/api/jobs', require('./routes/api/jobRoutes'));
-app.use('/api/candidates', require('./routes/api/candidateRoutes'));
-app.use('/api/advertisements', require('./routes/api/advertisementRoutes'));
+app.use("/api/jobs", require("./routes/api/jobRoutes"));
+app.use("/api/candidates", require("./routes/api/candidateRoutes"));
+app.use("/api/advertisements", require("./routes/api/advertisementRoutes"));
 
 //savinda
-app.use('/api/reservation', require('./routes/api/reservation'));
+app.use("/api/reservation", require("./routes/api/reservation"));
 //app.use('/api/serviceCenter', require('./routes/api/serviceCenter'));
 
 const PORT = process.env.PORT || 5000;
