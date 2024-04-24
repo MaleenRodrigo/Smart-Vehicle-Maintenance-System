@@ -1,8 +1,10 @@
 const express = require("express");
 const connectDB = require("./config/db");
+var cors = require("cors");
 const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
+app.use(cors()); // Use this after the variable declaration
 
 // Connect MongoDB
 connectDB();
