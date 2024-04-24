@@ -22,17 +22,24 @@ class ApiHelper {
     }
   }
 
-  async post(endpoint, data) {
+  async post(endpoint, data, token) {
+    // console.log("endpoint =>", endpoint);
+    // console.log("data =>", data);
+    // console.log("token =>", token);
     try {
-      const response = await axios.post(`${this.baseUrl}/${endpoint}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          //   Authorization: `Bearer ${token || ""}`,
-          // You can add additional headers here if needed
-        },
-      });
+      const headers = {
+        "Content-Type": "application/json",
+        // Other headers can be added here
+      };
+      if (token) {
+        headers["x-auth-token"] = token;
+      }
 
-      return response.data;
+      const response = await axios.post(`${this.baseUrl}/${endpoint}`, data, {
+        headers,
+      });
+      //   console.log("response=>", response);
+      // return response.data;
     } catch (error) {
       this.handleAxiosError(error);
     }
