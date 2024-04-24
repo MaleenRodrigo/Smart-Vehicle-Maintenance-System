@@ -1,11 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import inquiryBG from "../../assets/inquirybg.jpg";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 const notify = () => toast.success("Successfully toasted!");
 
 const Inquiries = () => {
+  const [inquiryData, setInquiryData] = useState({
+    phone: "",
+    title: "",
+    description: "",
+    inquiryType: "",
+  });
+
+  const { phone, title, description, inquiryType } = inquiryData;
+
+  const onChange = (e) =>
+    setInquiryData({ ...inquiryData, [e.target.name]: e.target.value });
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    // console.log("inquiryData => ", inquiryData);
+    const newInquiry = {
+      phone,
+      title,
+      description,
+      inquiryType,
+    };
+
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          // "x-auth-token":
+        },
+      };
+
+      const body = JSON.stringify(newInquiry);
+
+      const res = await axios.post("/api/inquiries", body, config);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -14,7 +54,7 @@ const Inquiries = () => {
           <h2 className="mb-4 text-xl font-bold text-gray-900 :text-white">
             Make an new inquiry
           </h2>
-          <form action="#">
+          <form onSubmit={(e) => onSubmit(e)}>
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
               <div className="w-full">
                 <label
@@ -43,6 +83,8 @@ const Inquiries = () => {
                   type="tel"
                   name="phone"
                   id="phone"
+                  value={phone}
+                  onChange={(e) => onChange(e)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
                   placeholder="Enter phone number"
                   required
@@ -59,6 +101,8 @@ const Inquiries = () => {
                   type="text"
                   name="title"
                   id="title"
+                  value={title}
+                  onChange={(e) => onChange(e)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
                   placeholder="Type inquiry title"
                   required
@@ -72,16 +116,21 @@ const Inquiries = () => {
                   Inquiry type
                 </label>
                 <select
+                  name="inquiryType"
+                  value={inquiryType}
+                  onChange={(e) => onChange(e)}
                   id="type"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
                 >
                   <option selected disabled>
                     Choose type
                   </option>
-                  <option value="TV">TV/Monitors</option>
-                  <option value="PC">PC</option>
-                  <option value="GA">Gaming/Console</option>
-                  <option value="PH">Phones</option>
+                  <option value="product">Product</option>
+                  <option value="rental">Rental</option>
+                  <option value="service">Service</option>
+                  <option value="quality_checks">Quality Check</option>
+                  <option value="customer_care">Customer Care</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
 
@@ -95,6 +144,9 @@ const Inquiries = () => {
                 <textarea
                   id="description"
                   rows="8"
+                  name="description"
+                  value={description}
+                  onChange={(e) => onChange(e)}
                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
                   placeholder="Your description here"
                 ></textarea>

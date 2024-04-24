@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { regitster } from "../../actions/auth";
-
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { createVehicleOwner } from "../../api/vehicleOwner";
 
 const notify = () => toast.success("Successfully toasted!");
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,7 +29,7 @@ const Register = () => {
     if (password !== password2) {
       console.log("Passwords do not match!");
     } else {
-      // console.log(formData);
+      console.log(formData);
       const newUser = {
         name,
         email,
@@ -38,19 +38,15 @@ const Register = () => {
       };
 
       try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-
-        const body = JSON.stringify(newUser);
-
-        const res = await axios.post("/api/vehicleOwner", body, config);
+        const res = await createVehicleOwner(newUser);
+        // console.log(response.data);
+        console.log("res.data=>", res);
         notify();
-      } catch (err) {
-        console.log("NOT REGISRERD");
-        // console.log(err.response.data);
+        navigate("/");
+        // success();
+      } catch (error) {
+        console.log("vehicle owner creating error", error);
+        // errorNotify();
       }
     }
   };
