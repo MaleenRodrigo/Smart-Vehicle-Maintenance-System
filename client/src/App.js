@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Form } from "react-router-dom";
 import Homepage from "./pages/Home/Homepage";
 import Inquiries from "./pages/Inquiries/Inquiries";
 import { Crisp } from "crisp-sdk-web";
@@ -9,6 +9,11 @@ import Product from "./pages/Products/product";
 import Shop from "./pages/Shop/Shop";
 import Profile from "./pages/Profile/Profile";
 import Card from "./pages/Card/Card";
+import { RentalService } from "./pages/Rentals/RentalService";
+import { CarsMain } from "./pages/Rentals/CarsMain";
+
+import { NewVehicleForm } from "./pages/Rentals/NewVehicleForm";
+
 
 function App() {
   useEffect(() => {
@@ -28,6 +33,12 @@ function App() {
           <Route exact path="/profile" Component={Profile} />
           <Route exact path="/profile/card" Component={Card} />
           <Route exact path="/shop" Component={Shop} />
+
+          <Route exact path="/rentalservice" Component={RentalService} />
+          <Route exact path="/carsmain" Component={CarsMain} />
+          <Route exact path="/newvehicleform" Component={NewVehicleForm} />
+
+          
         </Routes>
       </>
     </Router>

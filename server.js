@@ -22,6 +22,7 @@ app.use("/api/products", require("./routes/api/products"));
 app.use("/api/inquiries", require("./routes/api/inquiries"));
 app.use("/api/cardpayments", require("./routes/api/cardpayments"));
 app.use("/api/invoice", require("./routes/api/invoice"));
+// app.use("/api/card", require("./routes/api/card"));
 app.use("/api/rentalVehicles", require("./routes/api/rentalVehicles"));
 
 //chamiG
