@@ -13,22 +13,23 @@ app.use(express.json({ extended: false }));
 app.get("/", (req, res) => res.send("API running"));
 
 // Define Routes
+
+//Maleen
 app.use("/api/vehicleOwner", require("./routes/api/vehicleOwner"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/profile", require("./routes/api/profile"));
+
 app.use("/api/products", require("./routes/api/products"));
 app.use("/api/inquiries", require("./routes/api/inquiries"));
 app.use("/api/cardpayments", require("./routes/api/cardpayments"));
 app.use("/api/invoice", require("./routes/api/invoice"));
+// app.use("/api/card", require("./routes/api/card"));
 app.use("/api/rentalVehicles", require("./routes/api/rentalVehicles"));
 
 //chamiG
 app.use("/api/jobs", require("./routes/api/jobRoutes"));
 app.use("/api/candidates", require("./routes/api/candidateRoutes"));
 app.use("/api/advertisements", require("./routes/api/advertisementRoutes"));
-
-//Kaizma Routes
-app.use("/api/testCreate", require("./routes/api/testCreateKaizma"));
 
 const PORT = process.env.PORT || 5000;
 
