@@ -50,6 +50,17 @@ function App() {
           <Route exact path="/carsdetails" Component={CarsDetails} />
           <Route exact path="/vansdetails" Component={VansDetails} />
           <Route exact path="/jeepsdetails" Component={JeepsDetails} />
+
+          {/* Admin Panel Routes */}
+          {/* <Route
+            path="/admin"
+            element={
+              <>
+                <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <ECommerce />
+              </>
+            }
+          /> */}
         </Routes>
       </>
     </Router>
