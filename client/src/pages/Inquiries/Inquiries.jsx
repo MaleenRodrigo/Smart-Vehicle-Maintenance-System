@@ -5,10 +5,10 @@ import inquiryBG from "../../assets/inquirybg.jpg";
 import toast, { Toaster } from "react-hot-toast";
 import { createInquiry } from "../../api/inquiry";
 
-const success = () => toast.success("Successfully Added");
+const success = () => toast.success("Inquiry Successfully Added");
 const errorNotify = () => toast.error("Something wrong");
 const token = localStorage.getItem("token");
-console.log("token => ", token);
+// console.log("token => ", token);
 
 const Inquiries = () => {
   const navigate = useNavigate();
@@ -36,7 +36,6 @@ const Inquiries = () => {
 
     try {
       await createInquiry(newInquiry, token);
-
       success();
       navigate("/profile");
     } catch (err) {

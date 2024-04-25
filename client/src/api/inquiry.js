@@ -12,4 +12,15 @@ const createInquiry = async (inquiry, token) => {
   }
 };
 
-export { createInquiry };
+const getAllInquiry = async (token) => {
+  try {
+    const inquiries = await new API().get("inquiries", {}, token);
+    // console.log("inquiries => ", inquiries);
+    return inquiries;
+  } catch (error) {
+    console.error("Error fetching inquiries:", error.message);
+    throw error; // Rethrow the error for the component to handle
+  }
+};
+
+export { createInquiry, getAllInquiry };
