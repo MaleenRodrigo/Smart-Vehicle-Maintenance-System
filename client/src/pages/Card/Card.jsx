@@ -84,12 +84,16 @@
 // };
 
 // export default Card;
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Card = () => {
+  const navigate = useNavigate();
+  const params = useParams();
   const [formData, setFormData] = useState({
     cardNumber: "",
     nameOnCard: "",
@@ -115,10 +119,20 @@ const Card = () => {
         },
       };
 
-      const body = JSON.stringify(formData);
+      const body = JSON.stringify({
+        ...formData,
+        userId: localStorage.getItem("userId"),
+      });
 
-      const res = await axios.post("/api/cards", body, config);
-      console.log("Card saved successfully!", res.data);
+      if (params.cardId) {
+        const res = await axios.put(
+          "/api/cards/" + params.cardId,
+          body,
+          config
+        );
+      } else {
+        const res = await axios.post("/api/cards", body, config);
+      }
 
       toast.success("Card saved successfully!");
       setFormData({
@@ -127,19 +141,32 @@ const Card = () => {
         expiration: "",
         ccv: "",
       });
+      navigate("/profile");
     } catch (err) {
       console.error("Card save failed:", err);
       toast.error("Failed to save card. Please try again.");
     }
   };
 
+  useEffect(() => {
+    const cardId = params.cardId;
+    if (cardId) {
+      axios
+        .get("/api/cards/" + cardId)
+        .then((res) => {
+          setFormData(res.data?.card);
+        })
+        .catch((err) => {});
+    }
+  }, []);
+
   return (
     <div>
       <Navbar />
       <br />
-      <br/>
-      <br/>
-      <br/>
+      <br />
+      <br />
+      <br />
       <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
         <div className="mb-5">
           <label

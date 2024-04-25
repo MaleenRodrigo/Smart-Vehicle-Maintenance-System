@@ -7,13 +7,16 @@ class ApiHelper {
 
   async get(endpoint, queryParams = {}, token) {
     try {
+      const headers = {
+        "Content-Type": "application/json",
+        // Other headers can be added here
+      };
+      if (token) {
+        headers["x-auth-token"] = token;
+      }
       const response = await axios.get(`${this.baseUrl}/${endpoint}`, {
         params: queryParams,
-        headers: {
-          "Content-Type": "application/json",
-          // You can add additional headers here if needed
-          Authorization: `Bearer ${token || ""}`,
-        },
+        headers,
       });
 
       return response.data;
@@ -39,7 +42,7 @@ class ApiHelper {
         headers,
       });
       //   console.log("response=>", response);
-      // return response.data;
+      return response.data;
     } catch (error) {
       this.handleAxiosError(error);
     }
