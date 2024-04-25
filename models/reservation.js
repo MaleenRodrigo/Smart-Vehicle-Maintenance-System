@@ -9,10 +9,10 @@ const reservationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  services: {
+  services: [{
     type: String,
     required: true,
-  },
+  }],
   servicedate: {
     type: Date,
   },

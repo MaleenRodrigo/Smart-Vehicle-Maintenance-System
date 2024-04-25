@@ -4,7 +4,7 @@ const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 
 // Models
-const Customer = require("../../models/VehicleOwner");
+const VehicleOwner = require("../../models/VehicleOwner");
 const Inquiry = require("../../models/Inquiry");
 
 // @route POST api/inquiries
@@ -27,7 +27,7 @@ router.post("/", [
 
     try {
       // Getting the user who creates the inquiry
-      const customer = await Customer.findById(req.customer.id).select(
+      const customer = await VehicleOwner.findById(req.user.id).select(
         "-password"
       );
 

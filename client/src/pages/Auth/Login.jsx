@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -5,6 +6,15 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+=======
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../../api/auth";
+
+const Login = () => {
+  const navigate = useNavigate();
+
+>>>>>>> 295eadbd6f3495ea5017c2d001fc9e2906ed9600
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,6 +30,7 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     try {
       const response = await axios.post("/api/auth", formData);
       localStorage.setItem("token", response.data.token);
@@ -28,7 +39,21 @@ const Login = () => {
     } catch (error) {
       console.error(error.response.data);
     }
+=======
+    // console.log(formData);
+    const user = await login(formData);
+    if (user) {
+      localStorage.setItem("token", user.token);
+      navigate("/profile");
+    }
+    // console.log(user.token);
+>>>>>>> 295eadbd6f3495ea5017c2d001fc9e2906ed9600
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) navigate("/profile");
+  });
 
   return (
     <>
