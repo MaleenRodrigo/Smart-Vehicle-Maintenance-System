@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
-import mc from "../../assets/mastercard.png";
-import visa from "../../assets/visa.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import CreditCard from "../../components/CreditCard";
 
 const Profile = () => {
+  const [cards, setCards] = useState([]);
+  const getCards = async () => {
+    try {
+      const res = await axios.get(
+        "/api/cards/user/" + localStorage.getItem("userId")
+      );
+      setCards(res.data?.cards);
+    } catch (err) {
+      console.error("Error fetching cards");
+    }
+  };
+
+  useEffect(() => {
+    getCards();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -33,56 +49,9 @@ const Profile = () => {
           </div>
           <div className="flex-auto p-4">
             <div className="flex flex-wrap -mx-3">
-              <div className="max-w-full px-3 mb-6 md:mb-0 md:w-1/2 md:flex-none">
-                <div className="relative flex flex-row items-center flex-auto min-w-0 p-6 break-words bg-transparent border border-solid shadow-none md-max:overflow-auto rounded-xl border-slate-100 dark:border-slate-700 bg-clip-border">
-                  <img className="mb-0 mr-4 w-1/10 h-10" src={mc} alt="logo" />
-                  <h6 className="mb-0 dark:text-[#c6c6c6]">
-                    ****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;7852
-                  </h6>
-                  <i
-                    className="ml-auto cursor-pointer fas fa-pencil-alt text-slate-700"
-                    data-target="tooltip_trigger"
-                    data-placement="top"
-                  ></i>
-                  <div
-                    data-target="tooltip"
-                    className="hidden px-2 py-1 text-sm text-white bg-black rounded-lg"
-                  >
-                    Edit Card
-                    <div
-                      className="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                      data-popper-arrow
-                    ></div>
-                  </div>
-                </div>
-              </div>
-              <div className="max-w-full px-3 md:w-1/2 md:flex-none">
-                <div className="relative flex flex-row items-center flex-auto min-w-0 p-6 break-words bg-transparent border border-solid shadow-none md-max:overflow-auto rounded-xl border-slate-100 dark:border-slate-700 bg-clip-border">
-                  <img
-                    className="mb-0 mr-4 w-1/10 h-10"
-                    src={visa}
-                    alt="logo"
-                  />
-                  <h6 className="mb-0 dak:text-white">
-                    ****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;5248
-                  </h6>
-                  <i
-                    className="ml-auto cursor-pointer fas fa-pencil-alt text-slate-700"
-                    data-target="tooltip_trigger"
-                    data-placement="top"
-                  ></i>
-                  <div
-                    data-target="tooltip"
-                    className="hidden px-2 py-1 text-sm text-white bg-black rounded-lg"
-                  >
-                    Edit Card
-                    <div
-                      className="invisible absolute h-2 w-2 bg-inherit before:visible before:absolute before:h-2 before:w-2 before:rotate-45 before:bg-inherit before:content-['']"
-                      data-popper-arrow
-                    ></div>
-                  </div>
-                </div>
-              </div>
+              {cards.map((card) => (
+                <CreditCard card={card} key={card?.id} refersher={getCards} />
+              ))}
             </div>
           </div>
         </div>

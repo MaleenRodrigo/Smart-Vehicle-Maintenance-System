@@ -14,7 +14,6 @@ import { CarsMain } from "./pages/Rentals/CarsMain";
 
 import { NewVehicleForm } from "./pages/Rentals/NewVehicleForm";
 
-
 function App() {
   useEffect(() => {
     Crisp.configure("472b8c52-0771-4647-8563-c4c3ead5b1ce");
@@ -32,13 +31,12 @@ function App() {
           <Route exact path="/product" Component={Product} />
           <Route exact path="/profile" Component={Profile} />
           <Route exact path="/profile/card" Component={Card} />
+          <Route exact path="/profile/card/:cardId" Component={Card} />
           <Route exact path="/shop" Component={Shop} />
 
           <Route exact path="/rentalservice" Component={RentalService} />
           <Route exact path="/carsmain" Component={CarsMain} />
           <Route exact path="/newvehicleform" Component={NewVehicleForm} />
-
-          
         </Routes>
       </>
     </Router>
