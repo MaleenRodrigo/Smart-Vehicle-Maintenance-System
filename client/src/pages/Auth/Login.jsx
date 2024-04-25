@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../api/auth";
 
 const Login = () => {
   const navigate = useNavigate();

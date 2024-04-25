@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/db");
-var cors = require("cors");
+const cors = require("cors");
 const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
@@ -38,6 +38,7 @@ app.use("/api/advertisements", require("./routes/api/advertisementRoutes"));
 //savinda
 app.use("/api/reservation", require("./routes/api/reservation"));
 //app.use('/api/serviceCenter', require('./routes/api/serviceCenter'));
+
 app.use(
   "/api/rentalVehicleReport",
   require("./routes/api/rentalVehicleReport")
