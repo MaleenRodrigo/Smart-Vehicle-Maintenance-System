@@ -33,6 +33,10 @@ const Profile = () => {
     }
   };
 
+  const handleEditClick = (inquiry) => {
+    navigate("/inquiry/update", { state: { inquiry } });
+  };
+
   const handleDeleteInquiries = async (id) => {
     // e.preventDefault();
     // console.log("e=>", e);
@@ -71,7 +75,7 @@ const Profile = () => {
       <br></br>
       <br></br>
       <div className="flex w-full justify-end px-3 mb-6 lg:mb-0">
-        <div className="relative flex flex-col min-w-0 mt-6 break-words bg-white border-0 border-transparent border-solid shadow-xl :bg-slate-850 :shadow--xl rounded-2xl bg-clip-border">
+        <div className=" flex flex-col min-w-0 mt-6 break-words bg-white border-0 border-transparent border-solid shadow-xl :bg-slate-850 :shadow--xl rounded-2xl bg-clip-border">
           <div className="p-4 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
             <div className="flex flex-wrap -mx-3">
               <div className="flex items-center flex-none w-1/2 max-w-full px-3">
@@ -107,9 +111,9 @@ const Profile = () => {
           <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white :text-white :bg-gray-800">
             My Tickets
             <p className="mt-1 text-sm font-normal text-gray-500 :text-gray-400">
-              Browse a list of Flowbite products designed to help you work and
-              play, stay organized, get answers, keep in touch, grow your
-              business, and more.
+              Browse a list of tickets designed to help you work and play, stay
+              organized, get answers, keep in touch, grow your business, and
+              more.
             </p>
           </caption>
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 :bg-gray-700 :text-gray-400">
@@ -147,15 +151,14 @@ const Profile = () => {
                   <td className="px-6 py-4">{inquiry.description}</td>
                   <td className="px-6 py-4">{inquiry.inquiryType}</td>
                   <td className="px-6 py-4">
-                    <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded :bg-yellow-900 :text-yellow-300">
+                    <span className="bg-yellow-100 uppercase text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded :bg-yellow-900 :text-yellow-300">
                       {inquiry.status}
                     </span>
                   </td>
                   <td className="px-2 py-4 text-right">
                     <a
-                      // href="#"
+                      onClick={() => handleEditClick(inquiry)}
                       className="font-medium text-blue-600 :text-blue-500 cursor-pointer"
-                      // onClick={() => handleDeleteInquiries()}
                     >
                       <EditIcon />
                     </a>
@@ -172,7 +175,7 @@ const Profile = () => {
                 </tr>
               ))
             ) : (
-              <div className="w-full text-lg text-red-600 font-semibold m-10 text-center">
+              <div className="w-full text-md text-gray-600 font-semibold m-10 text-center">
                 You dont have any tickets!
               </div>
             )}

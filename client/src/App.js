@@ -19,6 +19,7 @@ import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
+import UpdateInquiryForm from "./pages/Inquiries/UpdateInquiryForm";
 
 function App() {
   useEffect(() => {
@@ -34,6 +35,7 @@ function App() {
           <Route exact path="/signin" Component={Login} />
           <Route exact path="/signup" Component={Register} />
           <Route exact path="/inquiry" Component={Inquiries} />
+          <Route exact path="/inquiry/update" Component={UpdateInquiryForm} />
           <Route exact path="/product" Component={Product} />
           <Route exact path="/profile" Component={Profile} />
           <Route exact path="/profile/card" Component={Card} />

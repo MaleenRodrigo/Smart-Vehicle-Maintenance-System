@@ -50,14 +50,18 @@ class ApiHelper {
 
   async put(endpoint, data, token) {
     try {
-      const response = await axios.put(`${this.baseUrl}/${endpoint}`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token || ""}`,
-          // You can add additional headers here if needed
-        },
-      });
+      const headers = {
+        "Content-Type": "application/json",
+        // Other headers can be added here
+      };
+      if (token) {
+        headers["x-auth-token"] = token;
+      }
 
+      const response = await axios.put(`${this.baseUrl}/${endpoint}`, data, {
+        headers,
+      });
+      //   console.log("response=>", response);
       return response.data;
     } catch (error) {
       this.handleAxiosError(error);
