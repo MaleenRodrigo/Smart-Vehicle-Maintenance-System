@@ -12,7 +12,7 @@ const Profile = () => {
       <br></br>
       <br></br>
       <br></br>
-      <div className="max-w-full px-3 mb-6 lg:mb-0 lg:w-full lg:flex-none">
+      <div className="flex w-full justify-end px-3 mb-6 lg:mb-0">
         <div className="relative flex flex-col min-w-0 mt-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
           <div className="p-4 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
             <div className="flex flex-wrap -mx-3">
