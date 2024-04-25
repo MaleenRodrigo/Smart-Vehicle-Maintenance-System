@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CreditCard from "../../components/CreditCard";
-import { getAllInquiry } from "../../api/inquiry";
+import { deleteInquiry, getAllInquiry } from "../../api/inquiry";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const token = localStorage.getItem("token");
 // console.log("profileToken=> ", token);
 const Profile = () => {
-  const [inquiries, setInquiries] = useState([]);
+  const navigate = useNavigate();
 
-  const getInquiries = async () => {
-    try {
-      const res = await getAllInquiry(token);
-      // console.log("res=>", res);
-      setInquiries(res.data);
-      // console.log("inquiries=> ", inquiries);
-    } catch (error) {
-      console.error("Error fetching inquiries: ", error.message);
-    }
-  };
+  const [inquiries, setInquiries] = useState([]);
 
   const [cards, setCards] = useState([]);
   const getCards = async () => {
@@ -33,10 +26,35 @@ const Profile = () => {
     }
   };
 
+  const handleDeleteInquiries = async (id) => {
+    // e.preventDefault();
+    // console.log("e=>", e);
+    try {
+      await deleteInquiry(id, token);
+      setInquiries((currentInquiries) =>
+        currentInquiries.filter((inquiry) => inquiry.id !== id)
+      );
+      // navigate("/profile");
+      // console.log(response.data);
+    } catch (error) {
+      console.log("error deleting inquiry => ", error);
+    }
+  };
+
   useEffect(() => {
+    const getInquiries = async () => {
+      try {
+        const res = await getAllInquiry(token);
+        // console.log("res=>", res);
+        setInquiries(res);
+      } catch (error) {
+        console.error("Error fetching inquiries: ", error.message);
+      }
+    };
+
     getInquiries();
     // getCards();
-  }, []);
+  }, [token]);
 
   return (
     <>
@@ -77,7 +95,7 @@ const Profile = () => {
       <br />
       <br />
 
-      <div className="mx-56 shadow-md rounded-lg">
+      <div className="mx-56 mb-28 shadow-md rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 :text-gray-400">
           <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white :text-white :bg-gray-800">
             My Tickets
@@ -102,68 +120,55 @@ const Profile = () => {
                 Status
               </th>
               <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
+                <span className="sr-only"></span>
+              </th>
+              <th scope="col" className="px-6 py-3">
+                <span className="sr-only"></span>
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b :bg-gray-800 :border-gray-700">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap :text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4">Silver</td>
-              <td className="px-6 py-4">Laptop</td>
-              <td className="px-6 py-4">$2999</td>
-              <td className="px-6 py-4 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 :text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white border-b :bg-gray-800 :border-gray-700">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap :text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="px-6 py-4">White</td>
-              <td className="px-6 py-4">Laptop PC</td>
-              <td className="px-6 py-4">$1999</td>
-              <td className="px-6 py-4 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 :text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-white :bg-gray-800">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap :text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="px-6 py-4">Black</td>
-              <td className="px-6 py-4">Accessories</td>
-              <td className="px-6 py-4">$99</td>
-              <td className="px-6 py-4 text-right">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 :text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
+            {inquiries.length > 0 ? (
+              inquiries.map((inquiry) => (
+                <tr className="bg-white border-b :bg-gray-800 :border-gray-700">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap :text-white"
+                  >
+                    {inquiry.title}
+                  </th>
+                  <td className="px-6 py-4">{inquiry.description}</td>
+                  <td className="px-6 py-4">{inquiry.inquiryType}</td>
+                  <td className="px-6 py-4">
+                    <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded :bg-yellow-900 :text-yellow-300">
+                      {inquiry.status}
+                    </span>
+                  </td>
+                  <td className="px-2 py-4 text-right">
+                    <a
+                      // href="#"
+                      className="font-medium text-blue-600 :text-blue-500 hover:underline"
+                      onClick={() => handleDeleteInquiries()}
+                    >
+                      <EditIcon />
+                    </a>
+                  </td>
+                  <td className="px-2 py-4 text-right">
+                    <a
+                      // href="#"
+                      onClick={() => handleDeleteInquiries(inquiry._id)}
+                      className="font-medium text-red-600 :text-blue-500 hover:underline"
+                    >
+                      <DeleteIcon />
+                    </a>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <div className="w-full text-lg text-red-600 font-semibold m-10 text-center">
+                You dont have any tickets!
+              </div>
+            )}
           </tbody>
         </table>
       </div>

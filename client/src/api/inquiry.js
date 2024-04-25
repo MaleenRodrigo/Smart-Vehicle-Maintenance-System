@@ -15,7 +15,7 @@ const createInquiry = async (inquiry, token) => {
 const getAllInquiry = async (token) => {
   try {
     const inquiries = await new API().get("inquiries", {}, token);
-    // console.log("inquiries => ", inquiries);
+    // console.log("inquiriesINjs => ", inquiries);
     return inquiries;
   } catch (error) {
     console.error("Error fetching inquiries:", error.message);
@@ -23,4 +23,15 @@ const getAllInquiry = async (token) => {
   }
 };
 
-export { createInquiry, getAllInquiry };
+const deleteInquiry = async (id, token) => {
+  try {
+    const deletedInquiry = await new API().delete(`inquiries/${id}`, token);
+    console.log("deletedInquiry => ", deletedInquiry);
+    return deletedInquiry.data;
+  } catch (error) {
+    console.error("Error deleting Inquiry:", error.message);
+    throw error; // Rethrow the error for the component to handle
+  }
+};
+
+export { createInquiry, getAllInquiry, deleteInquiry };

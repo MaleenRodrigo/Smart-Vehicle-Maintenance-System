@@ -66,12 +66,15 @@ class ApiHelper {
 
   async delete(endpoint, token) {
     try {
+      const headers = {
+        "Content-Type": "application/json",
+        // Other headers can be added here
+      };
+      if (token) {
+        headers["x-auth-token"] = token;
+      }
       const response = await axios.delete(`${this.baseUrl}/${endpoint}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token || ""}`,
-          // You can add additional headers here if needed
-        },
+        headers,
       });
 
       return response.data;
