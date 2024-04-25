@@ -1,7 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/db");
+<<<<<<< HEAD
+const cors = require("cors");
+=======
 var cors = require("cors");
 const errorHandler = require("./middleware/errorMiddleware");
+>>>>>>> 295eadbd6f3495ea5017c2d001fc9e2906ed9600
 
 const app = express();
 app.use(cors()); // Use this after the variable declaration
@@ -11,6 +16,7 @@ connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+app.use(cors());
 
 app.get("/", (req, res) => res.send("API running"));
 
@@ -25,7 +31,7 @@ app.use("/api/products", require("./routes/api/products"));
 app.use("/api/inquiries", require("./routes/api/inquiries"));
 app.use("/api/cardpayments", require("./routes/api/cardpayments"));
 app.use("/api/invoice", require("./routes/api/invoice"));
-// app.use("/api/card", require("./routes/api/card"));
+app.use("/api/cards", require("./routes/api/card"));
 app.use("/api/rentalVehicles", require("./routes/api/rentalVehicles"));
 
 //chamiG
@@ -33,10 +39,16 @@ app.use("/api/jobs", require("./routes/api/jobRoutes"));
 app.use("/api/candidates", require("./routes/api/candidateRoutes"));
 app.use("/api/advertisements", require("./routes/api/advertisementRoutes"));
 
+<<<<<<< HEAD
+//savinda
+app.use("/api/reservation", require("./routes/api/reservation"));
+//app.use('/api/serviceCenter', require('./routes/api/serviceCenter'));
+=======
 app.use(
   "/api/rentalVehicleReport",
   require("./routes/api/rentalVehicleReport")
 );
+>>>>>>> 295eadbd6f3495ea5017c2d001fc9e2906ed9600
 
 const PORT = process.env.PORT || 5000;
 
