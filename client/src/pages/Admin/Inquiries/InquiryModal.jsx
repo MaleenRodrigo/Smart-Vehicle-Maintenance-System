@@ -23,7 +23,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
     setLoader(true);
     html2canvas(capture).then((canvas) => {
       const imgData = canvas.toDataURL("img/png");
-      const doc = new jsPDF("p", "mm", "a5");
+      const doc = new jsPDF("p", "mm", "a4");
       const componentWidth = doc.internal.pageSize.getWidth();
       const componentHeight = doc.internal.pageSize.getHeight();
       doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);
@@ -35,10 +35,9 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
   return (
     <div
       id="default-modal"
-      tabindex="-1"
-      className="actual-inquiry overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      className="absolute top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
     >
-      <div className="relative p-4 w-full max-w-xl max-h-full">
+      <div className="actual-inquiry relative p-4 w-full max-w-xl ">
         <div className="relative bg-white rounded-lg shadow :bg-gray-700">
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t :border-gray-600">
             <h3 className="text-xl font-semibold text-gray-900 :text-white">
@@ -68,7 +67,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
               <span className="sr-only">Close modal</span>
             </button>
           </div>
-          <form className=" max-w-sm mx-auto my-10">
+          <form className="mx-10 my-10">
             <div className="flex justify-end ">
               <span
                 className={`uppercase font-medium text-sm px-2.5 py-0.5 rounded ${getStatusClassName(
@@ -126,20 +125,22 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
                 />
               </div>
             </div>
-            <div className="mb-5">
+
+            <div className="sm:col-span-2">
               <label
-                for="password"
+                for="description"
                 className="block mb-2 text-sm font-medium text-gray-900 :text-white"
               >
                 Description
               </label>
-              <input
-                type="text"
-                id="password"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500"
-                disabled
+              <textarea
+                id="description"
+                rows="5"
+                name="description"
                 value={inquiry.description}
-              />
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
+                placeholder="Your description here"
+              ></textarea>
             </div>
           </form>
 

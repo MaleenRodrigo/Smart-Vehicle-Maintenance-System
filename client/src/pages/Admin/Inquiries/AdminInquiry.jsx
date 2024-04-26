@@ -6,7 +6,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { InquiryModal } from "./InquiryModal";
-import { ConfirmDialog } from "./ConfirmDialog";
 
 const token = localStorage.getItem("token");
 console.log("token=>", token);
@@ -135,7 +134,7 @@ export const AdminInquiry = () => {
                       {inquiry.status}
                     </span>
                   </td>
-                  <td className="px-1 py-4 text-right">
+                  <td className="px- py-4 text-right">
                     <a
                       onClick={() => toggleInquiryModal(inquiry)}
                       className="font-medium text-gray-400 :text-blue-500 cursor-pointer"
@@ -143,7 +142,7 @@ export const AdminInquiry = () => {
                       <VisibilityIcon />
                     </a>
                   </td>
-                  <td className="px-1 py-4 text-right">
+                  <td className="px- py-4 text-right">
                     <a
                       onClick={() => handleEditClick(inquiry)}
                       className="font-medium text-gray-400 :text-blue-500 cursor-pointer"
@@ -151,7 +150,7 @@ export const AdminInquiry = () => {
                       <EditIcon />
                     </a>
                   </td>
-                  <td className="px-2 py-4 text-right">
+                  <td className="px-3 py-4 text-right">
                     <a
                       onClick={() => toggleModal(inquiry._id)}
                       className="font-medium text-red-600 :text-blue-500 cursor-pointer"
@@ -178,7 +177,7 @@ export const AdminInquiry = () => {
         <div
           id="popup-modal"
           tabIndex="-1"
-          className="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden flex justify-start items-end w-full h-[calc(100%-1rem)]"
+          className="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden flex justify-center items-end w-full h-[calc(100%-1rem)]"
         >
           <div className="relative p-4 w-full max-w-md">
             <div className="relative bg-gray-100 rounded-lg shadow-lg :bg-gray-700">

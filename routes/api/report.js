@@ -1,32 +1,32 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
-const reportModel = require("../../models/Report");
+const ReportModel = require("../../models/Report");
 
 const multer = require("../../multer");
 
-router.post("/reports", multer.single("pdf"), async (req, res) => {
-  const { name, creator, comments } = req.body;
+// router.post("/reports", multer.single("pdf"), async (req, res) => {
+//   const { name, creator, comments } = req.body;
 
-  const newReport = new reportModel({
-    name,
-    creator,
-    comments,
-    pdf: req.file ? req.file.filename : null, // Save PDF filename if uploaded
-  });
+//   const newReport = new reportModel({
+//     name,
+//     creator,
+//     comments,
+//     pdf: req.file ? req.file.filename : null, // Save PDF filename if uploaded
+//   });
 
+//   try {
+//     const savedReport = await newReport.save();
+//     res.status(201).json(savedReport);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Error creating report" });
+//   }
+// });
+
+router.get("/allreports", async (req, res) => {
   try {
-    const savedReport = await newReport.save();
-    res.status(201).json(savedReport);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error creating report" });
-  }
-});
-
-router.get("/aareports", async (req, res) => {
-  try {
-    const reports = await reportModel.find();
+    const reports = await ReportModel.find();
     res.json(reports);
   } catch (err) {
     console.error(err);
@@ -34,35 +34,39 @@ router.get("/aareports", async (req, res) => {
   }
 });
 
-router.put("/reports/:id", multer.single("pdf"), async (req, res) => {
-  const { id } = req.params;
-  const { name, creator, comments } = req.body;
+// router.put(
+//   "/reports/:id",
+//   // multer.single("pdf"),
+//   async (req, res) => {
+//     const { id } = req.params;
+//     const { name, creator, comments } = req.body;
 
-  const updates = { name, creator, comments };
+//     const updates = { name, creator, comments };
 
-  if (req.file) {
-    updates.pdf = req.file.filename; // Update PDF filename if uploaded
-  }
+//     if (req.file) {
+//       updates.pdf = req.file.filename; // Update PDF filename if uploaded
+//     }
 
-  try {
-    const updatedReport = await reportModel.findByIdAndUpdate(id, updates, {
-      new: true,
-    }); // Return updated document
-    if (!updatedReport) {
-      return res.status(404).json({ message: "Report not found" });
-    }
-    res.json(updatedReport);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error updating report" });
-  }
-});
+//     try {
+//       const updatedReport = await ReportModel.findByIdAndUpdate(id, updates, {
+//         new: true,
+//       }); // Return updated document
+//       if (!updatedReport) {
+//         return res.status(404).json({ message: "Report not found" });
+//       }
+//       res.json(updatedReport);
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).json({ message: "Error updating report" });
+//     }
+//   }
+// );
 
 router.delete("/reports/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedReport = await reportModel.findByIdAndDelete(id);
+    const deletedReport = await ReportModel.findByIdAndDelete(id);
     if (!deletedReport) {
       return res.status(404).json({ message: "Report not found" });
     }

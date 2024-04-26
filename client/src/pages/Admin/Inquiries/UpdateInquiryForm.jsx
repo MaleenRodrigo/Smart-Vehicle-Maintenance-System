@@ -50,9 +50,10 @@ const UpdateInquiryForm = () => {
   return (
     <>
       <section className="bg-white :bg-gray-900">
-        <div className="px-4 mx-auto max-w-2xl py-24">
+        <div className="px-4 mx-auto max-w-2xl py-9">
           <h2 className="mb-4 text-xl font-bold text-gray-900 :text-white">
-            Update an new inquiry
+            Update inquiry
+            <span className="ml-2 text-sm text-gray-400">{inquiry._id}</span>
           </h2>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="flex flex-col gap-4 sm:grid-cols-2 sm:gap-6">
@@ -74,30 +75,52 @@ const UpdateInquiryForm = () => {
                   required
                 />
               </div>
-              <div className="col-span-2">
-                <label
-                  htmlFor="type"
-                  className="block mb-2 text-sm font-medium text-gray-900 :text-white"
-                >
-                  Inquiry type
-                </label>
-                <select
-                  name="inquiryType"
-                  value={inquiryType}
-                  onChange={(e) => onChange(e)}
-                  id="type"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
-                >
-                  <option selected disabled>
-                    Choose type
-                  </option>
-                  <option value="product">Product</option>
-                  <option value="rental">Rental</option>
-                  <option value="service">Service</option>
-                  <option value="quality_checks">Quality Check</option>
-                  <option value="customer_care">Customer Care</option>
-                  <option value="other">Other</option>
-                </select>
+              <div className="flex w-full gap-5">
+                <div className="w-full">
+                  <label
+                    htmlFor="type"
+                    className="block mb-2 text-sm font-medium text-gray-900 :text-white"
+                  >
+                    Inquiry type
+                  </label>
+                  <select
+                    name="inquiryType"
+                    value={inquiryType}
+                    onChange={(e) => onChange(e)}
+                    id="type"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
+                  >
+                    <option selected disabled>
+                      Choose type
+                    </option>
+                    <option value="product">Product</option>
+                    <option value="rental">Rental</option>
+                    <option value="service">Service</option>
+                    <option value="quality_checks">Quality Check</option>
+                    <option value="customer_care">Customer Care</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor="countries"
+                    className="block mb-2 text-sm font-medium text-gray-900 :text-white"
+                  >
+                    Change status
+                  </label>
+                  <select
+                    name="inquiryStatus"
+                    id="status"
+                    value={inquiryStatus}
+                    onChange={(e) => onChange(e)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500"
+                  >
+                    <option>Choose a status</option>
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+                </div>
               </div>
               <div className="w-full">
                 <label
@@ -137,24 +160,7 @@ const UpdateInquiryForm = () => {
               </div>
             </div>
             <br />
-            <label
-              htmlFor="countries"
-              className="block mb-2 text-sm font-medium text-gray-900 :text-white"
-            >
-              Select an option
-            </label>
-            <select
-              name="inquiryStatus"
-              id="status"
-              value={inquiryStatus}
-              onChange={(e) => onChange(e)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500"
-            >
-              <option>Choose a status</option>
-              <option value="pending">Pending</option>
-              <option value="completed">Completed</option>
-              <option value="rejected">Rejected</option>
-            </select>
+
             <button
               type="submit"
               className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary rounded-lg"

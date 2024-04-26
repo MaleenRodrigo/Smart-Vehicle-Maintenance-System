@@ -23,9 +23,17 @@ const Login = () => {
     e.preventDefault();
     // console.log(formData);
     const user = await login(formData);
-    if (user) {
+    // Checking for specific admin credentials
+    if (
+      user &&
+      formData.email === "admin2024@gmail.com" &&
+      formData.password === "admin2024"
+    ) {
       localStorage.setItem("token", user.token);
-      navigate("/profile");
+      navigate("/admin"); // Navigating to admin page
+    } else if (user) {
+      localStorage.setItem("token", user.token);
+      navigate("/profile"); // Navigating to profile page for other users
     }
     // console.log(user.token);
   };

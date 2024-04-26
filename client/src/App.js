@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Routes, Route, Form } from "react-router-dom";
 import Homepage from "./pages/Home/Homepage";
 import Inquiries from "./pages/Inquiries/Inquiries";
 import { Crisp } from "crisp-sdk-web";
-import Product from "./pages/Products/product";
 import Shop from "./pages/Shop/Shop";
+import AddProduct from "./pages/Products/Addproduct";
 import Profile from "./pages/Profile/Profile";
 import Card from "./pages/Card/Card";
 import { RentalService } from "./pages/Rentals/RentalService";
@@ -18,11 +18,10 @@ import JeepsMain from "./pages/Rentals/JeepsMain";
 import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
-import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
-import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
 import { AdminPanel } from "./pages/Admin/Admin";
 import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
-
+import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
+import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 
 function App() {
   useEffect(() => {
@@ -39,11 +38,11 @@ function App() {
           <Route exact path="/signup" Component={Register} />
           <Route exact path="/inquiry" Component={Inquiries} />
           <Route exact path="/inquiry/update" Component={UpdateInquiryForm} />
-          <Route exact path="/product" Component={Product} />
           <Route exact path="/profile" Component={Profile} />
           <Route exact path="/profile/card" Component={Card} />
           <Route exact path="/profile/card/:cardId" Component={Card} />
           <Route exact path="/shop" Component={Shop} />
+          {/* <Route exact path="/addproduct" Component={AddProduct} /> */}
 
           <Route exact path="/rentalservice" Component={RentalService} />
 
