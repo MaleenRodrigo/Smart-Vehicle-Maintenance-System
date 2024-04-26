@@ -28,7 +28,6 @@ function Shop() {
     loadData();
   }, []);
 
-  
 
   return (
     <div>
