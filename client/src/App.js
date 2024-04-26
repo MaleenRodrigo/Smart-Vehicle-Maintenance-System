@@ -19,6 +19,7 @@ import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
+import { NewVehicleForm1 } from "./pages/Rentals/NewVehicleForm1";
 
 function App() {
   useEffect(() => {
@@ -48,6 +49,7 @@ function App() {
           <Route exact path="/carsdetails" Component={CarsDetails} />
           <Route exact path="/vansdetails" Component={VansDetails} />
           <Route exact path="/jeepsdetails" Component={JeepsDetails} />
+          <Route exact path="/newvehicleform1" Component={NewVehicleForm1} />
         </Routes>
       </>
     </Router>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 
 
 
@@ -92,9 +93,10 @@ const ImageList7 = [
 export const CarsMain = () => {
     return (
         <>
+        <Navbar />
             <div className="container mx-auto">
 
-                <Navbar />
+                
                 <div className="bg-white">
                     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                         <div className=' mt-10 h-10 px-8 flex justify-between'>
@@ -382,7 +384,9 @@ export const CarsMain = () => {
                     </div>
 
                 </div>
+                
             </div>
+            <Footer/>
         </>
 
     )

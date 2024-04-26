@@ -150,7 +150,7 @@ const Profile = () => {
                       className="font-medium text-blue-600 :text-blue-500 hover:underline"
                       onClick={() => handleDeleteInquiries()}
                     >
-                      <EditIcon />
+                    <EditIcon /> 
                     </a>
                   </td>
                   <td className="px-2 py-4 text-right">
@@ -159,7 +159,7 @@ const Profile = () => {
                       onClick={() => handleDeleteInquiries(inquiry._id)}
                       className="font-medium text-red-600 :text-blue-500 hover:underline"
                     >
-                      <DeleteIcon />
+                     <DeleteIcon /> 
                     </a>
                   </td>
                 </tr>
