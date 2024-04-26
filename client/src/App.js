@@ -19,7 +19,10 @@ import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
-import UpdateInquiryForm from "./pages/Inquiries/UpdateInquiryForm";
+import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
+import { AdminPanel } from "./pages/Admin/Admin";
+import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
+import { NewVehicleForm1 } from "./pages/Rentals/NewVehicleForm1";
 
 function App() {
   useEffect(() => {
@@ -50,6 +53,7 @@ function App() {
           <Route exact path="/carsdetails" Component={CarsDetails} />
           <Route exact path="/vansdetails" Component={VansDetails} />
           <Route exact path="/jeepsdetails" Component={JeepsDetails} />
+<<<<<<< HEAD
           <Route exact path="/vehicleChart" Component={VehicleTypeChart} />
 
           {/* Admin Panel Routes */}
@@ -62,6 +66,8 @@ function App() {
               </>
             }
           /> */}
+=======
+>>>>>>> df20e0b9b978ca3ffba0cfb2f9bd14eaf35b9a59
         </Routes>
       </>
     </Router>

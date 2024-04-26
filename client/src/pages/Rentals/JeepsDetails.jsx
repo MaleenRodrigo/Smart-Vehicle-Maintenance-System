@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 
 import Image23 from '../../assets/RentalsImages/Jeeps/black-jeep-grand-cherokee.png'
 
@@ -134,7 +135,7 @@ export const JeepsDetails = () => {
                     </dl>
                 </div>
             </div>
-
+            <Footer/>
         </>
     )
 }

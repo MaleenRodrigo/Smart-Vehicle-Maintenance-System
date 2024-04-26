@@ -30,7 +30,7 @@ const Register = () => {
     if (password !== password2) {
       console.log("Passwords do not match!");
     } else {
-      console.log(formData);
+      // console.log(formData);
       const newUser = {
         name,
         email,
@@ -41,7 +41,7 @@ const Register = () => {
       try {
         const res = await createVehicleOwner(newUser);
         // console.log(response.data);
-        console.log("res.data=>", res);
+        // console.log("res.data=>", res);
         success();
         navigate("/");
       } catch (error) {

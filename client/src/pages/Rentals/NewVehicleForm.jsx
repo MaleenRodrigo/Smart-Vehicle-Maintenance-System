@@ -1,6 +1,8 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
-// import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import Footer from '../../components/Footer';
+import axios from 'axios';
+
 
 
 export const NewVehicleForm = () => {
@@ -438,7 +440,14 @@ export const NewVehicleForm = () => {
                         </div>
                     </form>
                 </div>
+            {/* validations */}
+            
+          
+                
+         
+            
             </div>
+            <Footer />
         </>
 
     )
