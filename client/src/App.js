@@ -52,8 +52,6 @@ function App() {
           <Route exact path="/carsdetails" Component={CarsDetails} />
           <Route exact path="/vansdetails" Component={VansDetails} />
           <Route exact path="/jeepsdetails" Component={JeepsDetails} />
-          <Route exact path="/admin" Component={AdminPanel} />
-          <Route exact path="/admin/inquiries" Component={AdminInquiry} />
         </Routes>
       </>
     </Router>
