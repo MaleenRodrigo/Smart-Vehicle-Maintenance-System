@@ -6,7 +6,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { InquiryModal } from "./InquiryModal";
-import { ConfirmDialog } from "./ConfirmDialog";
 
 const token = localStorage.getItem("token");
 console.log("token=>", token);
@@ -178,7 +177,7 @@ export const AdminInquiry = () => {
         <div
           id="popup-modal"
           tabIndex="-1"
-          className="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden flex justify-start items-end w-full h-[calc(100%-1rem)]"
+          className="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden flex justify-center items-end w-full h-[calc(100%-1rem)]"
         >
           <div className="relative p-4 w-full max-w-md">
             <div className="relative bg-gray-100 rounded-lg shadow-lg :bg-gray-700">
