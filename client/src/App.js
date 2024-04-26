@@ -20,8 +20,8 @@ import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { AdminPanel } from "./pages/Admin/Admin";
 import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
+import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
-import UpdateInquiryForm from "./pages/Inquiries/UpdateInquiryForm";
 
 function App() {
   useEffect(() => {
@@ -52,6 +52,10 @@ function App() {
           <Route exact path="/carsdetails" Component={CarsDetails} />
           <Route exact path="/vansdetails" Component={VansDetails} />
           <Route exact path="/jeepsdetails" Component={JeepsDetails} />
+
+          {/* Admin Panel Routes */}
+          <Route exact path="/admin" Component={AdminPanel} />
+          <Route exact path="/admin/inquiries" Component={AdminInquiry} />
         </Routes>
       </>
     </Router>
