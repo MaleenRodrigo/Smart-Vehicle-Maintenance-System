@@ -59,7 +59,10 @@ function ReportGenerator() {
             value={vehicleType}
             onChange={(e) => setVehicleType(e.target.value)}
           >
-            <option value="">All Types</option>
+            <option value="" disabled>
+              ChooseType
+            </option>
+            <option value="allTypes">All Types</option>
             <option value="car">Car</option>
             <option value="van">Van</option>
             <option value="suv">SUV</option>
@@ -72,7 +75,10 @@ function ReportGenerator() {
             value={registrationYear}
             onChange={(e) => setRegistrationYear(e.target.value)}
           >
-            <option value="">All Years</option>
+            <option value="" disabled>
+              Choose Year
+            </option>
+            <option value="allYears">All Years</option>
             {years.map((year) => (
               <option key={year} value={year}>
                 {year}
