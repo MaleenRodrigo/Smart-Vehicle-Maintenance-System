@@ -12,8 +12,7 @@ export const ConfirmDialog = (props) => {
       {isDialogOpen && (
         <div
           id="popup-modal"
-          tabIndex="-1"
-          className="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden flex justify-start items-end w-full h-[calc(100%-1rem)]"
+          className="fixed inset-0 z-50 flex justify-center items-center w-  h-[calc(100%-1rem)]"
         >
           <div className="relative p-4 w-full max-w-md">
             <div className="relative bg-gray-200 rounded-lg shadow :bg-gray-700">

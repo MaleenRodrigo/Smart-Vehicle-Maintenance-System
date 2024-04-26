@@ -19,7 +19,9 @@ import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
-import UpdateInquiryForm from "./pages/Inquiries/UpdateInquiryForm";
+import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
+import { AdminPanel } from "./pages/Admin/Admin";
+import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
 
 function App() {
   useEffect(() => {
@@ -52,15 +54,8 @@ function App() {
           <Route exact path="/jeepsdetails" Component={JeepsDetails} />
 
           {/* Admin Panel Routes */}
-          {/* <Route
-            path="/admin"
-            element={
-              <>
-                <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <ECommerce />
-              </>
-            }
-          /> */}
+          <Route exact path="/admin" Component={AdminPanel} />
+          <Route exact path="/admin/inquiries" Component={AdminInquiry} />
         </Routes>
       </>
     </Router>
