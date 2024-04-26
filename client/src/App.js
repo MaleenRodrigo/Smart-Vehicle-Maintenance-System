@@ -19,6 +19,9 @@ import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
+import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
+import { AdminPanel } from "./pages/Admin/Admin";
+import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
 import { NewVehicleForm1 } from "./pages/Rentals/NewVehicleForm1";
 
 function App() {
@@ -35,6 +38,7 @@ function App() {
           <Route exact path="/signin" Component={Login} />
           <Route exact path="/signup" Component={Register} />
           <Route exact path="/inquiry" Component={Inquiries} />
+          <Route exact path="/inquiry/update" Component={UpdateInquiryForm} />
           <Route exact path="/product" Component={Product} />
           <Route exact path="/profile" Component={Profile} />
           <Route exact path="/profile/card" Component={Card} />
@@ -49,7 +53,6 @@ function App() {
           <Route exact path="/carsdetails" Component={CarsDetails} />
           <Route exact path="/vansdetails" Component={VansDetails} />
           <Route exact path="/jeepsdetails" Component={JeepsDetails} />
-          <Route exact path="/newvehicleform1" Component={NewVehicleForm1} />
         </Routes>
       </>
     </Router>

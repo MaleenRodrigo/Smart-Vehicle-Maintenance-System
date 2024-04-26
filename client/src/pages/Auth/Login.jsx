@@ -22,7 +22,7 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     // console.log(formData);
-    const user = await Login(formData);
+    const user = await login(formData);
     if (user) {
       localStorage.setItem("token", user.token);
       navigate("/profile");

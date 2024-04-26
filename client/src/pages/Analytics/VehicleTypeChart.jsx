@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 
 import { BarChartData } from "../../../routes/api/rentalVehicleReport";
+
+import downloadPDF from "../../../routes/api/reportPDFGenerator";
 import {
   Chart as ChartJS,
   CategorySclae,
@@ -21,49 +23,35 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = () => {
-  const options = {};
-  //const data = {};
+// const BarChart = () => {
+//   const options = {};
+//   //const data = {};
 
-  return <Bar option={options} data={BarChartData} />;
-};
+//   return <Bar option={options} data={BarChartData} />;
+// };
 
-// return (
-//   <div>
-//     <h2>Vehicle Type Distribution</h2>
-//     <Bar data={chartData} />
-//   </div>
-// );
+
+const Component = () => {
+  const pdfRef = useRef(null);
+
+  const handleDownloadPDF = () => {
+    downloadPDF(pdfRef.current.id, 'rentalVehicleReportData');
+  };
+
+return (
+  <div ref={pdfRef} id="vehicleReportContent">
+    
+    <h1>Vehicle Rental Report</h1>
+    <h2>Number of Rental Vehicles of each type</h2>
+
+   
+
+ <Bar option={} data={BarChartData} />
+
+    
+    <button onClick={handleDownloadPDF}>Download Report</button>
+  </div>
+);
 
 export default VehicleTypeChart;
 
-// function VehicleTypeChart() {
-//   const [vehicleTypes, setVehicleTypes] = useState({});
-
-//   useEffect(() => {
-//     fetch("../../../routes/api/rentalVehicleReport/vehicle-type-count")
-//       .then((response) => response.json())
-//       .then((data) => setVehicleTypes(data))
-//       .catch((err) => console.error(err));
-//   }, []);
-
-//   const chartData = {
-//     labels: Object.keys(vehicleTypes),
-//     datasets: [
-//       {
-//         label: "Number of Vehicles",
-//         data: Object.values(vehicleTypes),
-//         backgroundColor: [
-//           "rgba(255, 99, 132, 0.2)",
-//           "rgba(54, 162, 235, 0.2)",
-//           "rgba(255, 206, 86, 0.2)",
-//         ],
-//         borderColor: [
-//           "rgba(255, 99, 132, 1)",
-//           "rgba(54, 162, 235, 1)",
-//           "rgba(255, 206, 86, 1)",
-//         ],
-//         borderWidth: 1,
-//       },
-//     ],
-//   };
