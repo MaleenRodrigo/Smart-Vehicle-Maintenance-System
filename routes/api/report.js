@@ -5,6 +5,7 @@ const ReportModel = require("../../models/Report");
 
 const multer = require("../../multer");
 
+<<<<<<< HEAD
 router.post(
   "/",
   //multer.single("pdf"),
@@ -27,6 +28,26 @@ router.post(
     }
   }
 );
+=======
+// router.post("/reports", multer.single("pdf"), async (req, res) => {
+//   const { name, creator, comments } = req.body;
+
+//   const newReport = new reportModel({
+//     name,
+//     creator,
+//     comments,
+//     pdf: req.file ? req.file.filename : null, // Save PDF filename if uploaded
+//   });
+
+//   try {
+//     const savedReport = await newReport.save();
+//     res.status(201).json(savedReport);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Error creating report" });
+//   }
+// });
+>>>>>>> ca1e7aa4bc834ec442cabc0d62c5ee576921c3e4
 
 router.get("/allreports", async (req, res) => {
   try {
@@ -38,6 +59,7 @@ router.get("/allreports", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 router.put(
   "/reports/:id",
   // multer.single("pdf"),
@@ -65,6 +87,31 @@ router.put(
     }
   }
 );
+=======
+// router.put("/reports/:id", multer.single("pdf"), async (req, res) => {
+//   const { id } = req.params;
+//   const { name, creator, comments } = req.body;
+
+//   const updates = { name, creator, comments };
+
+//   if (req.file) {
+//     updates.pdf = req.file.filename; // Update PDF filename if uploaded
+//   }
+
+//   try {
+//     const updatedReport = await reportModel.findByIdAndUpdate(id, updates, {
+//       new: true,
+//     }); // Return updated document
+//     if (!updatedReport) {
+//       return res.status(404).json({ message: "Report not found" });
+//     }
+//     res.json(updatedReport);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Error updating report" });
+//   }
+// });
+>>>>>>> ca1e7aa4bc834ec442cabc0d62c5ee576921c3e4
 
 router.delete("/reports/:id", async (req, res) => {
   const { id } = req.params;
