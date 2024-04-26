@@ -1,5 +1,5 @@
 import API from "../helper/apiHelper";
-
+//localhor:500/api/vehicle
 const createInquiry = async (inquiry, token) => {
   //   console.log("inquiry.js =>", inquiry);
   //   console.log("inquiry.js =>", token);

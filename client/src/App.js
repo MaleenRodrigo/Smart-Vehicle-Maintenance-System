@@ -10,11 +10,11 @@ import Shop from "./pages/Shop/Shop";
 import Profile from "./pages/Profile/Profile";
 import Card from "./pages/Card/Card";
 import { RentalService } from "./pages/Rentals/RentalService";
-import { CarsMain } from "./pages/Rentals/CarsMain";
+import  CarsMain  from "./pages/Rentals/CarsMain";
 
 import { NewVehicleForm } from "./pages/Rentals/NewVehicleForm";
-import { VansMain } from "./pages/Rentals/VansMain";
-import { JeepsMain } from "./pages/Rentals/JeepsMain";
+import VansMain from "./pages/Rentals/VansMain";
+import JeepsMain from "./pages/Rentals/JeepsMain";
 import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
@@ -22,7 +22,7 @@ import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
 import { AdminPanel } from "./pages/Admin/Admin";
 import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
-import { NewVehicleForm1 } from "./pages/Rentals/NewVehicleForm1";
+
 
 function App() {
   useEffect(() => {
@@ -46,13 +46,19 @@ function App() {
           <Route exact path="/shop" Component={Shop} />
 
           <Route exact path="/rentalservice" Component={RentalService} />
-          <Route exact path="/rentalservice/carsmain" Component={CarsMain} />
+
           <Route exact path="/newvehicleform" Component={NewVehicleForm} />
+          
           <Route exact path="/rentalservice/vansmain" Component={VansMain} />
+          <Route exact path="/rentalservice/carsmain" Component={CarsMain} />
           <Route exact path="/rentalservice/jeepsmain" Component={JeepsMain} />
           <Route exact path="/carsdetails" Component={CarsDetails} />
           <Route exact path="/vansdetails" Component={VansDetails} />
           <Route exact path="/jeepsdetails" Component={JeepsDetails} />
+
+          {/* Admin Panel Routes */}
+          <Route exact path="/admin" Component={AdminPanel} />
+          <Route exact path="/admin/inquiries" Component={AdminInquiry} />
         </Routes>
       </>
     </Router>
