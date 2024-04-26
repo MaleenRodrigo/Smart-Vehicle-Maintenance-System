@@ -6,13 +6,37 @@ import CreditCard from "../../components/CreditCard";
 import { deleteInquiry, getAllInquiry } from "../../api/inquiry";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Button, Modal } from "flowbite-react";
+import { InquiryModal } from "./InquiryModal";
 
 const token = localStorage.getItem("token");
 // console.log("profileToken=> ", token);
 const Profile = () => {
   const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [inquiryModal, setInquiryModal] = useState(false);
   const [currentInquiryId, setCurrentInquiryId] = useState(null);
+  const [inquiry, setInquiry] = useState({});
+
+  function getStatusClassName(status) {
+    switch (status) {
+      case "pending":
+        return "bg-yellow-100 text-yellow-800";
+      case "completed":
+        return "bg-green-100 text-green-800";
+      case "rejected":
+        return "bg-red-100 text-red-800";
+      default:
+        return ""; // Default case if status doesn't match any case
+    }
+  }
+
+  const toggleInquiryModal = (inquiry) => {
+    // console.log("toglleInqModal");
+    setInquiry(inquiry);
+    setInquiryModal(!inquiryModal);
+  };
 
   const toggleModal = (id) => {
     setCurrentInquiryId(id);
@@ -33,16 +57,16 @@ const Profile = () => {
     }
   };
 
+  const handleEditClick = (inquiry) => {
+    navigate("/inquiry/update", { state: { inquiry } });
+  };
+
   const handleDeleteInquiries = async (id) => {
-    // e.preventDefault();
-    // console.log("e=>", e);
     try {
       await deleteInquiry(id, token);
       setInquiries((currentInquiries) =>
         currentInquiries.filter((inquiry) => inquiry._id !== id)
       );
-      // navigate("/profile");
-      // console.log(response.data);
     } catch (error) {
       console.log("error deleting inquiry => ", error);
     }
@@ -71,7 +95,7 @@ const Profile = () => {
       <br></br>
       <br></br>
       <div className="flex w-full justify-end px-3 mb-6 lg:mb-0">
-        <div className="relative flex flex-col min-w-0 mt-6 break-words bg-white border-0 border-transparent border-solid shadow-xl :bg-slate-850 :shadow--xl rounded-2xl bg-clip-border">
+        <div className=" flex flex-col min-w-0 mt-6 break-words bg-white border-0 border-transparent border-solid shadow-xl :bg-slate-850 :shadow--xl rounded-2xl bg-clip-border">
           <div className="p-4 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
             <div className="flex flex-wrap -mx-3">
               <div className="flex items-center flex-none w-1/2 max-w-full px-3">
@@ -107,9 +131,9 @@ const Profile = () => {
           <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white :text-white :bg-gray-800">
             My Tickets
             <p className="mt-1 text-sm font-normal text-gray-500 :text-gray-400">
-              Browse a list of Flowbite products designed to help you work and
-              play, stay organized, get answers, keep in touch, grow your
-              business, and more.
+              Browse a list of tickets designed to help you work and play, stay
+              organized, get answers, keep in touch, grow your business, and
+              more.
             </p>
           </caption>
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 :bg-gray-700 :text-gray-400">
@@ -145,24 +169,36 @@ const Profile = () => {
                     {inquiry.title}
                   </th>
                   <td className="px-6 py-4">{inquiry.description}</td>
-                  <td className="px-6 py-4">{inquiry.inquiryType}</td>
+                  <td className="px-6 py-4 capitalize">
+                    {inquiry.inquiryType}
+                  </td>
                   <td className="px-6 py-4">
-                    <span className="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded :bg-yellow-900 :text-yellow-300">
+                    <span
+                      className={`uppercase font-medium px-2.5 py-0.5 rounded ${getStatusClassName(
+                        inquiry.status
+                      )}`}
+                    >
                       {inquiry.status}
                     </span>
                   </td>
-                  <td className="px-2 py-4 text-right">
+                  <td className="px-1 py-4 text-right">
                     <a
-                      // href="#"
-                      className="font-medium text-blue-600 :text-blue-500 cursor-pointer"
-                      // onClick={() => handleDeleteInquiries()}
+                      onClick={() => toggleInquiryModal(inquiry)}
+                      className="font-medium text-gray-400 :text-blue-500 cursor-pointer"
+                    >
+                      <VisibilityIcon />
+                    </a>
+                  </td>
+                  <td className="px-1 py-4 text-right">
+                    <a
+                      onClick={() => handleEditClick(inquiry)}
+                      className="font-medium text-gray-400 :text-blue-500 cursor-pointer"
                     >
                       <EditIcon />
                     </a>
                   </td>
                   <td className="px-2 py-4 text-right">
                     <a
-                      // onClick={() => handleDeleteInquiries(inquiry._id)}
                       onClick={() => toggleModal(inquiry._id)}
                       className="font-medium text-red-600 :text-blue-500 cursor-pointer"
                     >
@@ -172,7 +208,7 @@ const Profile = () => {
                 </tr>
               ))
             ) : (
-              <div className="w-full text-lg text-red-600 font-semibold m-10 text-center">
+              <div className="w-full text-md text-gray-600 font-semibold m-10 text-center">
                 You dont have any tickets!
               </div>
             )}
@@ -191,7 +227,7 @@ const Profile = () => {
           className="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden flex justify-start items-end w-full h-[calc(100%-1rem)]"
         >
           <div className="relative p-4 w-full max-w-md">
-            <div className="relative bg-gray-200 rounded-lg shadow :bg-gray-700">
+            <div className="relative bg-gray-100 rounded-lg shadow-lg :bg-gray-700">
               <button
                 onClick={toggleModal}
                 type="button"
@@ -231,7 +267,7 @@ const Profile = () => {
                   />
                 </svg>
                 <h3 className="mb-5 text-lg font-normal text-gray-500 :text-gray-400">
-                  Are you sure you want to delete this product?
+                  Are you sure you want to delete this inquiry?
                 </h3>
                 <button
                   onClick={() => {
@@ -252,6 +288,13 @@ const Profile = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {inquiryModal && (
+        <InquiryModal
+          inquiry={inquiry}
+          toggleInquiryModal={toggleInquiryModal}
+        />
       )}
     </>
   );

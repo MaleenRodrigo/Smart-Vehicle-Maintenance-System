@@ -23,6 +23,23 @@ const getAllInquiry = async (token) => {
   }
 };
 
+const updateInquiry = async (inquiry, id, token) => {
+  //   console.log("inquiry.js =>", inquiry);
+  //   console.log("inquiry.js =>", token);
+  try {
+    const updatedInquiry = await new API().put(
+      `inquiries/${id}`,
+      inquiry,
+      token
+    );
+    console.log(updatedInquiry);
+    return updatedInquiry;
+  } catch (error) {
+    console.error("Error updating inquiry:", error.message);
+    throw error; // Rethrow the error for the component to handle
+  }
+};
+
 const deleteInquiry = async (id, token) => {
   try {
     const deletedInquiry = await new API().delete(`inquiries/${id}`, token);
@@ -34,4 +51,4 @@ const deleteInquiry = async (id, token) => {
   }
 };
 
-export { createInquiry, getAllInquiry, deleteInquiry };
+export { createInquiry, getAllInquiry, updateInquiry, deleteInquiry };
