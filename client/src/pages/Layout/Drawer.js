@@ -22,6 +22,7 @@ import SupportAgentRoundedIcon from "@mui/icons-material/SupportAgentRounded";
 import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
+import StoreRoundedIcon from '@mui/icons-material/StoreRounded';
 
 // Custom Components
 import AccountMenuComponent from "../Admin/Components/buttons/Menu";
@@ -86,6 +87,11 @@ function ResponsiveDrawer({ children }) {
             icon: <CreditCardIcon sx={iconStyle} />,
             text: "Manage cards",
             link: "/admin/cards",
+          },
+          {
+            icon: <StoreRoundedIcon sx={iconStyle} />,
+            text: "Manage Products",
+            link: "/admin/products",
           },
         ].map((item) => (
           <ListItem

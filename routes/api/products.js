@@ -143,6 +143,30 @@ router.post("/add", [
   }
 });
 
+//get single product from the database
+
+router.get('/get/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      // If product with the given ID is not found
+      return res.status(404).json({ status: "Product not found" });
+    }
+
+    // If product is found, return it in the response
+    res.status(200).json({ status: "Product Fetched", product: product });
+  } catch (err) {
+    // Handle errors during product retrieval
+    console.error(err.message);
+    res.status(500).json({ status: "Error with getting product" });
+  }
+});
+
+
+
+
 // @route   GET api/products
 // @desc    Get all products
 // @access  Public

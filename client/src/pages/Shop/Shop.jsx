@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function Shop() {
   const [products, setProducts] = useState([]);
-  const url = 'http://localhost:8070';
+  const url = 'http://localhost:5000';
   const [token, setToken] = useState('');
 
   const fetchProducts = async () => {
@@ -32,48 +32,48 @@ function Shop() {
   return (
     <div>
       <Navbar />
-      <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+      <section className="bg-white py-8 antialiased light:bg-gray-900 md:py-16">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
               <div className="hidden xl:mt-8 xl:block">
-                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">Shop</h3>
+                <h3 className="text-2xl font-semibold text-gray-900 light:text-white">Shop</h3>
                 
                 <div className="mt-6 grid grid-cols-4 gap-4 sm:mt-8">
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                      className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm light:border-gray-700 light:bg-gray-800"
                     >
                       <a href="#" className="overflow-hidden rounded">
                         <img
-                          className="mx-auto h-44 w-44 dark:hidden"
+                          className="mx-auto h-44 w-44 light:hidden"
                           src={product.imageUrl}
                           alt={product.name}
                         />
                         <img
-                          className="mx-auto hidden h-44 w-44 dark:block"
-                          src={product.imageUrlDark}
+                          className="mx-auto hidden h-44 w-44 light:block"
+                          src={product.imageUrllight}
                           alt={product.name}
                         />
                       </a>
                       <div>
-                        <a href="#" className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">
+                        <a href="#" className="text-lg font-semibold leading-tight text-gray-900 hover:underline light:text-white">
                           {product.name}
-                          <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">{product.brand}</p>
-                          <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">{product.model}</p>
+                          <p className="mt-2 text-base font-normal text-gray-500 light:text-gray-400">{product.brand}</p>
+                          <p className="mt-2 text-base font-normal text-gray-500 light:text-gray-400">{product.model}</p>
                         </a> 
                       </div>
                       
                       <div>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white"> Rs. {product.price} </p>
+                        <p className="text-lg font-bold text-gray-900 light:text-white"> Rs. {product.price} </p>
               
                       </div>
                       <div className="mt-6 flex items-center gap-2.5">
                       
                         <button
                           type="button"
-                          className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                          className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 light:bg-primary-600 light:hover:bg-primary-700 light:focus:ring-primary-800"
                         >
                           <svg
                             className="-ms-2 me-2 h-5 w-5"
