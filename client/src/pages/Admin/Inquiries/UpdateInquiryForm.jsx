@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../../components/Navbar";
 import { useNavigate, useLocation } from "react-router-dom";
-import { updateInquiry } from "../../api/inquiry";
+import { updateInquiry } from "../../../api/inquiry";
 
 const token = localStorage.getItem("token");
 
@@ -40,7 +40,7 @@ const UpdateInquiryForm = () => {
     try {
       await updateInquiry(updatedInquiry, inquiry?._id, token);
       //   success();
-      navigate("/profile");
+      navigate("/admin/inquiries");
     } catch (err) {
       console.log("inquiry updating error => ", err);
       //   errorNotify();
@@ -49,9 +49,8 @@ const UpdateInquiryForm = () => {
 
   return (
     <>
-      <Navbar />
       <section className="bg-white :bg-gray-900">
-        <div className="px-4 mx-auto max-w-2xl py-32">
+        <div className="px-4 mx-auto max-w-2xl py-24">
           <h2 className="mb-4 text-xl font-bold text-gray-900 :text-white">
             Update an new inquiry
           </h2>

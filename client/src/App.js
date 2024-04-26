@@ -20,7 +20,6 @@ import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 import UpdateInquiryForm from "./pages/Inquiries/UpdateInquiryForm";
-import AddProduct from "./pages/Products/Addproduct";
 
 function App() {
   useEffect(() => {

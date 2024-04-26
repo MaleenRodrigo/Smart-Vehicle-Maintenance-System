@@ -7,7 +7,7 @@ const Rental = require('../../models/RentalV');
 // @desc    Add a new RentalV
 // @access  Public
 router.post("/add", [
-  check("vehiclecategory", "vehiclecategory is required!").not().isEmpty(),
+      check("vehiclecategory", "vehiclecategory is required!").not().isEmpty(),
       check("vehiclemodel", "vehiclename is required!").not().isEmpty(),
       check("numberplate", "numberplate is required!").not().isEmpty(),
   
