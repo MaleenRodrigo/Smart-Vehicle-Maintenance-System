@@ -134,7 +134,7 @@ export const AdminInquiry = () => {
                       {inquiry.status}
                     </span>
                   </td>
-                  <td className="px-1 py-4 text-right">
+                  <td className="px- py-4 text-right">
                     <a
                       onClick={() => toggleInquiryModal(inquiry)}
                       className="font-medium text-gray-400 :text-blue-500 cursor-pointer"
@@ -142,7 +142,7 @@ export const AdminInquiry = () => {
                       <VisibilityIcon />
                     </a>
                   </td>
-                  <td className="px-1 py-4 text-right">
+                  <td className="px- py-4 text-right">
                     <a
                       onClick={() => handleEditClick(inquiry)}
                       className="font-medium text-gray-400 :text-blue-500 cursor-pointer"
@@ -150,7 +150,7 @@ export const AdminInquiry = () => {
                       <EditIcon />
                     </a>
                   </td>
-                  <td className="px-2 py-4 text-right">
+                  <td className="px-3 py-4 text-right">
                     <a
                       onClick={() => toggleModal(inquiry._id)}
                       className="font-medium text-red-600 :text-blue-500 cursor-pointer"
