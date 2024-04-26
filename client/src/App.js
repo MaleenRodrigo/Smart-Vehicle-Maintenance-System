@@ -19,10 +19,7 @@ import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
-import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
-import { AdminPanel } from "./pages/Admin/Admin";
-import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
-import { NewVehicleForm1 } from "./pages/Rentals/NewVehicleForm1";
+import UpdateInquiryForm from "./pages/Inquiries/UpdateInquiryForm";
 
 function App() {
   useEffect(() => {
@@ -44,6 +41,7 @@ function App() {
           <Route exact path="/profile/card" Component={Card} />
           <Route exact path="/profile/card/:cardId" Component={Card} />
           <Route exact path="/shop" Component={Shop} />
+          <Route exact path="/addproduct" Component={AddProduct} />
 
           <Route exact path="/rentalservice" Component={RentalService} />
           <Route exact path="/rentalservice/carsmain" Component={CarsMain} />
