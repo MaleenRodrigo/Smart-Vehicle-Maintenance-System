@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer'
 
 
 
@@ -9,6 +10,7 @@ import Image25 from '../../assets/RentalsImages/Jeeps/prado VX.png'
 import Image26 from '../../assets/RentalsImages/Jeeps/jeep.png'
 import Image27 from '../../assets/RentalsImages/Jeeps/Toyota-Land-Cruiser-Prado2.png'
 import Image28 from '../../assets/RentalsImages/Jeeps/jeep_offroad.png'
+
 
 
 
@@ -82,9 +84,10 @@ const ImageList28 = [
 export const JeepsMain = () => {
     return (
         <>
+        <Navbar />
             <div className="container mx-auto">
 
-                <Navbar />
+                
                 <div className="bg-white">
                     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                         <div className=' mt-10 h-10 px-8 flex justify-between'>
@@ -342,6 +345,7 @@ export const JeepsMain = () => {
 
                 </div>
             </div>
+            <Footer />
         </>
 
     )
