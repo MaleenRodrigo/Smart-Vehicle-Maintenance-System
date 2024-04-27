@@ -9,7 +9,7 @@ import Shop from "./pages/Shop/Shop";
 import AddProduct from "./pages/Admin/Products/Addproduct";
 import Productlist from "./pages/Admin/Products/Products";
 import UpdateProduct from "./pages/Admin/Products/Updateproduct";
-import AddProduct from "./pages/Products/Addproduct";
+// import AddProduct from "./pages/Products/Addproduct";
 
 import Profile from "./pages/Profile/Profile";
 import UpdateProfile from "./pages/Profile/UpdateProfile";
