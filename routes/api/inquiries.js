@@ -38,7 +38,7 @@ router.post("/", [
         title: req.body.title,
         description: req.body.description,
         inquiryType: req.body.inquiryType,
-        status: "Pending",
+        status: "pending",
       });
 
       // Save the inquiry in DB and set that inquiry in variable
@@ -116,9 +116,9 @@ router.put("/:id", [
       }
 
       // Getting the user who updates the inquiry
-      const customer = await Customer.findById(req.customer.id).select(
-        "-password"
-      );
+      // const customer = await Customer.findById(req.customer.id).select(
+      //   "-password"
+      // );
 
       const updatedInquiry = await Inquiry.findById(id);
 

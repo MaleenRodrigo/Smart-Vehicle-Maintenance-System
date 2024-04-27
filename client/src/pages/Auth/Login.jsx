@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../api/auth";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,15 +21,27 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("/api/auth", formData);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userId", response.data.userId);
-      navigate("/");
-    } catch (error) {
-      console.error(error.response.data);
+    // console.log(formData);
+    const user = await login(formData);
+    // Checking for specific admin credentials
+    if (
+      user &&
+      formData.email === "admin2024@gmail.com" &&
+      formData.password === "admin2024"
+    ) {
+      localStorage.setItem("token", user.token);
+      navigate("/admin"); // Navigating to admin page
+    } else if (user) {
+      localStorage.setItem("token", user.token);
+      navigate("/profile"); // Navigating to profile page for other users
     }
+    // console.log(user.token);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) navigate("/profile");
+  });
 
   return (
     <>

@@ -57,7 +57,7 @@ function Shop() {
   return (
     <div>
       <Navbar />
-      <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+      <section className="bg-white py-8 antialiased light:bg-gray-900 md:py-16">
         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
@@ -70,17 +70,17 @@ function Shop() {
                   {products.map((product) => (
                     <div
                       key={product.id}
-                      className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                      className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm light:border-gray-700 light:bg-gray-800"
                     >
                       <a href="#" className="overflow-hidden rounded">
                         <img
-                          className="mx-auto h-44 w-44 dark:hidden"
+                          className="mx-auto h-44 w-44 light:hidden"
                           src={product.imageUrl}
                           alt={product.name}
                         />
                         <img
-                          className="mx-auto hidden h-44 w-44 dark:block"
-                          src={product.imageUrlDark}
+                          className="mx-auto hidden h-44 w-44 light:block"
+                          src={product.imageUrllight}
                           alt={product.name}
                         />
                       </a>
@@ -101,6 +101,10 @@ function Shop() {
 
                       <div>
                         <p className="text-lg font-bold text-gray-900 dark:text-white">
+                          {" "}
+                          Rs. {product.price}{" "}
+                        </p>
+                        <p className="text-lg font-bold text-gray-900 light:text-white">
                           {" "}
                           Rs. {product.price}{" "}
                         </p>

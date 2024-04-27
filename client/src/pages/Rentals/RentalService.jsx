@@ -2,6 +2,8 @@
 
 import React from 'react'
 import Navbar from '../../components/Navbar'
+import Footer from '../../components/Footer';
+import axios from 'axios';
 
 
 import Image1 from '../../assets/RentalsImages/Car.png'
@@ -117,8 +119,9 @@ export const RentalService = () => {
 
 
 
-
+        <Footer />
       </div>
+      
 
 </>
 )
