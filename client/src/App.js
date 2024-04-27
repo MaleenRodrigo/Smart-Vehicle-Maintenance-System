@@ -19,6 +19,7 @@ import { CarsDetails } from "./pages/Rentals/CarsDetails";
 import { VansDetails } from "./pages/Rentals/VansDetails";
 import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
+import Cart from "./pages/Cart/Cart";
 
 function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
           <Route exact path="/profile" Component={Profile} />
           <Route exact path="/profile/card" Component={Card} />
           <Route exact path="/profile/card/:cardId" Component={Card} />
+          <Route exact path="/profile/cart" Component={Cart} />
           <Route exact path="/shop" Component={Shop} />
 
           <Route exact path="/rentalservice" Component={RentalService} />

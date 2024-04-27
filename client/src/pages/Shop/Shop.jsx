@@ -1,27 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import axios from "axios";
 
 function Shop() {
   const [products, setProducts] = useState([]);
-  const url = 'http://localhost:8070';
-  const [token, setToken] = useState('');
+  const url = "http://localhost:5000";
+  const [token, setToken] = useState("");
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`${url}/api/products`);
-      setProducts(response.data.data);
+      const response = await axios.get(url + "/api/products");
+      setProducts(response.data);
     } catch (error) {
-      console.error('Error fetching products:', error.message);
+      console.error("Error fetching products:", error.message);
+    }
+  };
+
+  const addToCart = async (product) => {
+    if (!token) {
+      console.error("You must be logged in to add items to the cart.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${url}/api/cart`,
+        {
+          userId: localStorage.getItem("userId"),
+          productId: product._id,
+          quantity: 1,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Added to cart:", response.data);
+      alert("Product added to cart!");
+    } catch (err) {
+      console.error("Error adding to cart:", err.message);
     }
   };
 
   useEffect(() => {
     async function loadData() {
       await fetchProducts();
-      if (localStorage.getItem('token')) {
-        setToken(localStorage.getItem('token'));
+      if (localStorage.getItem("token")) {
+        setToken(localStorage.getItem("token"));
       }
     }
     loadData();
@@ -35,8 +62,11 @@ function Shop() {
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
               <div className="hidden xl:mt-8 xl:block">
-                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">Shop</h3>
-                <div className="mt-6 grid grid-cols-3 gap-4 sm:mt-8">
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                  Shop
+                </h3>
+
+                <div className="mt-6 grid grid-cols-4 gap-4 sm:mt-8">
                   {products.map((product) => (
                     <div
                       key={product.id}
@@ -55,46 +85,32 @@ function Shop() {
                         />
                       </a>
                       <div>
-                        <a href="#" className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">
-                          {product.model}
-                        </a>
-                        <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">{product.model}</p>
-                      </div>
-                      <div>
-                        <a href="#" className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white">
+                        <a
+                          href="#"
+                          className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
+                        >
                           {product.name}
+                          <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">
+                            {product.brand}
+                          </p>
+                          <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">
+                            {product.model}
+                          </p>
                         </a>
-                        <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">{product.description}</p>
                       </div>
+
                       <div>
                         <p className="text-lg font-bold text-gray-900 dark:text-white">
-                          <span className="line-through"> ${product.price} </span>
+                          {" "}
+                          Rs. {product.price}{" "}
                         </p>
-                        <p className="text-lg font-bold leading-tight text-red-600 dark:text-red-500">${product.discountedPrice}</p>
                       </div>
                       <div className="mt-6 flex items-center gap-2.5">
                         <button
                           type="button"
-                          className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white p-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-                        >
-                          <svg
-                            className="h-5 w-5"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                            ></path>
-                          </svg>
-                        </button>
-                        <button
-                          type="button"
+                          onClick={() => {
+                            addToCart(product);
+                          }}
                           className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                         >
                           <svg
