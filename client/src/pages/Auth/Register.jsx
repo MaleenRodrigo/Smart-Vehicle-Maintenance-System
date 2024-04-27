@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { createVehicleOwner } from "../../api/vehicleOwner";
 
 const success = () => toast.success("Successfully Added");
-const errorNotify = () => toast.error("Something wrong");
+const errorNotify = () => toast.error("Something Wrong");
 
 const Register = () => {
   const navigate = useNavigate();
@@ -50,6 +50,7 @@ const Register = () => {
       }
     }
   };
+  
   return (
     <>
       <section className="bg-gray-50 :bg-gray-900">

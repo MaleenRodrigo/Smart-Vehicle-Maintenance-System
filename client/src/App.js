@@ -7,7 +7,15 @@ import Inquiries from "./pages/Inquiries/Inquiries";
 import { Crisp } from "crisp-sdk-web";
 import Shop from "./pages/Shop/Shop";
 import AddProduct from "./pages/Products/Addproduct";
+
 import Profile from "./pages/Profile/Profile";
+import UpdateProfile from "./pages/Profile/UpdateProfile";
+import CreateProfile from "./pages/Profile/CreateProfile";
+
+import AddVehicles from "./pages/Profile/AddVehicles";
+import UpdateVehicle from "./pages/Profile/UpdateVehicle";
+import ShowVehicle from "./pages/Profile/ShowVehicle";
+
 import Card from "./pages/Card/Card";
 import { RentalService } from "./pages/Rentals/RentalService";
 import { CarsMain } from "./pages/Rentals/CarsMain";
@@ -38,7 +46,14 @@ function App() {
           <Route exact path="/signup" Component={Register} />
           <Route exact path="/inquiry" Component={Inquiries} />
           <Route exact path="/inquiry/update" Component={UpdateInquiryForm} />
+
           <Route exact path="/profile" Component={Profile} />
+          <Route exact path="/UpdateProfile" Component={UpdateProfile} />
+          <Route exact path="/CreateProfile" Component={CreateProfile} />
+          <Route exact path="/AddVehicles" Component={AddVehicles} />
+          <Route exact path="/UpdateVehicle" Component={UpdateVehicle} />
+          <Route exact path="/ShowVehicle" Component={ShowVehicle} />
+
           <Route exact path="/profile/card" Component={Card} />
           <Route exact path="/profile/card/:cardId" Component={Card} />
           <Route exact path="/shop" Component={Shop} />
