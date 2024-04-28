@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
-import { BrowserRouter as Router, Routes, Route, Form } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Home/Homepage";
 import Inquiries from "./pages/Inquiries/Inquiries";
 import { Crisp } from "crisp-sdk-web";
 import Shop from "./pages/Shop/Shop";
 import AddProduct from "./pages/Admin/Products/Addproduct";
-import Productlist from "./pages/Admin/Products/Products";
+// import Productlist from "./pages/Admin/Products/Products";
 import UpdateProduct from "./pages/Admin/Products/Updateproduct";
 // import AddProduct from "./pages/Products/Addproduct";
 
@@ -32,8 +32,9 @@ import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { AdminPanel } from "./pages/Admin/Admin";
 import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
 import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
-import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
+// import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 import Cart from "./pages/Cart/Cart";
+import { AdminFeedback } from "./pages/Admin/Feedback/AdminFeedback";
 
 function App() {
   useEffect(() => {
@@ -79,6 +80,11 @@ function App() {
           {/* Admin Panel Routes */}
           <Route exact path="/admin" Component={AdminPanel} />
           <Route exact path="/admin/inquiries" Component={AdminInquiry} />
+          <Route
+            exact
+            path="/admin/products/feedback"
+            Component={AdminFeedback}
+          />
 
           {/* Why is this not getting tagged */}
         </Routes>
