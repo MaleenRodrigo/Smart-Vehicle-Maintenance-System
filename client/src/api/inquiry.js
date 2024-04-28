@@ -2,7 +2,6 @@ import API from "../helper/apiHelper";
 
 const createInquiry = async (inquiry) => {
   //   console.log("inquiry.js =>", inquiry);
-  //   console.log("inquiry.js =>", token);
   try {
     const createdInquiry = await new API().post("inquiries", inquiry);
     return createdInquiry;
