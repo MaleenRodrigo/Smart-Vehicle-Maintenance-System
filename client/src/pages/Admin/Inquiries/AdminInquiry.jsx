@@ -6,10 +6,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { InquiryModal } from "./InquiryModal";
+import toast, { Toaster } from "react-hot-toast";
 
-const token = localStorage.getItem("token");
-console.log("token=>", token);
+const success = () => toast.success("Inquiry Successfully Deleted");
+const successFetching = () => toast.success("Inquiries Fetched Successfully");
+const errorNotify = () => toast.error("Something wrong");
+
 export const AdminInquiry = () => {
+  const token = localStorage.getItem("token");
+  // console.log("token=>", token);
   const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
   const [inquiryModal, setInquiryModal] = useState(false);
@@ -54,6 +59,7 @@ export const AdminInquiry = () => {
         currentInquiries.filter((inquiry) => inquiry._id !== id)
       );
     } catch (error) {
+      errorNotify();
       alert(error);
       console.log("error deleting inquiry => ", error);
     }
@@ -64,6 +70,7 @@ export const AdminInquiry = () => {
       try {
         const res = await getAllInquiry(token);
         // console.log("res=>", res);
+        successFetching();
         setInquiries(res);
       } catch (error) {
         alert(error.message);
@@ -245,6 +252,7 @@ export const AdminInquiry = () => {
                   onClick={() => {
                     handleDeleteInquiries(currentInquiryId);
                     toggleModal(false);
+                    success();
                   }}
                   className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 :focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
                 >
@@ -268,6 +276,8 @@ export const AdminInquiry = () => {
           toggleInquiryModal={toggleInquiryModal}
         />
       )}
+
+      <Toaster />
     </ResponsiveDrawer>
   );
 };
