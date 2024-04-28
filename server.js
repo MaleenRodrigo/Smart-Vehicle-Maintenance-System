@@ -3,7 +3,8 @@ const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
 const errorHandler = require("./middleware/errorMiddleware");
-
+const cartRoutes = require("./routes/api/cartRoutes");
+const invoiceRoutes = require("./routes/api/invoice");
 const app = express();
 app.use(cors()); // Use this after the variable declaration
 
@@ -12,7 +13,6 @@ connectDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
-app.use(cors());
 
 app.get("/", (req, res) => res.send("API running"));
 
@@ -39,12 +39,14 @@ app.use("/api/advertisements", require("./routes/api/advertisementRoutes"));
 app.use("/api/reservation", require("./routes/api/reservation"));
 //app.use('/api/serviceCenter', require('./routes/api/serviceCenter'));
 
+//randi
+app.use("/api/cart", cartRoutes);
+app.use("/api/invoices", invoiceRoutes);
+
 app.use(
   "/api/rentalVehicleReport",
   require("./routes/api/rentalVehicleReport")
 );
-
-app.use("/api/report", require("./routes/api/report"));
 
 const PORT = process.env.PORT || 5000;
 
