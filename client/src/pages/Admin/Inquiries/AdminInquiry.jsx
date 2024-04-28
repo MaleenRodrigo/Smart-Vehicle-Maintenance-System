@@ -16,6 +16,8 @@ export const AdminInquiry = () => {
   const [currentInquiryId, setCurrentInquiryId] = useState(null);
   const [inquiry, setInquiry] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
+  const [inquiries, setInquiries] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   function getStatusClassName(status) {
     switch (status) {
@@ -41,8 +43,6 @@ export const AdminInquiry = () => {
     setModalOpen(!isModalOpen);
   };
 
-  const [inquiries, setInquiries] = useState([]);
-
   const handleEditClick = (inquiry) => {
     navigate("/inquiry/update", { state: { inquiry } });
   };
@@ -54,6 +54,7 @@ export const AdminInquiry = () => {
         currentInquiries.filter((inquiry) => inquiry._id !== id)
       );
     } catch (error) {
+      alert(error);
       console.log("error deleting inquiry => ", error);
     }
   };
@@ -65,6 +66,7 @@ export const AdminInquiry = () => {
         // console.log("res=>", res);
         setInquiries(res);
       } catch (error) {
+        alert(error.message);
         console.error("Error fetching inquiries: ", error.message);
       }
     };
@@ -73,8 +75,21 @@ export const AdminInquiry = () => {
     // getCards();
   }, [token]);
 
+  const filteredInquiries = inquiries.filter((inquiry) =>
+    inquiry.status.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <ResponsiveDrawer>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search by status"
+          className="border border-gray-300 rounded-md p-2 w-full"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div className="mb-28 shadow-md rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 :text-gray-400">
           <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white :text-white :bg-gray-800">
@@ -97,6 +112,9 @@ export const AdminInquiry = () => {
                 Type
               </th>
               <th scope="col" className="px-6 py-3">
+                Email
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Phone
               </th>
               <th scope="col" className="px-6 py-3">
@@ -111,8 +129,8 @@ export const AdminInquiry = () => {
             </tr>
           </thead>
           <tbody>
-            {inquiries.length > 0 ? (
-              inquiries.map((inquiry) => (
+            {filteredInquiries.length > 0 ? (
+              filteredInquiries.map((inquiry) => (
                 <tr className="bg-white border-b :bg-gray-800 :border-gray-700">
                   <th
                     scope="row"
@@ -124,8 +142,9 @@ export const AdminInquiry = () => {
                   <td className="px-6 py-4 capitalize">
                     {inquiry.inquiryType}
                   </td>
-                  <td className="px-6 py-4 capitalize">{inquiry.phone}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-3 py-4">{inquiry.email}</td>
+                  <td className="px-3 py-4 capitalize">{inquiry.phone}</td>
+                  <td className="px-3 py-4">
                     <span
                       className={`uppercase font-semibold text-[12px] px-2.5 py-0.5 rounded ${getStatusClassName(
                         inquiry.status

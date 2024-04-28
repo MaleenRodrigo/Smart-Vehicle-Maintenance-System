@@ -11,7 +11,6 @@ const Inquiry = require("../../models/Inquiry");
 // @desc Create an inquiry
 // @access Private
 router.post("/", [
-  auth,
   [
     check("phone", "Phone is required!").not().isEmpty(),
     check("title", "Title is required!").not().isEmpty(),
@@ -27,13 +26,13 @@ router.post("/", [
 
     try {
       // Getting the user who creates the inquiry
-      const customer = await VehicleOwner.findById(req.user.id).select(
-        "-password"
-      );
+      // const customer = await VehicleOwner.findById(req.user.id).select(
+      //   "-password"
+      // );
 
       // Creating an new inquiry
       const newInquiry = new Inquiry({
-        email: customer.email,
+        email: req.body.email,
         phone: req.body.phone,
         title: req.body.title,
         description: req.body.description,
