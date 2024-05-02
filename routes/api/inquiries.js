@@ -128,7 +128,7 @@ router.put("/:id", [
 
       // Generate a dynamic message based on the inquiry status
       const statusMessage = `Your inquiry status set to: ${updatedInquiry.status}.`;
-      const message = `Message from: Negombo Motor Shop, \n\nYour inquiry has been updated successfully. ${statusMessage}`;
+      const message = `Hello, we're from Negombo Motor Shop, \n\nYour inquiry has been updated successfully. ${statusMessage}`;
 
       // Send a confirmation message to the client's phone
       await sendMessage(formattedPhone, message);

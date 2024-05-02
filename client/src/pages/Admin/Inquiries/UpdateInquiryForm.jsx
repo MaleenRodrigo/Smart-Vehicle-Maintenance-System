@@ -118,7 +118,7 @@ const UpdateInquiryForm = () => {
                   >
                     <option>Choose a status</option>
                     <option value="pending">Pending</option>
-                    <option value="completed">Completed</option>
+                    <option value="resolved">Resolved</option>
                     <option value="rejected">Rejected</option>
                   </select>
                 </div>
