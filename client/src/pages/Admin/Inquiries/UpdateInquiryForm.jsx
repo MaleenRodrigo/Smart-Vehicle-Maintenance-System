@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "../../../components/Navbar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { updateInquiry } from "../../../api/inquiry";
 

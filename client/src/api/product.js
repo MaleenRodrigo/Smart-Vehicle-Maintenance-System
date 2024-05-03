@@ -3,7 +3,7 @@ import API from "../helper/apiHelper";
 const addFeedback = async (feedback, pid) => {
   //   console.log("inquiry.js =>", inquiry);
   try {
-    const createdFeedback = await new API().post(
+    const createdFeedback = await new API().put(
       `products/feedback/${pid}`,
       feedback
     );

@@ -35,6 +35,7 @@ import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
 // import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 import Cart from "./pages/Cart/Cart";
 import { AdminFeedback } from "./pages/Admin/Feedback/AdminFeedback";
+import { FeedbackForm } from "./pages/Shop/FeedbackForm";
 
 function App() {
   useEffect(() => {
@@ -63,6 +64,7 @@ function App() {
           <Route exact path="/profile/card/:cardId" Component={Card} />
           <Route exact path="/profile/cart" Component={Cart} />
           <Route exact path="/shop" Component={Shop} />
+          <Route exact path="/shop/feedback" Component={FeedbackForm} />
           <Route exact path="/admin/addproduct" Component={AddProduct} />
           <Route exact path="/admin/UpdateProduct/" Component={UpdateProduct} />
 

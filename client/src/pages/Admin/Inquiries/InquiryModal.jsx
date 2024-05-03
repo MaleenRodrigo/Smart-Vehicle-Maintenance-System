@@ -185,7 +185,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
               type="button"
               className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 :focus:ring-gray-700 :bg-gray-800 :text-gray-400 :border-gray-600 :hover:text-white :hover:bg-gray-700"
             >
-              Decline
+              Cancel
             </button>
           </div>
         </div>

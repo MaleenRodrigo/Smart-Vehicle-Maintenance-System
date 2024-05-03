@@ -9,7 +9,7 @@ import { InquiryModal } from "./InquiryModal";
 import toast, { Toaster } from "react-hot-toast";
 
 const success = () => toast.success("Inquiry Successfully Deleted");
-const successFetching = () => toast.success("Inquiries Fetched Successfully");
+const successFetching = () => toast.success("Inquiries fetched successfully");
 const errorNotify = () => toast.error("Something wrong");
 
 export const AdminInquiry = () => {
@@ -28,7 +28,7 @@ export const AdminInquiry = () => {
     switch (status) {
       case "pending":
         return "bg-yellow-100 text-yellow-800";
-      case "completed":
+      case "resolved":
         return "bg-green-100 text-green-800";
       case "rejected":
         return "bg-red-100 text-red-800";
@@ -65,22 +65,25 @@ export const AdminInquiry = () => {
     }
   };
 
-  useEffect(() => {
-    const getInquiries = async () => {
-      try {
-        const res = await getAllInquiry(token);
-        // console.log("res=>", res);
-        successFetching();
-        setInquiries(res);
-      } catch (error) {
-        alert(error.message);
-        console.error("Error fetching inquiries: ", error.message);
-      }
-    };
+  const getInquiries = async () => {
+    try {
+      const res = await getAllInquiry(token);
+      // console.log("res=>", res);
+      successFetching();
+      setInquiries(res);
+    } catch (error) {
+      alert(error.message);
+      console.error("Error fetching inquiries: ", error.message);
+    }
+  };
 
-    getInquiries();
-    // getCards();
-  }, [token]);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      getInquiries();
+    }, 300); // Adjust the time based on your needs
+
+    return () => clearTimeout(handler);
+  }, []);
 
   const filteredInquiries = inquiries.filter((inquiry) =>
     inquiry.status.toLowerCase().includes(searchTerm.toLowerCase())

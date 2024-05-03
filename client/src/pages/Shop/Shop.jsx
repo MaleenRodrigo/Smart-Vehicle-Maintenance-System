@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import axios from "axios";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Divider from "@mui/material/Divider";
+import Rating from "@mui/material/Rating";
+import moment from "moment";
+import FeedbackIcon from "@mui/icons-material/Feedback";
+
+function formatDate(dateString) {
+  return moment(dateString).format("dddd, MMMM Do YYYY, h:mm:ss A"); // "Saturday, April 28th 2024, 10:29:19 am"
+}
 
 function Shop() {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const url = "http://localhost:5000";
   const [token, setToken] = useState("");
@@ -12,6 +23,7 @@ function Shop() {
     try {
       const response = await axios.get(url + "/api/products");
       setProducts(response.data);
+      // console.log(products);
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }
@@ -54,6 +66,10 @@ function Shop() {
     loadData();
   }, []);
 
+  const handleAddFeedback = (product) => {
+    navigate("/shop/feedback", { state: { product } });
+  };
+
   return (
     <div>
       <Navbar />
@@ -66,79 +82,107 @@ function Shop() {
                   Shop
                 </h3>
 
-                <div className="mt-6 grid grid-cols-4 gap-4 sm:mt-8">
-                  {products.map((product) => (
-                    <div
-                      key={product.id}
-                      className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm light:border-gray-700 light:bg-gray-800"
-                    >
-                      <a href="#" className="overflow-hidden rounded">
-                        <img
-                          className="mx-auto h-44 w-44 light:hidden"
-                          src={product.imageUrl}
-                          alt={product.name}
-                        />
-                        <img
-                          className="mx-auto hidden h-44 w-44 light:block"
-                          src={product.imageUrllight}
-                          alt={product.name}
-                        />
-                      </a>
-                      <div>
-                        <a
-                          href="#"
-                          className="text-lg font-semibold leading-tight text-gray-900 hover:underline :text-white"
-                        >
-                          {product.name}
-                          <p className="mt-2 text-base font-normal text-gray-500 :text-gray-400">
-                            {product.brand}
-                          </p>
-                          <p className="mt-2 text-base font-normal text-gray-500 :text-gray-400">
-                            {product.model}
-                          </p>
-                        </a>
-                      </div>
-
-                      <div>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">
-                          {" "}
-                          Rs. {product.price}{" "}
-                        </p>
-                        <p className="text-lg font-bold text-gray-900 light:text-white">
-                          {" "}
-                          Rs. {product.price}{" "}
-                        </p>
-                      </div>
-                      <div className="mt-6 flex items-center gap-2.5">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            addToCart(product);
-                          }}
-                          className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                        >
-                          <svg
-                            className="-ms-2 me-2 h-5 w-5"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            fill="none"
-                            viewBox="0 0 24 24"
+                <div className="grid grid-cols-2 gap-4 sm:mt-8">
+                  {products &&
+                    products.map((product) => (
+                      <div
+                        key={product.id}
+                        className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm light:border-gray-700 light:bg-gray-800"
+                      >
+                        <div>
+                          <a
+                            href="#"
+                            className="text-lg font-semibold leading-tight text-gray-900 hover:underline :text-white"
                           >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4"
-                            />
-                          </svg>
-                          Add to cart
-                        </button>
+                            {product.name}
+                            <p className="mt-2 text-base font-normal text-gray-500 :text-gray-400">
+                              {product.brand}
+                            </p>
+                            <p className="mt-2 text-base font-normal text-gray-500 :text-gray-400">
+                              {product.model}
+                            </p>
+                          </a>
+                        </div>
+
+                        <div>
+                          <p className="text-lg font-bold text-gray-900 :text-white">
+                            Rs. {product.price}
+                          </p>
+                        </div>
+                        <div className="mt-6 flex items-center gap-2.5">
+                          <button
+                            type="button"
+                            onClick={() => addToCart(product)}
+                            className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 :bg-primary-600 :hover:bg-primary-700 :focus:ring-primary-800"
+                          >
+                            <svg
+                              className="-ms-2 me-2 h-5 w-5"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4"
+                              />
+                            </svg>
+                            Add to cart
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleAddFeedback(product)}
+                            className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 :bg-primary-600 :hover:bg-primary-700 :focus:ring-primary-800"
+                          >
+                            <div className="mr-2">
+                              <FeedbackIcon fontSize="small" />
+                            </div>
+                            Add Feedback
+                          </button>
+                        </div>
+                        <h1 className="font-bold text-lg">Ratings & Reviews</h1>
+                        {product.feedback && product.feedback.length > 0 ? (
+                          product.feedback.map((fb, index) => (
+                            <article key={index}>
+                              <div className="flex gap-2 items-center mb-3">
+                                <AccountCircleIcon className="text-primary" />
+                                <div className="font-medium">
+                                  <p>{fb.userName}</p>
+                                </div>
+                              </div>
+                              <div className="flex gap-2 mb-3">
+                                <Rating
+                                  name="half-rating-read"
+                                  defaultValue={fb.rating}
+                                  precision={0.5}
+                                  readOnly
+                                />
+                                <p>
+                                  <span className="font-bold">{fb.rating}</span>{" "}
+                                  out of 5
+                                </p>
+                              </div>
+                              <footer className="mb-3 text-sm text-gray-500 :text-gray-400">
+                                <p>Reviewed on {formatDate(fb.date)}</p>
+                              </footer>
+                              <p className="mb-2 text-gray-500 :text-gray-400">
+                                {fb.comment}
+                              </p>
+                              <Divider />
+                            </article>
+                          ))
+                        ) : (
+                          <p className="text-center text-gray-500 :text-gray-400">
+                            No feedback available yet.
+                          </p>
+                        )}
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             </div>

@@ -131,7 +131,7 @@ router.put("/:id", [
       const message = `Hello, we're from Negombo Motor Shop, \n\nYour inquiry has been updated successfully. ${statusMessage}`;
 
       // Send a confirmation message to the client's phone
-      await sendMessage(formattedPhone, message);
+      // await sendMessage(formattedPhone, message);
       // console.log(message);
 
       // Get the updated inquiry as response
