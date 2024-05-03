@@ -36,14 +36,25 @@ export const AdminFeedback = () => {
 
   const handleDeleteFeedback = async (pID, fb_ID) => {
     try {
+      // Assume deleteFeedback sends a request to your server to delete the feedback
       await deleteFeedback(pID, fb_ID);
-      setProducts((currentFeedbacks) =>
-        currentFeedbacks.filter((product) => product._id !== pID)
+
+      setProducts((currentProducts) =>
+        currentProducts.map((product) => {
+          if (product._id === pID) {
+            // Filter out the feedback to be deleted
+            const updatedFeedbacks = product.feedback.filter(
+              (fb) => fb._id !== fb_ID
+            );
+            return { ...product, feedback: updatedFeedbacks };
+          }
+          return product; // Return other products unchanged
+        })
       );
     } catch (error) {
-      // errorNotify();
+      // Handle error notifications appropriately
       alert(error);
-      console.log("error deleting inquiry => ", error);
+      console.log("error deleting feedback => ", error);
     }
   };
 

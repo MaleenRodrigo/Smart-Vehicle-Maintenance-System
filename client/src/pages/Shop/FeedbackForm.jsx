@@ -5,8 +5,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { addFeedback } from "../../api/product";
 import Rating from "@mui/material/Rating";
 
-const success = () => toast.success("Feedback Successfully Added");
-const errorNotify = () => toast.error("Something wrong");
+const success = () => toast.success("Feedback successfully submitted");
+const errorNotify = () => toast.error("Something went wrong!");
 
 export const FeedbackForm = () => {
   const navigate = useNavigate();
