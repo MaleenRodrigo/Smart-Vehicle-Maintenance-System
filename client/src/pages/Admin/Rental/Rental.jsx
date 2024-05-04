@@ -1,9 +1,12 @@
 import React from 'react'
 import ResponsiveDrawer from '../../Layout/Drawer'
+import NewVehicleForm from './NewVehicleForm';
 
 const Rental = () => {
   return (
-    <ResponsiveDrawer>Hello, Devmi!</ResponsiveDrawer>
+    <ResponsiveDrawer>
+      <NewVehicleForm />
+    </ResponsiveDrawer>
   )
 }
 

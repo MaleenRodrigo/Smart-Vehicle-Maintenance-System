@@ -24,7 +24,7 @@ import { RentalService } from "./pages/Rentals/RentalService";
 import CarsMain from "./pages/Rentals/CarsMain";
 
 import NewVehicleForm  from "./pages/Admin/Rental/NewVehicleForm";
-import UpdateVehicle  from "./pages/Admin/Rental/UpdateVehicle";
+// import UpdateVehicle  from "./pages/Admin/Rental/UpdateVehicle";
 import VansMain from "./pages/Rentals/VansMain";
 import JeepsMain from "./pages/Rentals/JeepsMain";
 import { CarsDetails } from "./pages/Rentals/CarsDetails";
