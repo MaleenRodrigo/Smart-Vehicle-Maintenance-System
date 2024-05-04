@@ -86,10 +86,10 @@ export default function AccountMenuComponent() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={() => navigate("/profile")}>
+        {/* <MenuItem onClick={() => navigate("/profile")}>
           <Avatar /> Profile
-        </MenuItem>
-        <Divider />
+        </MenuItem> */}
+        {/* <Divider /> */}
         <MenuItem onClick={logout}>
           <ListItemIcon>
             <Logout fontSize="small" />

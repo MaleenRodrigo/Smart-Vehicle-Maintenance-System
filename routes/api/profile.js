@@ -28,7 +28,7 @@ router.get("/me", auth, async (req, res) => {
 
 // @route   Get api/profile
 // @desc    Create or update user profile
-// @access  Private
+// @access  Privatee
 
 router.post(
   "/",
@@ -203,6 +203,29 @@ router.put(
     }
   }
 );
+
+// @route   GET api/profile/vehicles
+// @desc    Get vehicles by user token
+// @access  Private
+
+router.get("/vehicles", auth, async (req, res) => {
+  try {
+    // Find the profile associated with the user token
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    if (!profile) {
+      return res.status(400).json({ msg: "Profile not found" });
+    }
+
+    // Extract the vehicles from the profile
+    const vehicles = profile.vehicle;
+
+    res.json(vehicles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 // @route   DELETE api/profile/vehicle/:v_id
 // @desc    Delete Vehicle from profile
