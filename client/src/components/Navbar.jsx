@@ -1,22 +1,16 @@
 // export default Navbar;
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../assets/mainLogo.png";
 
 const Navbar = () => {
   return (
     <>
       <header>
-        <nav className="bg-gray-200 border-b border-gray-200 backdrop-filter backdrop-blur-lg bg-opacity-30 fixed w-full px-4 lg:px-6 py-5 :bg-gray-800 rounded-b-3xl">
+        <nav className="bg-gray-200 border-b border-gray-200 backdrop-filter backdrop-blur-xl bg-opacity-30 fixed w-full px-4 lg:px-6 py-5 :bg-gray-800 rounded-b-3xl">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a to="https://flowbite.com" className="flex items-center">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="mr-3 h-6 sm:h-9"
-                alt="Flowbite Logo"
-              />
-              <span className="self-center text-xl font-semibold whitespace-nowrap :text-white">
-                Negombo MS
-              </span>
+              <img src={logo} className="mr-3 h-12" alt="NMS Logo" />
             </a>
             <div className="flex items-center lg:order-2">
               <Link
