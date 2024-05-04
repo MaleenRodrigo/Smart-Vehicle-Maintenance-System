@@ -77,9 +77,6 @@ const Profile = () => {
     });
   };
 
-  if (!profile) {
-    navigate("/CreateProfile");
-  }
 
   return (
     <>

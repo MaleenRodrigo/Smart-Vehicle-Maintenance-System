@@ -7,8 +7,6 @@ const bcrypt = require("bcryptjs");
 const config = require("config");
 const { check, validationResult } = require("express-validator");
 
-
-
 // @route    GET api/auth
 // @desc     Get user by token
 // @access   Private
@@ -86,10 +84,15 @@ router.put("/password", auth, async (req, res) => {
 
     const vehicleOwner = await VehicleOwner.findById(req.user.id);
 
-    const isMatch = await bcrypt.compare(currentPassword, vehicleOwner.password);
+    const isMatch = await bcrypt.compare(
+      currentPassword,
+      vehicleOwner.password
+    );
 
     if (!isMatch) {
-      return res.status(400).json({ errors: [{ msg: "Current password is incorrect" }] });
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "Current password is incorrect" }] });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -125,6 +128,5 @@ router.put("/update", auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-
 
 module.exports = router;
