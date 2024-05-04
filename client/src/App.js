@@ -23,7 +23,7 @@ import Card from "./pages/Card/Card";
 import { RentalService } from "./pages/Rentals/RentalService";
 import CarsMain from "./pages/Rentals/CarsMain";
 
-import { NewVehicleForm } from "./pages/Rentals/NewVehicleForm";
+// import { NewVehicleForm } from "./pages/Rentals/NewVehicleForm";
 import VansMain from "./pages/Rentals/VansMain";
 import JeepsMain from "./pages/Rentals/JeepsMain";
 import { CarsDetails } from "./pages/Rentals/CarsDetails";
@@ -72,7 +72,7 @@ function App() {
 
           <Route exact path="/rentalservice" Component={RentalService} />
 
-          <Route exact path="/newvehicleform" Component={NewVehicleForm} />
+          {/* <Route exact path="/newvehicleform" Component={NewVehicleForm} /> */}
 
           <Route exact path="/rentalservice/vansmain" Component={VansMain} />
           <Route exact path="/rentalservice/carsmain" Component={CarsMain} />
@@ -84,6 +84,11 @@ function App() {
           {/* Admin Panel Routes */}
           <Route exact path="/admin" Component={AdminPanel} />
           <Route exact path="/admin/inquiries" Component={AdminInquiry} />
+          <Route
+            exact
+            path="/admin/products/feedback"
+            Component={AdminFeedback}
+          />
 
           {/* Why is this not getting tagged */}
         </Routes>
