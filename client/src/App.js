@@ -6,9 +6,6 @@ import Homepage from "./pages/Home/Homepage";
 import Inquiries from "./pages/Inquiries/Inquiries";
 import { Crisp } from "crisp-sdk-web";
 import Shop from "./pages/Shop/Shop";
-import AddProduct from "./pages/Admin/Products/Addproduct";
-import Productlist from "./pages/Admin/Products/Products";
-import UpdateProduct from "./pages/Admin/Products/Updateproduct";
 import Profile from "./pages/Profile/Profile";
 import Card from "./pages/Card/Card";
 import { RentalService } from "./pages/Rentals/RentalService";
@@ -24,10 +21,11 @@ import { AdminPanel } from "./pages/Admin/Admin";
 import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
 import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
-<<<<<<< HEAD
-import UpdateInquiryForm from "./pages/Inquiries/Inquiries";
-=======
->>>>>>> 782f437c91c0334101faedb74cd88740a8868b7e
+import { ShowAllReports } from "./pages/Analytics/GetAllReports";
+import Reports from "./pages/Admin/Reports/Reports";
+import UpdateReportForm from "./pages/Admin/Reports/UpdateReportForm";
+import { createReport } from "./api/report";
+import CreateReport from "./pages/Admin/Reports/CreateReportForm";
 
 function App() {
   useEffect(() => {
@@ -44,15 +42,11 @@ function App() {
           <Route exact path="/signup" Component={Register} />
           <Route exact path="/inquiry" Component={Inquiries} />
           <Route exact path="/inquiry/update" Component={UpdateInquiryForm} />
-          <Route exact path="/admin" Component={AdminPanel} />
-          <Route exact path="/admin/inquiries" Component={AdminInquiry} />
-          <Route exact path="/admin/products" Component={Productlist} />
           <Route exact path="/profile" Component={Profile} />
           <Route exact path="/profile/card" Component={Card} />
           <Route exact path="/profile/card/:cardId" Component={Card} />
           <Route exact path="/shop" Component={Shop} />
-          <Route exact path="/admin/addproduct" Component={AddProduct} />
-          <Route exact path="/admin/UpdateProduct/" Component={UpdateProduct} />
+          {/* <Route exact path="/addproduct" Component={AddProduct} /> */}
 
           <Route exact path="/rentalservice" Component={RentalService} />
 
@@ -68,6 +62,14 @@ function App() {
           {/* Admin Panel Routes */}
           <Route exact path="/admin" Component={AdminPanel} />
           <Route exact path="/admin/inquiries" Component={AdminInquiry} />
+          <Route exact path="/admin/reports/all" Component={Reports} />
+          <Route
+            exact
+            path="/admin/reports/update"
+            Component={UpdateReportForm}
+          />
+
+          <Route exact path="/admin/reports/create" Component={CreateReport} />
 
           {/* Why is this not getting tagged */}
         </Routes>

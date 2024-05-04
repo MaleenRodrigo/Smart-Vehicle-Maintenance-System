@@ -39,52 +39,54 @@ function ReportGenerator() {
       return (
         <div>
           <h2>Vehicle Rental Report</h2>
-          <label htmlFor="startDate">Start Date:</label>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => handleDateChange(date, setStartDate)}
-            disabled={endDate} // Disable start date selection if end date is set
-            isDaySelectable={(date) => !isPreviousDay(date)} // Prevent selecting previous day of existing start date
-          />
-          <label htmlFor="endDate">End Date:</label>
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => handleDateChange(date, setEndDate)}
-            minDate={startDate} // Set minimum date to selected start date
-          />
-          <label htmlFor="vehicleType">Vehicle Type:</label>
-          <select
-            name="vehicleType"
-            id="vehicleType"
-            value={vehicleType}
-            onChange={(e) => setVehicleType(e.target.value)}
-          >
-            <option value="" disabled>
-              ChooseType
-            </option>
-            <option value="allTypes">All Types</option>
-            <option value="car">Car</option>
-            <option value="van">Van</option>
-            <option value="suv">SUV</option>
-            <option value="truck">Truck</option>
-          </select>
-          <label htmlFor="registrationYear">Registration Year:</label>
-          <select
-            name="registrationYear"
-            id="registrationYear"
-            value={registrationYear}
-            onChange={(e) => setRegistrationYear(e.target.value)}
-          >
-            <option value="" disabled>
-              Choose Year
-            </option>
-            <option value="allYears">All Years</option>
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
+          <form>
+            <label htmlFor="startDate">Start Date:</label>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => handleDateChange(date, setStartDate)}
+              disabled={endDate} // Disable start date selection if end date is set
+              isDaySelectable={(date) => !isPreviousDay(date)} // Prevent selecting previous day of existing start date
+            />
+            <label htmlFor="endDate">End Date:</label>
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => handleDateChange(date, setEndDate)}
+              minDate={startDate} // Set minimum date to selected start date
+            />
+            <label htmlFor="vehicleType">Vehicle Type:</label>
+            <select
+              name="vehicleType"
+              id="vehicleType"
+              value={vehicleType}
+              onChange={(e) => setVehicleType(e.target.value)}
+            >
+              <option value="" disabled>
+                ChooseType
               </option>
-            ))}
-          </select>
+              <option value="allTypes">All Types</option>
+              <option value="car">Car</option>
+              <option value="van">Van</option>
+              <option value="suv">SUV</option>
+              <option value="truck">Truck</option>
+            </select>
+            <label htmlFor="registrationYear">Registration Year:</label>
+            <select
+              name="registrationYear"
+              id="registrationYear"
+              value={registrationYear}
+              onChange={(e) => setRegistrationYear(e.target.value)}
+            >
+              <option value="" disabled>
+                Choose Year
+              </option>
+              <option value="allYears">All Years</option>
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </form>
         </div>
       );
     }

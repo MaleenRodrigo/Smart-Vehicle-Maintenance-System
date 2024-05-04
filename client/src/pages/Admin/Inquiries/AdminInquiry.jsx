@@ -8,7 +8,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { InquiryModal } from "./InquiryModal";
 
 const token = localStorage.getItem("token");
-console.log("token=>", token);
+// console.log("token=>", token);
 export const AdminInquiry = () => {
   const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
