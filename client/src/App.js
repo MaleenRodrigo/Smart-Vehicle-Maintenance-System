@@ -12,7 +12,8 @@ import Card from "./pages/Card/Card";
 import { RentalService } from "./pages/Rentals/RentalService";
 import  CarsMain  from "./pages/Rentals/CarsMain";
 
-import { NewVehicleForm } from "./pages/Rentals/NewVehicleForm";
+import NewVehicleForm  from "./pages/Admin/Rental/NewVehicleForm";
+import UpdateVehicle  from "./pages/Admin/Rental/UpdateVehicle";
 import VansMain from "./pages/Rentals/VansMain";
 import JeepsMain from "./pages/Rentals/JeepsMain";
 import { CarsDetails } from "./pages/Rentals/CarsDetails";
@@ -22,6 +23,7 @@ import { AdminPanel } from "./pages/Admin/Admin";
 import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
 import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
+import Rental from "./pages/Admin/Rental/Rental";
 
 function App() {
   useEffect(() => {
@@ -47,6 +49,7 @@ function App() {
           <Route exact path="/rentalservice" Component={RentalService} />
 
           <Route exact path="/newvehicleform" Component={NewVehicleForm} />
+          <Route exact path="/updateVehicle/:id" Component={UpdateVehicle} />
           
           <Route exact path="/rentalservice/vansmain" Component={VansMain} />
           <Route exact path="/rentalservice/carsmain" Component={CarsMain} />
@@ -58,6 +61,7 @@ function App() {
           {/* Admin Panel Routes */}
           <Route exact path="/admin" Component={AdminPanel} />
           <Route exact path="/admin/inquiries" Component={AdminInquiry} />
+          <Route exact path="/admin/rental" Component={Rental} />
         </Routes>
       </>
     </Router>

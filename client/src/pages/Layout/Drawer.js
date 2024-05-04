@@ -74,8 +74,8 @@ function ResponsiveDrawer({ children }) {
           },
           {
             icon: <LocalShippingRoundedIcon sx={iconStyle} />,
-            text: "Manage vehicles",
-            link: "/admin/vehicle",
+            text: "Rental vehicles",
+            link: "/admin/rental",
           },
           {
             icon: <SupportAgentRoundedIcon sx={iconStyle} />,
