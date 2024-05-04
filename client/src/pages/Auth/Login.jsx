@@ -33,9 +33,10 @@ const Login = () => {
       navigate("/admin"); // Navigating to admin page
     } else if (user) {
       localStorage.setItem("token", user.token);
+      localStorage.setItem("userId", user.userId);
       navigate("/profile"); // Navigating to profile page for other users
     }
-    // console.log(user.token);
+    console.log(user);
   };
 
   useEffect(() => {

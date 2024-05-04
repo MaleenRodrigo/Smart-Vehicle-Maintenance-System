@@ -22,6 +22,7 @@ const Profile = () => {
       const res = await axios.get(
         "/api/cards/user/" + localStorage.getItem("userId")
       );
+      // console.log(res);
       setCards(res.data?.cards);
     } catch (err) {
       console.error("Error fetching cards");
@@ -35,7 +36,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    // getCards();
+    getCards();
   }, [token]);
 
   return (

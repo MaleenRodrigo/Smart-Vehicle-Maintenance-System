@@ -39,6 +39,8 @@ const Card = () => {
         userId: localStorage.getItem("userId"),
       });
 
+      console.log("body=>", body);
+
       if (params.cardId) {
         const res = await axios.put(
           "/api/cards/" + params.cardId,
@@ -97,6 +99,13 @@ const Card = () => {
             value={cardNumber}
             onChange={onChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onKeyPress={(e) => {
+              // Allow only numeric characters and certain special keys
+              const validKey = /[0-9\b]/;
+              if (!validKey.test(e.key)) {
+                e.preventDefault();
+              }
+            }}
             maxLength="16"
             minLength="16"
             required

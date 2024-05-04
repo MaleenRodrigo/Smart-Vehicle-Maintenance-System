@@ -25,10 +25,6 @@ import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
 import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 import Cart from "./pages/Cart/Cart";
-<<<<<<< HEAD
-import UpdateInquiryForm from "./pages/Inquiries/Inquiries";
-=======
->>>>>>> 782f437c91c0334101faedb74cd88740a8868b7e
 
 function App() {
   useEffect(() => {

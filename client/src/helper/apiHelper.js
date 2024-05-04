@@ -42,6 +42,7 @@ class ApiHelper {
         headers,
       });
       //   console.log("response=>", response);
+      localStorage.setItem("userId", response.data.userID);
       return response.data;
     } catch (error) {
       this.handleAxiosError(error);
