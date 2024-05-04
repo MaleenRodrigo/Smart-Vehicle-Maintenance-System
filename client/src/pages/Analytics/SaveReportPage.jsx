@@ -33,7 +33,7 @@ function ReportForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true); // Set loading state to indicate ongoing request
+    setIsLoading(true); // Set loading state to indicate ongoing request....
     setError(null); // Clear any previous errors
     setSuccessMessage(null); // Clear any previous success message
 

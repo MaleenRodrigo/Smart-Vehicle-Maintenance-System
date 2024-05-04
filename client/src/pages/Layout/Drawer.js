@@ -72,7 +72,7 @@ function ResponsiveDrawer({ children }) {
           {
             icon: <AssessmentIcon sx={iconStyle} />,
             text: "Reports",
-            link: "/reports",
+            link: "/admin/reports/all",
           },
           {
             icon: <LocalShippingRoundedIcon sx={iconStyle} />,

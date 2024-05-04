@@ -33,6 +33,11 @@ import { AdminPanel } from "./pages/Admin/Admin";
 import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
 import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
+import { ShowAllReports } from "./pages/Analytics/GetAllReports";
+import Reports from "./pages/Admin/Reports/Reports";
+import UpdateReportForm from "./pages/Admin/Reports/UpdateReportForm";
+import { createReport } from "./api/report";
+import CreateReport from "./pages/Admin/Reports/CreateReportForm";
 import Rental from "./pages/Admin/Rental/Rental";
 // import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 import Cart from "./pages/Cart/Cart";
@@ -54,7 +59,6 @@ function App() {
           <Route exact path="/signup" Component={Register} />
           <Route exact path="/inquiry" Component={Inquiries} />
           <Route exact path="/inquiry/update" Component={UpdateInquiryForm} />
-
           <Route exact path="/profile" Component={Profile} />
           <Route exact path="/UpdateProfile" Component={UpdateProfile} />
           <Route exact path="/CreateProfile" Component={CreateProfile} />
@@ -84,6 +88,14 @@ function App() {
           {/* Admin Panel Routes */}
           <Route exact path="/admin" Component={AdminPanel} />
           <Route exact path="/admin/inquiries" Component={AdminInquiry} />
+          <Route exact path="/admin/reports/all" Component={Reports} />
+          <Route
+            exact
+            path="/admin/reports/update"
+            Component={UpdateReportForm}
+          />
+
+          <Route exact path="/admin/reports/create" Component={CreateReport} />
           <Route
             exact
             path="/admin/products/feedback"
