@@ -12,6 +12,8 @@ const success = () => toast.success("Inquiry Successfully Deleted");
 const successFetching = () => toast.success("Inquiries fetched successfully");
 const errorNotify = () => toast.error("Something wrong");
 
+const token = localStorage.getItem("token");
+console.log("token=>", token);
 export const AdminInquiry = () => {
   const token = localStorage.getItem("token");
   // console.log("token=>", token);

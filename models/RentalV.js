@@ -22,6 +22,10 @@ const RentalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  color: {
+    type: String,
+    required: true,
+  },
   distance: {
     type: String,
     required: true,

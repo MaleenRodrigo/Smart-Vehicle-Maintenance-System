@@ -1,104 +1,71 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import axios from 'axios';
 
+const ListVehicle = () => {
+  const [vehicles, setVehicles] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
-function CarsMain() {
-    const [rentals, setRentals] = useState([]);
-    const url = 'http://localhost:5000';
-    const [token, setToken] = useState('');
-
-    const fetchCars = async () => {
-        try {
-            const response = await axios.get(url + "/api/RentalV?category=car");
-            console.log(response)
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching cars:', error.message);
-            return [];
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('/api/rentalVehicles'); // Replace with your API endpoint to fetch all vehicles
+        const cars = res.data.filter(vehicle => vehicle.vehiclecategory === 'car'); // Filter only cars
+        setVehicles(cars); // Set the list of cars
+      } catch (err) {
+        console.error(err.response.data);
+      }
     };
 
-    useEffect(() => {
-        async function loadData() {
-            const car = await fetchCars();
+    fetchData();
+  }, []);
 
+  const handleDelete = async id => {
+    try {
+      await axios.delete(`/api/rentalVehicles/delete/${id}`); // Replace with your API endpoint to delete a vehicle by ID
+      setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle._id !== id)); // Remove the deleted vehicle from the list
+    } catch (err) {
+      console.error(err.response.data);
+      // Optionally, you can show an error message here
+    }
+  };
 
-            setRentals({ car });
-        }
+  const filteredVehicles = vehicles.filter(vehicle =>
+    vehicle.numberplate.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-        loadData();
-    }, []);
+  return (
+    <div className='container pl-48 mt-28'>
+      <h2 className="text-2xl font-bold mb-4">List of Cars</h2>
 
-    return (
-        <>
-            <Navbar />
-            <div className="container mx-auto">
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search by Number Plate"
+          className="border border-gray-300 rounded-md p-2 w-full"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-
-                <div className="bg-white">
-                    <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-                        <div className=' mt-10 h-10 px-8 flex justify-between'>
-                            <a
-                                href="#"
-                                className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                            >
-                                Add a New Vehicle
-                            </a>
-                        </div>
-
-                        <div className=' mt-5 flex gap-3 justify-between'>
-                            <div className=" mt-5 flex ">
-                                {rentals.car.map((car) => (
-                                    <div key={car.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={car.url}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={car.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {car.vehiclemodel}
-                                                    </a>
-                                                </div>
-                                                {/* <div className="mt-1 text-sm font-medium text-gray-900">{car.color}</div> */}
-                                                <div className=" text-sm font-medium text-gray-900">{car.distance}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{car.passengersno}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        href="../../carsdetails"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-7 py-1 text-justify font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Change Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                <div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
+      <ul>
+        {filteredVehicles.map(vehicle => (
+          <li key={vehicle._id} className="border-b border-gray-300 py-2">
+            <p className="text-lg font-medium">{vehicle.vehiclemodel}</p>
+            <p className="text-sm text-gray-500">{vehicle.numberplate}</p>
+            <div className="mt-2">
+              <Link to={`/updateVehicle/${vehicle._id}`} className="text-blue-500 hover:text-blue-700 mr-2">Update</Link>
+              <button onClick={() => handleDelete(vehicle._id)} className="text-red-500 hover:text-red-700">Delete</button>
             </div>
-            <Footer />
-        </>
+          </li>
+        ))}
+      </ul>
+     
+    </div>
+  
+  );
+};
 
-    )
-}
-
-export default CarsMain;
+export default ListVehicle;

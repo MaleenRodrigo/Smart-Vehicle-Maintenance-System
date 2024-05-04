@@ -23,7 +23,7 @@ import Card from "./pages/Card/Card";
 import { RentalService } from "./pages/Rentals/RentalService";
 import CarsMain from "./pages/Rentals/CarsMain";
 
-import { NewVehicleForm } from "./pages/Rentals/NewVehicleForm";
+// import { NewVehicleForm } from "./pages/Rentals/NewVehicleForm";
 import VansMain from "./pages/Rentals/VansMain";
 import JeepsMain from "./pages/Rentals/JeepsMain";
 import { CarsDetails } from "./pages/Rentals/CarsDetails";
@@ -32,6 +32,8 @@ import { JeepsDetails } from "./pages/Rentals/JeepsDetails";
 import { AdminPanel } from "./pages/Admin/Admin";
 import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
 import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
+import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
+import Rental from "./pages/Admin/Rental/Rental";
 // import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 import Cart from "./pages/Cart/Cart";
 import { AdminFeedback } from "./pages/Admin/Feedback/AdminFeedback";
@@ -70,7 +72,7 @@ function App() {
 
           <Route exact path="/rentalservice" Component={RentalService} />
 
-          <Route exact path="/newvehicleform" Component={NewVehicleForm} />
+          {/* <Route exact path="/newvehicleform" Component={NewVehicleForm} /> */}
 
           <Route exact path="/rentalservice/vansmain" Component={VansMain} />
           <Route exact path="/rentalservice/carsmain" Component={CarsMain} />

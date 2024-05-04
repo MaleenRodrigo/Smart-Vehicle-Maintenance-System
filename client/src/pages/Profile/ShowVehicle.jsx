@@ -58,17 +58,7 @@ const ShowVehicle = () => {
         />
         {isResponsiveSearch && (
           <div className="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md shadow-lg">
-            {filteredVehicles.map((vehicle) => (
-              <div key={vehicle._id} className="p-4 border-b border-gray-300">
-                <p>{vehicle.make}</p>
-                <button
-                  onClick={() => handleDelete(vehicle._id)}
-                  className="text-red-500 hover:text-red-700 font-medium inline-block mt-2"
-                >
-                  Delete
-                </button>
-              </div>
-            ))}
+            
           </div>
         )}
       </div>
