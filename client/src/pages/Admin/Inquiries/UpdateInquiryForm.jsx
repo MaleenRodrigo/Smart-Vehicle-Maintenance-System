@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "../../../components/Navbar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { updateInquiry } from "../../../api/inquiry";
 
@@ -72,7 +71,7 @@ const UpdateInquiryForm = () => {
                   onChange={(e) => onChange(e)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
                   placeholder="Type inquiry title"
-                  required
+                  disabled
                 />
               </div>
               <div className="flex w-full gap-5">
@@ -88,6 +87,7 @@ const UpdateInquiryForm = () => {
                     value={inquiryType}
                     onChange={(e) => onChange(e)}
                     id="type"
+                    disabled
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
                   >
                     <option selected disabled>
@@ -117,7 +117,7 @@ const UpdateInquiryForm = () => {
                   >
                     <option>Choose a status</option>
                     <option value="pending">Pending</option>
-                    <option value="completed">Completed</option>
+                    <option value="resolved">Resolved</option>
                     <option value="rejected">Rejected</option>
                   </select>
                 </div>
@@ -137,7 +137,7 @@ const UpdateInquiryForm = () => {
                   onChange={(e) => onChange(e)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
                   placeholder="Enter phone number"
-                  required
+                  disabled
                 />
               </div>
 
@@ -149,6 +149,7 @@ const UpdateInquiryForm = () => {
                   Description
                 </label>
                 <textarea
+                  disabled
                   id="description"
                   rows="8"
                   name="description"

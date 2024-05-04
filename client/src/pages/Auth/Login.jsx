@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/auth";
+import ApiHelper from "../../helper/apiHelper";
 
+const apiHelper = new ApiHelper();
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -37,12 +39,42 @@ const Login = () => {
       navigate("/profile"); // Navigating to profile page for other users
     }
     console.log(user);
+    // console.log("user=>", user);
+    localStorage.setItem("userId", user.userId);
+
+    if (user) {
+      localStorage.setItem("token", user.token);
+
+      const userProfile = await getUserProfile(user.token);
+      if (!userProfile) {
+        navigate("/CreateProfile");
+      } else {
+        if (
+          formData.email === "admin2024@gmail.com" &&
+          formData.password === "admin2024"
+        ) {
+          navigate("/admin");
+        } else {
+          navigate("/profile");
+        }
+      }
+    }
+  };
+
+  const getUserProfile = async (token) => {
+    try {
+      const profile = await apiHelper.get("profile/me", {}, token);
+      // console.log("profile=>", profile);
+      return profile;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) navigate("/profile");
-  });
+  }, [navigate]);
 
   return (
     <>
