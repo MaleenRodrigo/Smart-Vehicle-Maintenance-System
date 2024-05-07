@@ -46,6 +46,6 @@ app.use(
 
 app.use("/api/report", require("./routes/api/report"));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8070;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

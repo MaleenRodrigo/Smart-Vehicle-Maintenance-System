@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function Shop() {
   const [products, setProducts] = useState([]);
-  const url = 'http://localhost:5000';
+  const url = 'http://localhost:8070';
   const [token, setToken] = useState('');
 
   const fetchProducts = async () => {
@@ -73,7 +73,7 @@ function Shop() {
                       
                         <button
                           type="button"
-                          className="inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium  text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 light:bg-primary-600 light:hover:bg-primary-700 light:focus:ring-primary-800"
+                          className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-bold text-center text-white bg-primary rounded-lg ml-auto"
                         >
                           <svg
                             className="-ms-2 me-2 h-5 w-5"
