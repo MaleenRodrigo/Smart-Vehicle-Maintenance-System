@@ -19,10 +19,11 @@ import Toolbar from "@mui/material/Toolbar";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import LocalShippingRoundedIcon from "@mui/icons-material/LocalShippingRounded";
 import SupportAgentRoundedIcon from "@mui/icons-material/SupportAgentRounded";
-import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
+// import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import StoreRoundedIcon from '@mui/icons-material/StoreRounded';
+// import CreditCardIcon from "@mui/icons-material/CreditCard";
+import StoreRoundedIcon from "@mui/icons-material/StoreRounded";
+import FeedbackIcon from "@mui/icons-material/Feedback";
 
 // Custom Components
 import AccountMenuComponent from "../Admin/Components/buttons/Menu";
@@ -71,27 +72,32 @@ function ResponsiveDrawer({ children }) {
           {
             icon: <AssessmentIcon sx={iconStyle} />,
             text: "Reports",
-            link: "/reports",
+            link: "/admin/reports/all",
           },
           {
             icon: <LocalShippingRoundedIcon sx={iconStyle} />,
-            text: "Manage vehicles",
-            link: "/admin/vehicle",
+            text: "Rental vehicles",
+            link: "/admin/rental",
           },
           {
             icon: <SupportAgentRoundedIcon sx={iconStyle} />,
             text: "Inquiries",
             link: "/admin/inquiries",
           },
-          {
-            icon: <CreditCardIcon sx={iconStyle} />,
-            text: "Manage cards",
-            link: "/admin/cards",
-          },
+          // {
+          //   icon: <CreditCardIcon sx={iconStyle} />,
+          //   text: "Manage cards",
+          //   link: "/admin/cards",
+          // },
           {
             icon: <StoreRoundedIcon sx={iconStyle} />,
-            text: "Manage Products",
+            text: "Products",
             link: "/admin/products",
+          },
+          {
+            icon: <FeedbackIcon sx={iconStyle} />,
+            text: "Feedbacks",
+            link: "/admin/products/feedback",
           },
         ].map((item) => (
           <ListItem

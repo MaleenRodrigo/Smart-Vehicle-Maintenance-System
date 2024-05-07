@@ -6,8 +6,8 @@ import { getAllReports } from "../../api/report";
 import React, { useState, useEffect } from "react";
 import axios from "axios"; // Assuming you use Axios for API calls
 
-const [reports, setReports] = useState([]);
 export const ShowAllReports = () => {
+  const [reports, setReports] = useState([]);
   useEffect(() => {
     const getReports = async () => {
       try {

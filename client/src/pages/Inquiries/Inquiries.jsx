@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import inquiryBG from "../../assets/inquirybg.jpg";
 import toast, { Toaster } from "react-hot-toast";
 import { createInquiry } from "../../api/inquiry";
 
@@ -13,13 +12,14 @@ const token = localStorage.getItem("token");
 const Inquiries = () => {
   const navigate = useNavigate();
   const [inquiryData, setInquiryData] = useState({
+    email: "",
     phone: "",
     title: "",
     description: "",
     inquiryType: "",
   });
 
-  const { phone, title, description, inquiryType } = inquiryData;
+  const { email, phone, title, description, inquiryType } = inquiryData;
 
   const onChange = (e) =>
     setInquiryData({ ...inquiryData, [e.target.name]: e.target.value });
@@ -28,6 +28,7 @@ const Inquiries = () => {
     e.preventDefault();
     // console.log("inquiryData => ", inquiryData);
     const newInquiry = {
+      email,
       phone,
       title,
       description,
@@ -35,10 +36,16 @@ const Inquiries = () => {
     };
 
     try {
-      await createInquiry(newInquiry, token);
+      await createInquiry(newInquiry);
       success();
-      navigate("/profile");
+      // console.log("newInquiry=> ", newInquiry);
+
+      // Delay navigation for 2 seconds after showing success
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (err) {
+      alert(err);
       console.log("inquiry creating error => ", err);
       errorNotify();
     }
@@ -54,6 +61,46 @@ const Inquiries = () => {
           </h2>
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="flex flex-col gap-4 sm:grid-cols-2 sm:gap-6">
+              <div className="flex w-full gap-3">
+                <div className="w-full">
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-sm font-medium text-gray-900 :text-white"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => onChange(e)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor="phone"
+                    className="block mb-2 text-sm font-medium text-gray-900 :text-white"
+                  >
+                    Phone number
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    value={phone}
+                    onChange={(e) => onChange(e)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
+                    placeholder="Enter phone number"
+                    required
+                    maxLength="10"
+                    minLength="10"
+                  />
+                </div>
+              </div>
               <div className="sm:col-span-2">
                 <label
                   htmlFor="title"
@@ -86,9 +133,7 @@ const Inquiries = () => {
                   id="type"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
                 >
-                  <option selected disabled>
-                    Choose type
-                  </option>
+                  <option selected>Choose type</option>
                   <option value="product">Product</option>
                   <option value="rental">Rental</option>
                   <option value="service">Service</option>
@@ -96,24 +141,6 @@ const Inquiries = () => {
                   <option value="customer_care">Customer Care</option>
                   <option value="other">Other</option>
                 </select>
-              </div>
-              <div className="w-full">
-                <label
-                  htmlFor="phone"
-                  className="block mb-2 text-sm font-medium text-gray-900 :text-white"
-                >
-                  Phone number
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  id="phone"
-                  value={phone}
-                  onChange={(e) => onChange(e)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-primary-500 :focus:border-primary-500"
-                  placeholder="Enter phone number"
-                  required
-                />
               </div>
 
               <div className="sm:col-span-2">
@@ -144,6 +171,7 @@ const Inquiries = () => {
           </form>
         </div>
       </section>
+      <Toaster />
     </>
   );
 };
