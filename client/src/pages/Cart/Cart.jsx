@@ -244,6 +244,8 @@ const Cart = () => {
       console.log("Invoice submitted successfully", response.data);
       alert("Invoice submitted successfully");
       generatePDF(invoiceDetails);
+
+      setCartItems([]);
       setInvoiceDetails({
         customerName: "",
         billingAddress: "",
@@ -260,6 +262,8 @@ const Cart = () => {
   return (
     <div>
       <Navbar />
+      <br></br>
+      <br></br>
       <div className="container mx-auto mt-10">
         <div className="flex shadow-md my-10">
           <div className="w-3/4 bg-white px-10 py-10">

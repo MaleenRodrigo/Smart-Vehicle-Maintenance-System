@@ -22,7 +22,7 @@ function AddProduct() {
     e.preventDefault();
   
     try {
-      const response = await axios.post('http://localhost:5000/api/products/add', product);
+      const response = await axios.post('http://localhost:8070/api/products/add', product);
       console.log(response.data); // Assuming you want to log the response
   
       // Optionally, you can redirect or show a success message here
