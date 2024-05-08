@@ -43,6 +43,7 @@ import Rental from "./pages/Admin/Rental/Rental";
 import Cart from "./pages/Cart/Cart";
 import { AdminFeedback } from "./pages/Admin/Feedback/AdminFeedback";
 import { FeedbackForm } from "./pages/Shop/FeedbackForm";
+import { AdminTransaction } from "./pages/Admin/Transaction/AdminTransaction";
 
 function App() {
   useEffect(() => {
@@ -100,6 +101,11 @@ function App() {
             exact
             path="/admin/products/feedback"
             Component={AdminFeedback}
+          />
+          <Route
+            exact
+            path="/admin/transactions"
+            Component={AdminTransaction}
           />
 
           {/* Why is this not getting tagged */}

@@ -50,7 +50,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
     setLoader(false);
 
     // Save the PDF
-    doc.save("invoice.pdf");
+    doc.save("Inquiry_HardCopy.pdf");
   };
 
   return (

@@ -15,7 +15,6 @@ const Profile = () => {
   const [remainingTime, setRemainingTime] = useState(null);
 
   // State to hold remaining time
-
   const navigate = useNavigate();
 
   const [cards, setCards] = useState([]);

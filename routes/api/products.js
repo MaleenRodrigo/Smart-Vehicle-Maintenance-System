@@ -10,7 +10,7 @@
 // // @desc Test route
 // // @access Public
 
-// http://localhost:8070/product/add
+// http://localhost:5000/product/add
 
 // //add product
 
@@ -49,7 +49,7 @@
 
 // //update product
 
-// http://localhost:8070/student/update
+// http://localhost:5000/student/update
 // router.route("/update/:id").put(async (req,res)=> {
 //     let productId = req.params.id;
 //     const {name, brand, model, description, price, stock} = req.body;

@@ -8,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import Rating from "@mui/material/Rating";
 import moment from "moment";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function formatDate(dateString) {
   return moment(dateString).format("dddd, MMMM Do YYYY, h:mm:ss A"); // "Saturday, April 28th 2024, 10:29:19 am"
@@ -78,9 +79,23 @@ function Shop() {
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
               <div className="hidden xl:mt-8 xl:block">
-                <h3 className="text-2xl font-semibold text-gray-900 :text-white">
-                  Shop
-                </h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-2xl font-semibold text-gray-900 :text-white">
+                    Shop
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigate("/profile/cart");
+                    }}
+                    className="inline-flex items-center justify-center rounded-lg border-2 border-primary px-5 py-2.5 text-sm font-medium text-primary hover:bg-primary hover:border-none"
+                  >
+                    View Cart
+                    <div className="ml-2">
+                      <ShoppingCartIcon fontSize="small" />
+                    </div>
+                  </button>
+                </div>
 
                 <div className="grid grid-cols-2 gap-4 sm:mt-8">
                   {products &&

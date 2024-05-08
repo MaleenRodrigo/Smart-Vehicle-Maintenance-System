@@ -26,6 +26,7 @@ const CreateProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log("token => ", localStorage.getItem("token"));
     try {
       const response = await axios.post("/api/profile", newProfile, {
         headers: {
@@ -40,7 +41,7 @@ const CreateProfile = () => {
       // Handle error as needed
     }
   };
- 
+
   return (
     <>
       <Navbar />
@@ -116,7 +117,6 @@ const CreateProfile = () => {
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-             
             >
               Create Profile
             </button>
