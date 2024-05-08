@@ -21,7 +21,7 @@ const Navbar = () => {
               </Link>
               <a
                 to="#"
-                className="text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 :bg-primary-600 :hover:bg-primary-700 focus:outline-none :focus:ring-primary-800"
+                className="inline-flex justify-center items-center py-2 px-4 text-base font-medium text-center text-primary rounded-lg border-2 border-primary hover:bg-[#2c44cc] hover:text-white focus:ring-4 focus:ring-gray-100 :text-white :border-gray-700 :hover:bg-gray-700 :focus:ring-gray-800"
               >
                 <Link to="/inquiry">Make Inquiry</Link>
               </a>
@@ -78,7 +78,7 @@ const Navbar = () => {
                     to="#"
                     className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 :text-gray-400 lg::hover:text-white :hover:bg-gray-700 :hover:text-white lg::hover:bg-transparent :border-gray-700"
                   >
-                    Company
+                    Rentals
                   </Link>
                 </li>
                 <li>
@@ -94,7 +94,7 @@ const Navbar = () => {
                     to="#"
                     className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 :text-gray-400 lg::hover:text-white :hover:bg-gray-700 :hover:text-white lg::hover:bg-transparent :border-gray-700"
                   >
-                    Features
+                    Services
                   </Link>
                 </li>
                 {localStorage.getItem("token") && (

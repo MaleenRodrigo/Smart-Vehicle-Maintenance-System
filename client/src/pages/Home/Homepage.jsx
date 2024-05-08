@@ -7,8 +7,8 @@ const Homepage = () => {
   return (
     <>
       <Navbar />
-      <section className="bg-white :bg-gray-900 h-screen w-full grid place-items-center">
-        <div className="px-4 mx-auto max-w-screen-xl text-center">
+      <section className="bg-white :bg-gray-900 h-screen w-full grid place-items-center ">
+        <div className="px-4 mx-auto max-w-screen-xl text-center mt-20">
           <a
             href="#"
             className="inline-flex justify-between items-center py-1 px-1 pr-4 mb-7 text-sm text-gray-700 bg-gray-100 rounded-full :bg-gray-800 :text-white hover:bg-gray-200 :hover:bg-gray-700"
@@ -33,8 +33,12 @@ const Homepage = () => {
               ></path>
             </svg>
           </a>
-          <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl :text-white">
-            Welcome to the Smart Vehicle Management System
+          <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-4xl :text-white">
+            Welcome to the
+            <br />
+            <span className="animate-ping text-primary md:text-5xl lg:text-6xl uppercase">
+              Negombo <span className="text-[#f64c72]">Motor Shop</span>
+            </span>
           </h1>
           <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 :text-gray-400">
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -45,9 +49,9 @@ const Homepage = () => {
           <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             <a
               href="#"
-              className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-primary rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 :focus:ring-primary-900"
+              className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-primary rounded-lg border border-gray-300 hover:bg-[#2c44cc] hover:text-white focus:ring-4 focus:ring-gray-100 :text-white :border-gray-700 :hover:bg-gray-700 :focus:ring-gray-800"
             >
-              Explore more
+              Explore More
               <svg
                 className="ml-2 -mr-1 w-5 h-5"
                 fill="currentColor"
@@ -60,20 +64,6 @@ const Homepage = () => {
                   clip-rule="evenodd"
                 ></path>
               </svg>
-            </a>
-            <a
-              href="#"
-              className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 :text-white :border-gray-700 :hover:bg-gray-700 :focus:ring-gray-800"
-            >
-              <svg
-                className="mr-2 -ml-1 w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
-              </svg>
-              Watch video
             </a>
           </div>
         </div>
@@ -99,12 +89,12 @@ const Homepage = () => {
           <div className="grid grid-cols-2 gap-4 mt-8">
             <img
               className="w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png"
+              src="https://images.unsplash.com/photo-1615906655593-ad0386982a0f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="office content 1"
             />
             <img
               className="mt-4 w-full lg:mt-10 rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png"
+              src="https://images.unsplash.com/photo-1610092708835-af669294f3f3?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="office content 2"
             />
           </div>
@@ -137,9 +127,7 @@ const Homepage = () => {
                   ></path>
                 </svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold :text-white">
-                Marketing
-              </h3>
+              <h3 className="mb-2 text-xl font-bold :text-white">Marketing</h3>
               <p className="text-gray-500 :text-gray-400">
                 Plan it, create it, launch it. Collaborate seamlessly with all
                 the organization and hit your marketing goals every month with
@@ -203,9 +191,7 @@ const Homepage = () => {
                   ></path>
                 </svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold :text-white">
-                Finance
-              </h3>
+              <h3 className="mb-2 text-xl font-bold :text-white">Finance</h3>
               <p className="text-gray-500 :text-gray-400">
                 Audit-proof software built for critical financial operations
                 like month-end close and quarterly budgeting.
@@ -245,9 +231,7 @@ const Homepage = () => {
                   ></path>
                 </svg>
               </div>
-              <h3 className="mb-2 text-xl font-bold :text-white">
-                Operations
-              </h3>
+              <h3 className="mb-2 text-xl font-bold :text-white">Operations</h3>
               <p className="text-gray-500 :text-gray-400">
                 Keep your company’s lights on with customizable, iterative, and
                 structured workflows built for all efficient teams and
