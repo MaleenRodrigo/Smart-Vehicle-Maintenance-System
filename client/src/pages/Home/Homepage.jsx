@@ -36,7 +36,7 @@ const Homepage = () => {
           <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-4xl :text-white">
             Welcome to the
             <br />
-            <span className="animate-pulse text-primary md:text-5xl lg:text-6xl uppercase">
+            <span className="animate- text-primary md:text-5xl lg:text-6xl uppercase">
               Negombo <span className="text-[#f64c72]">Motor Shop</span>
             </span>
           </h1>

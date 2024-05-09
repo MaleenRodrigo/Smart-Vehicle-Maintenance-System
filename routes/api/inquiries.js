@@ -127,11 +127,12 @@ router.put("/:id", [
       const updatedInquiry = await Inquiry.findById(id);
 
       // Generate a dynamic message based on the inquiry status
-      const statusMessage = `Your inquiry status set to: ${updatedInquiry.status}.`;
-      const message = `Hello, we're from Negombo Motor Shop, \n\nYour inquiry has been updated successfully. ${statusMessage}`;
+      const status = updatedInquiry.status;
+      const title = updatedInquiry.title;
+      const message = `Subject: Inquiry Status Update \n\n\n\Dear Customer, \n\nYour inquiry titled "${title}" at Negombo Motor Shop has been updated to ${status}. Thank you for your patience. If you have any questions or need further assistance, please contact us at 032 22 65638. \n\nBest Regards,\nNegombo Motor Shop Support Team`;
 
       // Send a confirmation message to the client's phone
-      // await sendMessage(formattedPhone, message);
+      await sendMessage(formattedPhone, message);
       // console.log(message);
 
       // Get the updated inquiry as response
