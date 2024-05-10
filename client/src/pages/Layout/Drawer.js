@@ -89,14 +89,19 @@ function ResponsiveDrawer({ children }) {
             link: "/admin/inquiries",
           },
           {
-            icon: <CreditCardIcon sx={iconStyle} />,
-            text: "Manage cards",
-            link: "/admin/cards",
+            icon: <StoreRoundedIcon sx={iconStyle} />,
+            text: "Transactions",
+            link: "/admin/transactions",
           },
           {
             icon: <BookmarkAddedIcon sx={iconStyle} />,
             text: "Reservations",
             link: "/admin/reservation",
+          },
+          {
+            icon: <FeedbackIcon sx={iconStyle} />,
+            text: "Feedbacks",
+            link: "/admin/products/feedback",
           },
         ].map((item) => (
           <ListItem

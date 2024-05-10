@@ -27,7 +27,6 @@ const Login = () => {
     const user = await login(formData);
     // Checking for specific admin credentials
     if (
-      user &&
       formData.email === "admin2024@gmail.com" &&
       formData.password === "admin2024"
     ) {
