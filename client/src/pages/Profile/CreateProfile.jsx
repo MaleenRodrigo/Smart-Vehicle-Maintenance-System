@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/NavbarAfter";
-
 import axios from "axios";
+
 const token = localStorage.getItem("token");
 
 const CreateProfile = () => {
@@ -26,7 +26,16 @@ const CreateProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("token => ", localStorage.getItem("token"));
+
+    // Validate license before submitting
+    const expiryDate = new Date(newProfile.expirydate);
+    const currentDate = new Date();
+
+    if (expiryDate <= currentDate) {
+      alert("Expiry date is in the past. Please enter a valid expiry date.");
+      return;
+    }
+
     try {
       const response = await axios.post("/api/profile", newProfile, {
         headers: {
@@ -63,6 +72,9 @@ const CreateProfile = () => {
               name="nic"
               value={newProfile.nic}
               onChange={handleInputChange}
+              required
+              pattern="[0-9]{9}[vVxX]|[0-9]{12}"
+              title="NIC should be 9 digits followed by 'v', 'V', 'x', 'X' or 12 digits"
             />
           </div>
           <div className="mb-4">
@@ -75,11 +87,12 @@ const CreateProfile = () => {
               name="address"
               value={newProfile.address}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              License Number
+              Driving License Number
             </label>
             <input
               type="text"
@@ -87,18 +100,9 @@ const CreateProfile = () => {
               name="licensenumber"
               value={newProfile.licensenumber}
               onChange={handleInputChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Expiry Date
-            </label>
-            <input
-              type="date"
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              name="expirydate"
-              value={newProfile.expirydate}
-              onChange={handleInputChange}
+              required
+              pattern="[A-Za-z]{1}\d{7}"
+              title="License number should start with 1 letter followed by 7 digits"
             />
           </div>
           <div className="mb-6">
@@ -111,6 +115,21 @@ const CreateProfile = () => {
               name="issueddate"
               value={newProfile.issueddate}
               onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Expiry Date
+            </label>
+            <input
+              type="date"
+              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              name="expirydate"
+              id="expirydate"
+              value={newProfile.expirydate}
+              onChange={handleInputChange}
+              required
             />
           </div>
           <div className="flex justify-center mt-12">

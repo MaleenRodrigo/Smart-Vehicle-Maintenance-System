@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/NavbarAfter";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import CreateProfile from "./CreateProfile";
 import { useNavigate } from "react-router-dom";
 
 const token = localStorage.getItem("token");
@@ -10,9 +8,6 @@ const token = localStorage.getItem("token");
 const Profile = () => {
   const [vehicleOwner, setVehicleOwner] = useState(null);
   const [profile, setProfile] = useState(null);
-  const navigate = useNavigate();
-
-  // Update profile state
   const [updatedProfile, setUpdatedProfile] = useState({
     nic: "",
     address: "",
@@ -20,9 +15,15 @@ const Profile = () => {
     expirydate: "",
     issueddate: "",
   });
+  const [updatedOwnerInfo, setUpdatedOwnerInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
         const vehicleOwnerResponse = await axios.get("/api/auth", {
           headers: {
@@ -30,6 +31,11 @@ const Profile = () => {
           },
         });
         setVehicleOwner(vehicleOwnerResponse.data);
+        setUpdatedOwnerInfo({
+          name: vehicleOwnerResponse.data.name,
+          email: vehicleOwnerResponse.data.email,
+          phone: vehicleOwnerResponse.data.phone,
+        });
       } catch (error) {
         console.error("Error fetching vehicle owner details:", error);
       }
@@ -41,7 +47,6 @@ const Profile = () => {
           },
         });
         setProfile(profileResponse.data);
-        // Set the updated profile state with existing data
         setUpdatedProfile(profileResponse.data);
       } catch (error) {
         console.error("Error fetching profile details:", error);
@@ -49,34 +54,58 @@ const Profile = () => {
     };
 
     if (token) {
-      fetchUserData();
+      fetchData();
     }
   }, [token]);
 
-  const updateProfile = async () => {
+  const updateInfo = async () => {
+    const expiryDate = new Date(updatedProfile.expirydate);
+    const currentDate = new Date();
+
+    if (expiryDate <= currentDate) {
+      alert("Expiry date is in the past. Please enter a valid expiry date.");
+      return;
+    }
     try {
-      const response = await axios.post("/api/profile", updatedProfile, {
+      // Update profile
+      const profileResponse = await axios.post("/api/profile", updatedProfile, {
         headers: {
           "x-auth-token": token,
         },
       });
-      setProfile(response.data);
+      setProfile(profileResponse.data);
+
+      // Update owner info
+      const ownerInfoResponse = await axios.put(
+        "/api/auth/update",
+        updatedOwnerInfo,
+        {
+          headers: {
+            "x-auth-token": token,
+          },
+        }
+      );
+      setVehicleOwner(ownerInfoResponse.data);
+
       navigate("/profile");
-      // Reset input fields or perform any other necessary actions
     } catch (error) {
-      console.error("Error updating profile:", error);
-      // Handle error as needed
+      console.error("Error updating profile and owner info:", error);
     }
   };
 
-  // Update the state when input fields change
-  const handleInputChange = (e, fieldName) => {
-    setUpdatedProfile({
-      ...updatedProfile,
-      [fieldName]: e.target.value,
-    });
+  const handleInputChange = (e, fieldName, type = "profile") => {
+    if (type === "profile") {
+      setUpdatedProfile({
+        ...updatedProfile,
+        [fieldName]: e.target.value,
+      });
+    } else if (type === "owner") {
+      setUpdatedOwnerInfo({
+        ...updatedOwnerInfo,
+        [fieldName]: e.target.value,
+      });
+    }
   };
-
 
   return (
     <>
@@ -89,7 +118,41 @@ const Profile = () => {
       </div>
       <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
         <label className="text-sm font-medium leading-6 text-gray-900">
-          NIC
+          Full Name
+        </label>
+        <input
+          type="text"
+          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+          value={updatedOwnerInfo.name}
+          onChange={(e) => handleInputChange(e, "name", "owner")}
+        />
+      </div>
+      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
+        <label className="text-sm font-medium leading-6 text-gray-900">
+          Email Address
+        </label>
+        <input
+          type="email"
+          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+          value={updatedOwnerInfo.email}
+          onChange={(e) => handleInputChange(e, "email", "owner")}
+        />
+      </div>
+      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
+        <label className="text-sm font-medium leading-6 text-gray-900">
+          Phone Number
+        </label>
+        <input
+          type="text"
+          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+          value={updatedOwnerInfo.phone}
+          onChange={(e) => handleInputChange(e, "phone", "owner")}
+        />
+      </div>
+
+      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
+        <label className="text-sm font-medium leading-6 text-gray-900">
+          National Identity Card
         </label>
         <input
           type="text"
@@ -100,7 +163,7 @@ const Profile = () => {
       </div>
       <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
         <label className="text-sm font-medium leading-6 text-gray-900">
-          Address
+          Permanent Address
         </label>
         <input
           type="text"
@@ -111,7 +174,7 @@ const Profile = () => {
       </div>
       <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
         <label className="text-sm font-medium leading-6 text-gray-900">
-          License Number
+          Driving License Number
         </label>
         <input
           type="text"
@@ -122,10 +185,11 @@ const Profile = () => {
       </div>
       <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
         <label className="text-sm font-medium leading-6 text-gray-900">
-          Expiry Date
+          Driving Expiry Date
         </label>
         <input
           type="date"
+          id = "expiryDate"
           className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
           value={updatedProfile.expirydate}
           onChange={(e) => handleInputChange(e, "expirydate")}
@@ -133,7 +197,7 @@ const Profile = () => {
       </div>
       <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
         <label className="text-sm font-medium leading-6 text-gray-900">
-          Issued Date
+          Driving Issued Date
         </label>
         <input
           type="date"
@@ -142,12 +206,13 @@ const Profile = () => {
           onChange={(e) => handleInputChange(e, "issueddate")}
         />
       </div>
+      
       <div className="text-center mt-10">
         <button
           className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          onClick={updateProfile}
+          onClick={updateInfo}
         >
-          Update
+          Update Info
         </button>
       </div>
     </>

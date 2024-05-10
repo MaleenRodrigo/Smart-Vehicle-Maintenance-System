@@ -50,7 +50,7 @@ const Register = () => {
       }
     }
   };
-  
+
   return (
     <>
       <section className="bg-gray-50 :bg-gray-900">

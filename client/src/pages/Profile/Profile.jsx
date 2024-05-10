@@ -103,12 +103,15 @@ const Profile = () => {
   return (
     <>
       <Navbar />
+
+      
       <div className="container mx-auto px-4 sm:px-6 lg:px-20 py-20 ">
         <div className="text-center">
           <h3 className=" text-3xl font-semibold leading-7 text-gray-900 mt-12 mb-20">
             Vehicle Owner Information
           </h3>
         </div>
+        {vehicleOwner && (
         <div className="mt-6 border-t border-gray-100 ">
           <dl className="divide-y divide-gray-100">
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -116,7 +119,7 @@ const Profile = () => {
                 Full name
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {vehicleOwner && vehicleOwner.name}
+                {vehicleOwner.name}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -124,7 +127,7 @@ const Profile = () => {
                 Email address
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {vehicleOwner && vehicleOwner.email}
+                {vehicleOwner.email}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -132,7 +135,7 @@ const Profile = () => {
                 Phone number
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {vehicleOwner && vehicleOwner.phone}
+                {vehicleOwner.phone}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -140,27 +143,20 @@ const Profile = () => {
                 Date registered
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {vehicleOwner &&
-                  new Date(vehicleOwner.date).toLocaleDateString()}
+                {new Date(vehicleOwner.date).toLocaleDateString()}
               </dd>
             </div>
-            {/* Remaining Time */}
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Remaining Time (days) to Expiry
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {remainingTime !== null ? remainingTime : "Loading..."}
-              </dd>
-            </div>
+            
+            
           </dl>
         </div>
+        )}
 
         {profile && (
           <>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">
-                NIC
+                National Identity Card
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 {profile.nic}
@@ -168,34 +164,46 @@ const Profile = () => {
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">
-                Address
+                Permanent Address
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 {profile.address}
               </dd>
             </div>
+            <br/>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">
-                License Number
+                Driving License Number
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 {profile.licensenumber}
               </dd>
             </div>
+            
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">
-                Expiry Date
+                Driving License Issued Date
+              </dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                {new Date(profile.issueddate).toLocaleDateString()}
+              </dd>
+            </div>
+
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">
+                Driving License Expiry Date
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 {new Date(profile.expirydate).toLocaleDateString()}
               </dd>
             </div>
+
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">
-                Issued Date
+                Remaining Time (days) to Expiry
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {new Date(profile.issueddate).toLocaleDateString()}
+                {remainingTime !== null ? remainingTime : "Loading..."}
               </dd>
             </div>
           </>
