@@ -7,8 +7,9 @@ import Inquiries from "./pages/Inquiries/Inquiries";
 import { Crisp } from "crisp-sdk-web";
 import Shop from "./pages/Shop/Shop";
 import AddProduct from "./pages/Admin/Products/Addproduct";
-// import Productlist from "./pages/Admin/Products/Products";
+import ProductList from "./pages/Admin/Products/Products";
 import UpdateProduct from "./pages/Admin/Products/Updateproduct";
+import Stock from "./pages/Admin/Inventory/stock";
 // import AddProduct from "./pages/Products/Addproduct";
 
 import Profile from "./pages/Profile/Profile";
@@ -44,6 +45,8 @@ import Cart from "./pages/Cart/Cart";
 import { AdminFeedback } from "./pages/Admin/Feedback/AdminFeedback";
 import { FeedbackForm } from "./pages/Shop/FeedbackForm";
 
+
+
 function App() {
   useEffect(() => {
     Crisp.configure("472b8c52-0771-4647-8563-c4c3ead5b1ce");
@@ -71,8 +74,10 @@ function App() {
           <Route exact path="/profile/cart" Component={Cart} />
           <Route exact path="/shop" Component={Shop} />
           <Route exact path="/shop/feedback" Component={FeedbackForm} />
+          <Route exact path="/admin/products" Component={ProductList} />
           <Route exact path="/admin/addproduct" Component={AddProduct} />
           <Route exact path="/admin/UpdateProduct/" Component={UpdateProduct} />
+          <Route exact path="/admin/inventory/" Component={Stock} />
 
           <Route exact path="/rentalservice" Component={RentalService} />
 

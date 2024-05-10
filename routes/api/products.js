@@ -1,99 +1,3 @@
-// const express = require('express');
-// const router = express.Router();
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-// const config = require("config");
-
-// const Product = require("../../models/product");
-
-// // @route GET api/products
-// // @desc Test route
-// // @access Public
-
-// http://localhost:8070/product/add
-
-// //add product
-
-// router.route("/add").post((req,res)=>{
-//     const name = req.body.name;
-//     const brand = req.body.brand;
-//     const model = req.body.model;
-//     const description = req.body.description;
-//     const price = Number(req.body.price);
-//     const stock = Number(req.body.stock);
-
-//     const newProduct = new Product({
-//         name,
-//         brand,
-//         model,
-//         description,
-//         price,
-//         stock
-//     })
-//     newStudent.save().then(()=>{
-//         res.json("Product Added Successfully !")
-//     }).catch((err)=>{
-//         console.log(err);
-//     })
-// })
-
-// //display products
-
-// router.route("/").get((req,res)=>{
-//     product.find().then((products)=>{
-//         res.json(products)
-//     }).catch((err)=>{
-//         console.log(err)
-//     })
-// })
-
-// //update product
-
-// http://localhost:8070/student/update
-// router.route("/update/:id").put(async (req,res)=> {
-//     let productId = req.params.id;
-//     const {name, brand, model, description, price, stock} = req.body;
-
-//     const updateProduct = {
-//         name,
-//         brand,
-//         model,
-//         description,
-//         price,
-//         stock
-//     }
-//     const update = await product.findByIdAndUpdate(productId, updateProduct).then(()=>{
-//         res.status(200).send({status: "product updated", user: update})
-//     }).catch((err)=>{
-//         console.log(err);
-//         res.status(500).send({status: "Error with updating data", error: err.message});
-//     })
-// })
-
-// //delete
-
-// router.route("/delete/:id").delete(async (req,res) => {
-//     let productId = req.params.id;
-
-//     await product.findByIdAndDelete(productId).then(()=>{
-//         res.status(200).send({status: "Product deleted"})
-//     }).catch((err)=>{
-//         console.log(err.message);
-//         res.status(500).send({status: "error with delete product", error: err.message});
-//     })
-// })
-
-// // router.get('/', (req, res) => res.send('Products route'));
-// // [
-// //     check("name", "Product name is required!").not().isEmpty(),
-// //     check("brand", "Product brand is required!").not().isEmpty(),
-// //     check("model","Pro duct model is required!").not().isEmpty(),
-// //     check("description","Product description is required!").not().isEmpty(),
-// //     check("price","Product price is required!").not().isEmpty(),
-// // ],
-
-// module.exports = router;
-
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
@@ -107,6 +11,7 @@ router.post(
   "/add",
   [
     check("name", "Product name is required").not().isEmpty(),
+    check("category", "Product category is required").not().isEmpty(),
     check("brand", "Product brand is required").not().isEmpty(),
     check("model", "Product model is required").not().isEmpty(),
     check("description", "Product description is required").not().isEmpty(),
@@ -120,15 +25,17 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const { name, brand, model, description, price, stock } = req.body;
+      const { name, category, brand, model, description, price, stock, date } = req.body;
 
       const newProduct = new Product({
         name,
+        category,
         brand,
         model,
         description,
         price,
         stock,
+        date,
       });
 
       await newProduct.save();
@@ -179,16 +86,18 @@ router.get("/", async (req, res) => {
 // @access  Public
 router.put("/update/:id", async (req, res) => {
   try {
-    const { name, brand, model, description, price, stock } = req.body;
+    const { name, category, brand, model, description, price, stock, date } = req.body;
     const productId = req.params.id;
 
     const updatedProduct = {
       name,
+      category,
       brand,
       model,
       description,
       price,
       stock,
+      date,
     };
 
     const product = await Product.findByIdAndUpdate(productId, updatedProduct, {
@@ -228,6 +137,29 @@ router.delete("/delete/:id", async (req, res) => {
 // @route   PUT api/products/feedback
 // @desc    PUT a product feedback
 // @access  Private
+
+router.put('/addstock/:productId', async (req, res) => {
+  const { productId } = req.params;
+  const { stock } = req.body;
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Update the stock and date
+    product.stock += stock;
+    product.date = Date.now(); // Update date to current timestamp
+    const updatedProduct = await product.save();
+
+
+    res.status(200).json({ message: 'Stock updated successfully', updatedProduct: product });
+  } catch (error) {
+    console.error('Error updating stock:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 router.put(
   "/feedback/:id",

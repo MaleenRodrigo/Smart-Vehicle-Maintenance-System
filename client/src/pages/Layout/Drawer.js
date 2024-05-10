@@ -16,6 +16,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
+import InventoryIcon from '@mui/icons-material/Inventory';
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import LocalShippingRoundedIcon from "@mui/icons-material/LocalShippingRounded";
 import SupportAgentRoundedIcon from "@mui/icons-material/SupportAgentRounded";
@@ -93,6 +94,11 @@ function ResponsiveDrawer({ children }) {
             icon: <StoreRoundedIcon sx={iconStyle} />,
             text: "Products",
             link: "/admin/products",
+          },
+          {
+            icon: <InventoryIcon sx={iconStyle} />,
+            text: "Inventory",
+            link: "/admin/inventory",
           },
           {
             icon: <FeedbackIcon sx={iconStyle} />,

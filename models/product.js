@@ -6,6 +6,10 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   brand: {
     type: String,
     required: true,
@@ -25,6 +29,10 @@ const ProductSchema = new mongoose.Schema({
   stock: {
     type: Number,
     required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 
   feedback: [

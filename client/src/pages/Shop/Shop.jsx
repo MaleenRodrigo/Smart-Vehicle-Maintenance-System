@@ -99,6 +99,9 @@ function Shop() {
                               {product.brand}
                             </p>
                             <p className="mt-2 text-base font-normal text-gray-500 :text-gray-400">
+                              {product.category}
+                            </p>
+                            <p className="mt-2 text-base font-normal text-gray-500 :text-gray-400">
                               {product.model}
                             </p>
                           </a>
