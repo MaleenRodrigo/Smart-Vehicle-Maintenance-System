@@ -1,16 +1,32 @@
 import React, { useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Chip from "@mui/material/Chip";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+};
 
 export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
-  function getStatusClassName(status) {
+  function getStatusColor(status) {
     switch (status) {
       case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "completed":
-        return "bg-green-100 text-green-800";
+        return "warning";
+      case "resolved":
+        return "success";
       case "rejected":
-        return "bg-red-100 text-red-800";
+        return "error";
       default:
         return ""; // Default case if status doesn't match any case
     }
@@ -50,15 +66,17 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
     setLoader(false);
 
     // Save the PDF
-    doc.save("invoice.pdf");
+    doc.save("Inquiry_HardCopy.pdf");
   };
 
   return (
-    <div
-      id="default-modal"
-      className="absolute top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+    <Modal
+      open={toggleInquiryModal}
+      onClose={toggleInquiryModal}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
     >
-      <div className="relative p-4 w-full max-w-xl ">
+      <Box sx={style}>
         <div className="relative bg-white rounded-lg shadow :bg-gray-700">
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t :border-gray-600">
             <h3 className="text-xl font-semibold text-gray-900 :text-white">
@@ -67,7 +85,6 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
             <button
               type="button"
               className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center :hover:bg-gray-600 :hover:text-white"
-              data-modal-hide="default-modal"
               onClick={toggleInquiryModal}
             >
               <svg
@@ -79,9 +96,9 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>
@@ -89,18 +106,16 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
             </button>
           </div>
           <form className="mx-10 my-10">
-            <div className="flex justify-end ">
-              <span
-                className={`uppercase font-medium text-sm px-2.5 py-0.5 rounded ${getStatusClassName(
-                  inquiry.status
-                )}`}
-              >
-                {inquiry.status}
-              </span>
+            <div className="flex justify-end">
+              <Chip
+                size="small"
+                label={inquiry.status.toUpperCase()}
+                color={getStatusColor(inquiry.status)}
+              />
             </div>
             <div className="mb-5">
               <label
-                for="email"
+                htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 :text-white"
               >
                 Inquiry Title
@@ -116,7 +131,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
             <div className="flex w-full gap-3">
               <div className="mb-5 w-full">
                 <label
-                  for="password"
+                  htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 :text-white"
                 >
                   Inquiry Type
@@ -132,14 +147,14 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
               </div>
               <div className="mb-5 w-full">
                 <label
-                  for="password"
+                  htmlFor="phone"
                   className="block mb-2 text-sm font-medium text-gray-900 :text-white"
                 >
                   Contact number
                 </label>
                 <input
-                  type="number"
-                  id="password"
+                  type="tel"
+                  id="phone"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500"
                   disabled
                   value={inquiry.phone}
@@ -149,7 +164,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
 
             <div className="sm:col-span-2">
               <label
-                for="description"
+                htmlFor="description"
                 className="block mb-2 text-sm font-medium text-gray-900 :text-white"
               >
                 Description
@@ -169,7 +184,6 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
             <button
               onClick={() => downloadPDF(inquiry)}
               disabled={!(loader === false)}
-              data-modal-hide="default-modal"
               type="button"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center :bg-blue-600 :hover:bg-blue-700 :focus:ring-blue-800"
             >
@@ -181,7 +195,6 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
             </button>
             <button
               onClick={toggleInquiryModal}
-              data-modal-hide="default-modal"
               type="button"
               className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 :focus:ring-gray-700 :bg-gray-800 :text-gray-400 :border-gray-600 :hover:text-white :hover:bg-gray-700"
             >
@@ -189,7 +202,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      </Box>
+    </Modal>
   );
 };

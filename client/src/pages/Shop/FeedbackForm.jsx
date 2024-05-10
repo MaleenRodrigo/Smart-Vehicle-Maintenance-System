@@ -113,6 +113,7 @@ export const FeedbackForm = () => {
                   name="rating"
                   value={rating}
                   onChange={(e) => onChange(e)}
+                  req
                 />
               </div>
 

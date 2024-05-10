@@ -127,8 +127,9 @@ router.put("/:id", [
       const updatedInquiry = await Inquiry.findById(id);
 
       // Generate a dynamic message based on the inquiry status
-      const statusMessage = `Your inquiry status set to: ${updatedInquiry.status}.`;
-      const message = `Hello, we're from Negombo Motor Shop, \n\nYour inquiry has been updated successfully. ${statusMessage}`;
+      const status = updatedInquiry.status;
+      const title = updatedInquiry.title;
+      const message = `Subject: Inquiry Status Update \n\n\n\Dear Customer, \n\nYour inquiry titled "${title}" at Negombo Motor Shop has been updated to ${status}. Thank you for your patience. If you have any questions or need further assistance, please contact us at 032 22 65638. \n\nBest Regards,\nNegombo Motor Shop Support Team`;
 
       // Send a confirmation message to the client's phone
       // await sendMessage(formattedPhone, message);
@@ -170,8 +171,8 @@ router.delete("/:id", auth, async (req, res) => {
 // Function to send a message using the notify.lk API
 async function sendMessage(to, message) {
   const apiUrl = "https://app.notify.lk/api/v1/send";
-  const userId = "27075"; // Replace with your user ID
-  const apiKey = "iavgguXxPi6LGJ4C5dVg"; // Replace with your API key
+  const userId = "27132"; // Replace with your user ID
+  const apiKey = "JWVZfc6LN8YWvfCIDyyR"; // Replace with your API key
   const senderId = "NotifyDEMO"; // Replace with your sender ID
 
   const data = {

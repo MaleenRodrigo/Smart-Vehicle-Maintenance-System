@@ -43,12 +43,22 @@ router.get("/res/:res_id", checkObjectId("res_id"), async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const reservations = await Reservation.find(); // Retrieve all reservations from the database
+    res.json(reservations); // Send the retrieved reservations as JSON response
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // @route   PUT api/reservation/update/:id
 // @desc    Update a reservation by ID
 // @access  Public
 router.put("/update/:res_id", async (req, res) => {
   try {
-    const { ownername, vehiclenum, services, servicedate, date} = req.body;
+    const { ownername, vehiclenum, services, servicedate, date } = req.body;
     const res_id = req.params.res_id;
 
     const updatedReservation = {
@@ -59,7 +69,11 @@ router.put("/update/:res_id", async (req, res) => {
       date,
     };
 
-    const reservation = await Reservation.findByIdAndUpdate(res_id, updatedReservation, { new: true });
+    const reservation = await Reservation.findByIdAndUpdate(
+      res_id,
+      updatedReservation,
+      { new: true }
+    );
 
     if (!reservation) {
       return res.status(404).json({ message: "Reservation not found" });
@@ -90,6 +104,5 @@ router.delete("/delete/:res_id", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-
 
 module.exports = router;

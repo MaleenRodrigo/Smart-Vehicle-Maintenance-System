@@ -8,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import Rating from "@mui/material/Rating";
 import moment from "moment";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function formatDate(dateString) {
   return moment(dateString).format("dddd, MMMM Do YYYY, h:mm:ss A"); // "Saturday, April 28th 2024, 10:29:19 am"
@@ -78,9 +79,23 @@ function Shop() {
           <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
               <div className="hidden xl:mt-8 xl:block">
-                <h3 className="text-2xl font-semibold text-gray-900 :text-white">
-                  Shop
-                </h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-2xl font-semibold text-gray-900 :text-white">
+                    Shop
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigate("/profile/cart");
+                    }}
+                    className="inline-flex items-center justify-center rounded-lg border-2 border-primary px-5 py-2.5 text-sm font-medium text-primary hover:bg-primary text-primary hover:bg-[#2c44cc] hover:text-white"
+                  >
+                    View Cart
+                    <div className="ml-2">
+                      <ShoppingCartIcon fontSize="small" />
+                    </div>
+                  </button>
+                </div>
 
                 <div className="grid grid-cols-2 gap-4 sm:mt-8">
                   {products &&
@@ -89,6 +104,11 @@ function Shop() {
                         key={product.id}
                         className="space-y-6 overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm light:border-gray-700 light:bg-gray-800"
                       >
+                        <img
+                          class="rounded-t-lg bg-cover p-0"
+                          src="https://images.unsplash.com/photo-1588017530244-c57df911f73b?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                          alt=""
+                        />
                         <div>
                           <a
                             href="#"
@@ -140,7 +160,7 @@ function Shop() {
                           <button
                             type="button"
                             onClick={() => handleAddFeedback(product)}
-                            className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 :bg-primary-600 :hover:bg-primary-700 :focus:ring-primary-800"
+                            className="inline-flex w-full items-center justify-center rounded-lg border-2 border-primary px-5 py-2.5 text-sm font-medium text-primary hover:bg-[#2c44cc] hover:text-white focus:outline-none focus:ring-4 focus:ring-primary-300 :bg-primary-600 :hover:bg-primary-700 :focus:ring-primary-800"
                           >
                             <div className="mr-2">
                               <FeedbackIcon fontSize="small" />

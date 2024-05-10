@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import ResponsiveDrawer from '../../Layout/Drawer';
 
 function UpdateProduct() {
     const location = useLocation();
-    const navigate = useNavigate();
-
   const productID = location.state?.productId;
   const { productId } = useParams(); // Get the product ID from the URL
   const [updateProduct, setUpdateProduct] = useState({
     name: '',
-    category: '',
     brand: '',
     model: '',
     description: '',
@@ -23,10 +20,10 @@ function UpdateProduct() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/products/get/${productID}`);
+        const response = await axios.get(`http://localhost:8070/api/products/get/${productID}`);
         setUpdateProduct(response.data.product); // Set product data in the state
       } catch (error) {
-        console.error('Error fetching product:', error);
+        console.error("Error fetching product:", error);
       }
     };
 
@@ -43,13 +40,11 @@ function UpdateProduct() {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`http://localhost:5000/api/products/update/${productID}`, updateProduct);
+      const response = await axios.put(`http://localhost:8070/api/products/update/${productID}`, updateProduct);
       console.log(response.data); // Log the response after updating product
       window.alert("Product Updated Successfull")
-      navigate("/admin/products");
     } catch (error) {
-      console.error('Error updating product:', error);
-      
+      console.error("Error updating product:", error);
     }
   };
     return (
@@ -74,46 +69,18 @@ function UpdateProduct() {
                     />
                   </div>
                   <div>
-                <label htmlFor="brand" className="block mb-2 text-sm font-medium text-gray-900 light:text-light">Category</label>
-                <select
-                  id="category"
-                  name="category"
-                  value={updateProduct.category}
-                  onChange={handleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-primary-500 light:focus:border-primary-500"
-                  required
-                >
-                  <option value="">Select Category</option>
-                  <option value="Engine Components">Engine Components</option>
-                  <option value="Transmission and Drivetrain Parts">Transmission and Drivetrain Parts</option>
-                  <option value="Suspension and Steering Components">Suspension and Steering Components</option>
-                  <option value="Braking System Parts">Braking System Parts</option>
-                  <option value="Electrical Components">Electrical Components</option>
-                  <option value="Exhaust System Parts">Exhaust System Parts</option>
-                  <option value="Body and Exterior Parts">Body and Exterior Parts</option>
-                  <option value="Interior Components">Interior Components</option>
-                  <option value="Fluids and Lubricants">Fluids and Lubricants</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="brand" className="block mb-2 text-sm font-medium text-gray-900 light:text-light">Brand</label>
-                <select
-                  id="brand"
-                  name="brand"
-                  value={updateProduct.brand}
-                  onChange={handleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-primary-500 light:focus:border-primary-500"
-                  required
-                >
-                  <option value="">Select Brand</option>
-                  <option value="Toyota">Toyota</option>
-                  <option value="Mazda">Mazda</option>
-                  <option value="Mitsubishi">Mitsubishi</option>
-                  <option value="Nissan">Nissan</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
+                    <label htmlFor="brand" className="block mb-2 text-sm font-medium text-gray-900 light:text-light">Brand</label>
+                    <input
+                      type="text"
+                      name="brand"
+                      id="brand"
+                      value={updateProduct.brand}
+                      onChange={handleChange}
+                      className="bg-gray border border-gray-300 text-light-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-primary-500 light:focus:border-primary-500"
+                      placeholder="Enter product brand"
+                      required
+                    />
+                  </div>
                   <div className="w-full">
                     <label htmlFor="model" className="block mb-2 text-sm font-medium text-gray-900 light:text-light">Model</label>
                     <input

@@ -15,17 +15,23 @@ function ProductList() {
   const navigate = useNavigate();
 
   const handleEditClick = (productId) => {
-    const confirmEdit = window.confirm("Are you sure you want to edit this product?");
+    const confirmEdit = window.confirm(
+      "Are you sure you want to edit this product?"
+    );
     if (confirmEdit) {
       navigate(`/admin/updateproduct`, { state: { productId } });
     }
   };
 
   const handleDelete = async (productId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
     if (confirmDelete) {
       try {
-        await axios.delete(`http://localhost:5000/api/products/delete/${productId}`);
+        await axios.delete(
+          `http://localhost:5000/api/products/delete/${productId}`
+        );
         // Remove the deleted product from the local state
         setProducts(products.filter((product) => product._id !== productId));
         console.log("Product deleted successfully");
@@ -223,14 +229,19 @@ function ProductList() {
             <tbody>
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((product) => (
-                  <tr key={product._id} className="bg-white border-b :bg-gray-800 :border-gray-700">
+                  <tr
+                    key={product._id}
+                    className="bg-white border-b :bg-gray-800 :border-gray-700"
+                  >
                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap :text-white">
                       {product.name}
                     </td>
                     <td className="px-6 py-4">{product.category}</td>
                     <td className="px-6 py-4">{product.brand}</td>
                     <td className="px-6 py-4 capitalize">{product.model}</td>
-                    <td className="px-6 py-4 capitalize">{product.description}</td>
+                    <td className="px-6 py-4 capitalize">
+                      {product.description}
+                    </td>
                     <td className="px-6 py-4 capitalize">{product.price}</td>
 
                     <td className="px-6 py-4 capitalize">

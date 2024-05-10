@@ -46,7 +46,8 @@ const AddVehicle = () => {
     e.preventDefault();
     try {
       const api = new ApiHelper();
-      const token = localStorage.getItem("token"); // Assuming you are storing the token in localStorage
+      const token = localStorage.getItem("token"); 
+      
       await api.put("profile/vehicle", formData, token);
 
       // Redirect to profile page

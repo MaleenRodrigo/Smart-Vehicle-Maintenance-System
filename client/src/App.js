@@ -44,6 +44,13 @@ import Rental from "./pages/Admin/Rental/Rental";
 import Cart from "./pages/Cart/Cart";
 import { AdminFeedback } from "./pages/Admin/Feedback/AdminFeedback";
 import { FeedbackForm } from "./pages/Shop/FeedbackForm";
+import { AdminTransaction } from "./pages/Admin/Transaction/AdminTransaction";
+
+import Reservation from "./pages/Reservation/Reservation";
+import ReservationStatus from "./pages/Reservation/ReservationStatus";
+import ReservationList from "./pages/Admin/Reservation/AdminReservation";
+import ReservationUpdate from "./pages/Admin/Reservation/ReservationUpdate";
+// import ResUpdate from "./pages/Admin/Reservation/ResUpdate";
 
 
 
@@ -66,7 +73,7 @@ function App() {
           <Route exact path="/UpdateProfile" Component={UpdateProfile} />
           <Route exact path="/CreateProfile" Component={CreateProfile} />
           <Route exact path="/AddVehicles" Component={AddVehicles} />
-          <Route exact path="/UpdateVehicle" Component={UpdateVehicle} />
+          <Route exact path="/UpdateVehicle/:v_id" Component={UpdateVehicle} />
           <Route exact path="/ShowVehicle" Component={ShowVehicle} />
 
           <Route exact path="/profile/card" Component={Card} />
@@ -93,6 +100,15 @@ function App() {
           {/* Admin Panel Routes */}
           <Route exact path="/admin" Component={AdminPanel} />
           <Route exact path="/admin/inquiries" Component={AdminInquiry} />
+
+          <Route exact path="/reservation" Component={Reservation} />
+          <Route
+            exact
+            path="/reservationStatus"
+            Component={ReservationStatus}
+          />
+          <Route exact path="/admin/reservation" Component={ReservationList} />
+          <Route exact path="/admin/resupdate" Component={ReservationUpdate} />
           <Route exact path="/admin/reports/all" Component={Reports} />
           <Route
             exact
@@ -105,6 +121,11 @@ function App() {
             exact
             path="/admin/products/feedback"
             Component={AdminFeedback}
+          />
+          <Route
+            exact
+            path="/admin/transactions"
+            Component={AdminTransaction}
           />
 
           {/* Why is this not getting tagged */}
