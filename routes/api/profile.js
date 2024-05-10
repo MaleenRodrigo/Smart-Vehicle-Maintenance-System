@@ -204,6 +204,8 @@ router.put(
   }
 );
 
+
+
 // @route   GET api/profile/vehicles
 // @desc    Get vehicles by user token
 // @access  Private
@@ -226,6 +228,73 @@ router.get("/vehicles", auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+// @route   PUT api/profile/vehicle/:v_id
+// @desc    Update vehicle by vehicle ID
+// @access  Private
+
+router.put("/vehicle/:v_id", auth, async (req, res) => {
+  try {
+    // Find the profile associated with the user token
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    if (!profile) {
+      return res.status(400).json({ msg: "Profile not found" });
+    }
+
+    // Find the index of the vehicle to update
+    const vehicleIndex = profile.vehicle.findIndex(v => v._id.toString() === req.params.v_id);
+
+    if (vehicleIndex === -1) {
+      return res.status(400).json({ msg: "Vehicle not found" });
+    }
+
+    // Update the vehicle fields
+    profile.vehicle[vehicleIndex] = {
+      ...profile.vehicle[vehicleIndex],
+      ...req.body
+    };
+
+    await profile.save();
+
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+
+// @route   GET api/profile/vehicle/:v_id
+// @desc    Get vehicle by vehicle ID
+// @access  Private
+
+router.get("/vehicle/:v_id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    if (!profile) {
+      return res.status(400).json({ msg: "Profile not found" });
+    }
+
+    const vehicle = profile.vehicle.find(v => v._id.toString() === req.params.v_id);
+
+    if (!vehicle) {
+      return res.status(400).json({ msg: "Vehicle not found" });
+    }
+
+    res.json(vehicle);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+////////////////////////////////////////////////////////////////////////////////
+
 
 // @route   DELETE api/profile/vehicle/:v_id
 // @desc    Delete Vehicle from profile

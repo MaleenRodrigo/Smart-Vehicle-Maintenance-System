@@ -70,7 +70,7 @@ function App() {
           <Route exact path="/UpdateProfile" Component={UpdateProfile} />
           <Route exact path="/CreateProfile" Component={CreateProfile} />
           <Route exact path="/AddVehicles" Component={AddVehicles} />
-          <Route exact path="/UpdateVehicle" Component={UpdateVehicle} />
+          <Route exact path="/UpdateVehicle/:v_id" Component={UpdateVehicle} />
           <Route exact path="/ShowVehicle" Component={ShowVehicle} />
 
           <Route exact path="/profile/card" Component={Card} />

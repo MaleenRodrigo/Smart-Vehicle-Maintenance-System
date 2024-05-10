@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/NavbarAfter";
+import Footer from "../../components/Footer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 const token = localStorage.getItem("token");
 
 const Profile = () => {
   const [vehicleOwner, setVehicleOwner] = useState(null);
   const [profile, setProfile] = useState(null);
+  const [confirmDelete, setconfirmDelete] = useState(false);
+
   const [updatedProfile, setUpdatedProfile] = useState({
     nic: "",
     address: "",
@@ -75,13 +80,36 @@ const Profile = () => {
   }, [token]);
 
   const updateInfo = async () => {
+    // Validate inputs
+    if (!updatedOwnerInfo.name || !updatedOwnerInfo.email || !updatedOwnerInfo.phone || !updatedProfile.nic || !updatedProfile.address) {
+      alert("All fields are required.");
+      return;
+    }
+
+    if (!updatedOwnerInfo.name || !updatedOwnerInfo.name.trim().includes(' ')) {
+      alert("Name should contain at least two parts.");
+      return;
+    }
+  
+    const nicPattern = /[0-9]{9}[vVxX]|[0-9]{12}/;
+    if (!nicPattern.test(updatedProfile.nic)) {
+      alert("NIC should be 9 digits followed by 'v', 'V', 'x', 'X' or 12 digits.");
+      return;
+    }
+
+    const phonePattern = /^[0-9]{10}$/;
+    if (!phonePattern.test(updatedOwnerInfo.phone)) {
+      alert("Phone number should be exactly 10 digits.");
+      return;
+    }
+  
     const expiryDate = new Date(updatedProfile.expirydate);
     const currentDate = new Date();
-
     if (expiryDate <= currentDate) {
       alert("Expiry date is in the past. Please enter a valid expiry date.");
       return;
     }
+  
     try {
       // Update profile
       const profileResponse = await axios.post("/api/profile", updatedProfile, {
@@ -90,7 +118,7 @@ const Profile = () => {
         },
       });
       setProfile(profileResponse.data);
-
+  
       // Update owner info
       const ownerInfoResponse = await axios.put(
         "/api/auth/update",
@@ -102,12 +130,13 @@ const Profile = () => {
         }
       );
       setVehicleOwner(ownerInfoResponse.data);
-
+  
       navigate("/profile");
     } catch (error) {
       console.error("Error updating profile and owner info:", error);
     }
   };
+  
 
   const handleInputChange = (e, fieldName, type = "profile") => {
     if (type === "profile") {
@@ -123,6 +152,35 @@ const Profile = () => {
     }
   };
 
+  function formatDateToISO(dateString) {
+      // Create a new Date object from the provided date string
+      const date = new Date(dateString);
+
+      // Check if the date is valid
+      if (isNaN(date.getTime())) {
+          // If the date is invalid, return null or throw an error
+          return null;
+      } else {
+          // Format the date as "YYYY-MM-DD"
+          const formattedDate = date.toISOString().split('T')[0];
+          return formattedDate;
+      }
+  }
+
+  const handleDeleteConfirmation = () => {
+    setconfirmDelete(true); 
+  };
+
+  const handleCancelLogout = () => {
+    setconfirmDelete(false); 
+  };
+
+  const handleconfirmDelete = () => {
+    deleteProfile(); 
+    setconfirmDelete(false); 
+  };
+
+
   return (
     <>
       <Navbar />
@@ -131,113 +189,140 @@ const Profile = () => {
         <h3 className="text-3xl font-semibold leading-7 text-gray-900 mt-28 mb-10">
           Update Information
         </h3>
-      </div>
-      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
-        <label className="text-sm font-medium leading-6 text-gray-900">
-          Full Name
-        </label>
-        <input
-          type="text"
-          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-          value={updatedOwnerInfo.name}
-          onChange={(e) => handleInputChange(e, "name", "owner")}
-        />
-      </div>
-      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
-        <label className="text-sm font-medium leading-6 text-gray-900">
-          Email Address
-        </label>
-        <input
-          type="email"
-          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-          value={updatedOwnerInfo.email}
-          onChange={(e) => handleInputChange(e, "email", "owner")}
-        />
-      </div>
-      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
-        <label className="text-sm font-medium leading-6 text-gray-900">
-          Phone Number
-        </label>
-        <input
-          type="text"
-          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-          value={updatedOwnerInfo.phone}
-          onChange={(e) => handleInputChange(e, "phone", "owner")}
-        />
-      </div>
-
-      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
-        <label className="text-sm font-medium leading-6 text-gray-900">
-          National Identity Card
-        </label>
-        <input
-          type="text"
-          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-          value={updatedProfile.nic}
-          onChange={(e) => handleInputChange(e, "nic")}
-        />
-      </div>
-      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
-        <label className="text-sm font-medium leading-6 text-gray-900">
-          Permanent Address
-        </label>
-        <input
-          type="text"
-          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-          value={updatedProfile.address}
-          onChange={(e) => handleInputChange(e, "address")}
-        />
-      </div>
-      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
-        <label className="text-sm font-medium leading-6 text-gray-900">
-          Driving License Number
-        </label>
-        <input
-          type="text"
-          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-          value={updatedProfile.licensenumber}
-          onChange={(e) => handleInputChange(e, "licensenumber")}
-        />
-      </div>
-      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
-        <label className="text-sm font-medium leading-6 text-gray-900">
-          Driving Expiry Date
-        </label>
-        <input
-          type="date"
-          id = "expiryDate"
-          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-          value={updatedProfile.expirydate}
-          onChange={(e) => handleInputChange(e, "expirydate")}
-        />
-      </div>
-      <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-center">
-        <label className="text-sm font-medium leading-6 text-gray-900">
-          Driving Issued Date
-        </label>
-        <input
-          type="date"
-          className="mt-1 block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-          value={updatedProfile.issueddate}
-          onChange={(e) => handleInputChange(e, "issueddate")}
-        />
+        <br/>
       </div>
       
-      <div className="flex flex-col items-center mt-6 space-y-4">
+
+<form class="max-w-md mx-auto">
+  <div class="relative z-0 w-full mb-5 group">
+      <input type="text" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"  required value={updatedOwnerInfo.name}
+      onChange={(e) => handleInputChange(e, "name", "owner")}/>
+      <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Full Name</label>
+  </div>
+
+  <div class="relative z-0 w-full mb-5 group">
+    <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required value={updatedOwnerInfo.email}
+    onChange={(e) => handleInputChange(e, "email", "owner")}/>
+    <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email Address</label>
+</div>
+
+<div class="relative z-0 w-full mb-5 group">
+<input
+  type="text"
+  name="floating_email"
+  id="floating_email"
+  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+  required
+  value={updatedProfile.nic}
+  pattern="[0-9]{9}[vVxX]|[0-9]{12}" // NIC pattern validation
+  title="NIC should be 9 digits followed by 'v', 'V', 'x', 'X' or 12 digits"
+  onChange={(e) => handleInputChange(e, "nic")}
+/>
+    <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">National Identity Card</label>
+</div>
+  
+ 
+  <div class="grid md:grid-cols-2 md:gap-6">
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="floating_first_name" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required value={updatedProfile.address}
+        onChange={(e) => handleInputChange(e, "address")}/>
+        <label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Permanent Address</label>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="floating_last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required value={updatedOwnerInfo.phone}
+          onChange={(e) => handleInputChange(e, "phone", "owner")}/>
+        <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone Number</label>
+    </div>
+  </div>
+  
+
+  <h3 className="text-center text-xl font-semibold leading-7 text-gray-900 mt-8 mb-10">Update Information</h3>
+
+  <div class="relative z-0 w-full mb-5 group">
+  <input
+    type="text"
+    name="floating_email"
+    id="floating_email"
+    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+    required
+    value={updatedProfile.licensenumber}
+    pattern="[A-Za-z]{1}\d{7}"
+    title="License number should start with 1 letter followed by 7 "
+    onChange={(e) => handleInputChange(e, "licensenumber")}
+  />
+      <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Driving License Number</label>
+  </div>
+    
+  
+    <div class="grid md:grid-cols-2 md:gap-6">
+      <div class="relative z-0 w-full mb-5 group">
+          <input type="date" name="floating_first_name" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required value=
+          {formatDateToISO(updatedProfile.issueddate)}
+          onChange={(e) => handleInputChange(e, "issueddate")}/>
+          <label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Issued Date</label>
+      </div>
+      
+      <div class="relative z-0 w-full mb-5 group">
+          <input type="date" name="floating_last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required value={formatDateToISO(updatedProfile.expirydate)}
+            onChange={(e) => handleInputChange(e, "expirydate")}/>
+          <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Expiry Date</label>
+      </div>
+    </div>
+  
+</form>
+
+      
+      
+      <div className="flex flex-col items-center mt-6 mb-14 space-y-4">
         <button
-          className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={updateInfo}
         >
           Update Info
         </button>
 
         <button
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            onClick={deleteProfile}
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+            onClick={handleDeleteConfirmation}
           >
             Delete Profile
           </button>
+          <Link to="/Profile" className="block mt-2">
+            <button className="border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-100 mb-14">
+              Go back
+            </button>
+          </Link>
       </div>
+
+      {confirmDelete && (
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen px-4 text-center">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-black opacity-50"></div>
+            </div>
+            <div className="relative z-10 p-6 bg-white shadow-md rounded-xl">
+              <p className="mb-4">
+                Are you sure you want to delete account?
+              </p>
+              <div className="flex justify-center">
+                <button
+                  className="mr-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none"
+                  onClick={handleconfirmDelete} 
+                >
+                  Delete
+                </button>
+                <button
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
+                  onClick={handleCancelLogout} 
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <Footer />
     </>
   );
 };
