@@ -13,6 +13,7 @@ const Profile = () => {
   const [vehicleOwner, setVehicleOwner] = useState(null);
   const [profile, setProfile] = useState(null);
   const [remainingTime, setRemainingTime] = useState(null);
+  const [confirmLogout, setconfirmLogout] = useState(false);
 
   // State to hold remaining time
   const navigate = useNavigate();
@@ -75,22 +76,6 @@ const Profile = () => {
     setRemainingTime(days);
   };
 
-  const deleteProfile = async () => {
-    try {
-      const response = await axios.delete("/api/profile", {
-        headers: {
-          "x-auth-token": token,
-        },
-      });
-      console.log(response.data);
-      localStorage.clear();
-      navigate("/");
-    } catch (error) {
-      console.error("Error deleting profile:", error);
-      // Handle error as needed
-    }
-  };
-
   const logout = () => {
     localStorage.clear();
     navigate("/");
@@ -100,34 +85,43 @@ const Profile = () => {
     getCards();
   }, [token]);
 
+  // Logout check
+  const handleDeleteConfirmation = () => {
+    setconfirmLogout(true); 
+  };
+
+  const handleCancelLogout = () => {
+    setconfirmLogout(false); 
+  };
+
+  const handleconfirmLogout = () => {
+    logout(); 
+    setconfirmLogout(false); 
+  };
+
   return (
     <>
       <Navbar />
 
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-20 py-20 ">
+
         <div className="text-center">
           <h3 className=" text-3xl font-semibold leading-7 text-gray-900 mt-12 mb-20">
-            Vehicle Owner Information
+          {vehicleOwner && vehicleOwner.name}'s Profile
           </h3>
         </div>
-        {vehicleOwner && (
-        <div className="mt-6 border-t border-gray-100 ">
+        
+        {/* Start Profile Details */}
+        <div className="mt-6 border-t border-gray-100 flex flex-col items-center space-y-4">
           <dl className="divide-y divide-gray-100">
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Full name
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {vehicleOwner.name}
-              </dd>
-            </div>
+            
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">
                 Email address
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {vehicleOwner.email}
+                {vehicleOwner && vehicleOwner.email}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -135,7 +129,7 @@ const Profile = () => {
                 Phone number
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {vehicleOwner.phone}
+                {vehicleOwner && vehicleOwner.phone}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -143,96 +137,141 @@ const Profile = () => {
                 Date registered
               </dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {new Date(vehicleOwner.date).toLocaleDateString()}
+                {new Date(vehicleOwner && vehicleOwner.date).toLocaleDateString()}
+              </dd>
+            </div>
+
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">
+                National Identity Card
+              </dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                {profile && profile.nic}
+              </dd>
+            </div>
+
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">
+                Permanent Address
+              </dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                {profile && profile.address}
               </dd>
             </div>
             
             
           </dl>
         </div>
-        )}
+         {/* End Profile Details */}
 
-        {profile && (
-          <>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                National Identity Card
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {profile.nic}
-              </dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Permanent Address
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {profile.address}
-              </dd>
-            </div>
-            <br/>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Driving License Number
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {profile.licensenumber}
-              </dd>
-            </div>
+        
+
+        {/* License Card start */}
+        <div class="my-10 space-y-16">
+        <div class="relative m-auto h-48 w-80 rounded-xl bg-gradient-to-r from-gray-500 to-gray-400 text-white shadow-2xl transition-transform sm:h-56 sm:w-96 sm:hover:scale-110">
+          <div class="absolute top-4 w-full px-8 sm:top-8">
+            <div class="flex justify-between">
+              <div class="">
+                <p class="font-light">Name</p>
+                <p class="font-medium tracking-widest">{ vehicleOwner && vehicleOwner.name}</p>
+              </div>
+
+              {remainingTime !== null && remainingTime <= 30 && (
+                <button class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                  Add New Card
+                </button>
+              )}
             
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Driving License Issued Date
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {new Date(profile.issueddate).toLocaleDateString()}
-              </dd>
             </div>
+            <div class="pt-1">
+              <p class="font-light">Driving License Number</p>
+              <p class="tracking-more-wider font-medium">{profile && profile.licensenumber}</p>
+            </div>
+            <div class="pt-4 pr-6 sm:pt-6">
+              <div class="flex justify-between">
+                <div class="">
+                  <p class="text-xs font-light">Valid From</p>
+                  <p class="text-base font-medium tracking-widest">{new Date(profile && profile.issueddate).toLocaleDateString()}</p>
+                </div>
+                <div class="">
+                  <p class="text-xs font-light">Expiry</p>
+                  <p class="text-base font-medium tracking-widest">{new Date(profile && profile.expirydate).toLocaleDateString()}</p>
+                </div>
 
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Driving License Expiry Date
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {new Date(profile.expirydate).toLocaleDateString()}
-              </dd>
-            </div>
+                <div class="">
+                  <p class="text-xs font-light">Expires in</p>
+                  <p class="tracking-more-wider text-sm font-bold">{remainingTime !== null ? remainingTime : "Loading..."} days
+                  </p>
 
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
-                Remaining Time (days) to Expiry
-              </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {remainingTime !== null ? remainingTime : "Loading..."}
-              </dd>
+                  
+                </div>
+              </div>
             </div>
-          </>
-        )}
+          </div>
+        </div>
+        </div>
+        {/* License Card End */}
+
+
+        {/* Buttons */}
         <div className="flex flex-col items-center mt-6 space-y-4">
+
+          {/* Update Profile Buttons */}
           <Link to="/UpdateProfile">
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Update Profile
             </button>
           </Link>
-          <Link to="/ShowVehicle">
+
+          {/* Show Vehicle Buttons */}
+          
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Show Vehicle
             </button>
-          </Link>
+          
+          
+          {/* Logout Buttons */}
           <button
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            onClick={deleteProfile}
-          >
-            Delete Profile
-          </button>
-          <button
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            onClick={logout}
+            onClick={handleDeleteConfirmation}
           >
             LogOut
           </button>
+          
         </div>
       </div>
+      {/* Logout confirmation  */}
+      {confirmLogout && (
+          <div className="fixed inset-0 z-10 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-screen px-4 text-center">
+              <div className="fixed inset-0 transition-opacity">
+                <div className="absolute inset-0 bg-black opacity-50"></div>
+              </div>
+              <div className="relative z-10 p-6 bg-white shadow-md rounded-xl">
+                <p className="mb-4">
+                  Are you sure you want to logout?
+                </p>
+                <div className="flex justify-center">
+                  <button
+                    className="mr-2 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none"
+                    onClick={handleconfirmLogout} // Attach handleconfirmLogout function to onClick event
+                  >
+                    Logout
+                  </button>
+                  <button
+                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
+                    onClick={handleCancelLogout} // Attach handleCancelLogout function to onClick event
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* End of Logout confirmation  */}
+
+      
       <div className="flex w-full justify-end px-3 mb-6 lg:mb-0">
         <div className=" flex flex-col min-w-0 mt-6 break-words bg-white border-0 border-transparent border-solid shadow-xl :bg-slate-850 :shadow--xl rounded-2xl bg-clip-border">
           <div className="p-4 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">

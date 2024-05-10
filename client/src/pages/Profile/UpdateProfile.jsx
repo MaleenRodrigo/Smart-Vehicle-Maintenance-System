@@ -22,6 +22,22 @@ const Profile = () => {
   });
   const navigate = useNavigate();
 
+  const deleteProfile = async () => {
+    try {
+      const response = await axios.delete("/api/profile", {
+        headers: {
+          "x-auth-token": token,
+        },
+      });
+      console.log(response.data);
+      localStorage.clear();
+      navigate("/");
+    } catch (error) {
+      console.error("Error deleting profile:", error);
+      // Handle error as needed
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -207,13 +223,20 @@ const Profile = () => {
         />
       </div>
       
-      <div className="text-center mt-10">
+      <div className="flex flex-col items-center mt-6 space-y-4">
         <button
           className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           onClick={updateInfo}
         >
           Update Info
         </button>
+
+        <button
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            onClick={deleteProfile}
+          >
+            Delete Profile
+          </button>
       </div>
     </>
   );
