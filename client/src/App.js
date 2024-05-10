@@ -23,6 +23,12 @@ import { AdminInquiry } from "./pages/Admin/Inquiries/AdminInquiry";
 import UpdateInquiryForm from "./pages/Admin/Inquiries/UpdateInquiryForm";
 import { VehicleRentalReport } from "./pages/Rentals/JeepsDetails";
 
+import Reservation from "./pages/Reservation/Reservation";
+import ReservationStatus from "./pages/Reservation/ReservationStatus";
+import ReservationList from "./pages/Admin/Reservation/AdminReservation";
+import ReservationUpdate from "./pages/Admin/Reservation/ReservationUpdate";
+// import ResUpdate from "./pages/Admin/Reservation/ResUpdate";
+
 function App() {
   useEffect(() => {
     Crisp.configure("472b8c52-0771-4647-8563-c4c3ead5b1ce");
@@ -56,6 +62,15 @@ function App() {
           {/* Admin Panel Routes */}
           <Route exact path="/admin" Component={AdminPanel} />
           <Route exact path="/admin/inquiries" Component={AdminInquiry} />
+
+          <Route exact path="/reservation" Component={Reservation} />
+          <Route
+            exact
+            path="/reservationStatus"
+            Component={ReservationStatus}
+          />
+          <Route exact path="/admin/reservation" Component={ReservationList} />
+          <Route exact path="/admin/resupdate" Component={ReservationUpdate} />
         </Routes>
       </>
     </Router>

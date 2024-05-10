@@ -22,6 +22,7 @@ import SupportAgentRoundedIcon from "@mui/icons-material/SupportAgentRounded";
 import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
 // Custom Components
 import AccountMenuComponent from "../Admin/Components/buttons/Menu";
@@ -86,6 +87,11 @@ function ResponsiveDrawer({ children }) {
             icon: <CreditCardIcon sx={iconStyle} />,
             text: "Manage cards",
             link: "/admin/cards",
+          },
+          {
+            icon: <BookmarkAddedIcon sx={iconStyle} />,
+            text: "Reservations",
+            link: "/admin/reservation",
           },
         ].map((item) => (
           <ListItem
