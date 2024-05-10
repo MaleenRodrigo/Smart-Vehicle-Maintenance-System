@@ -7,11 +7,17 @@ const { check, validationResult } = require("express-validator");
 const VehicleOwner = require("../../models/VehicleOwner");
 const Inquiry = require("../../models/Inquiry");
 
+function formatPhoneNumber(phoneNumber) {
+  if (phoneNumber.startsWith("0")) {
+    phoneNumber = "94" + phoneNumber.substring(1);
+  }
+  return phoneNumber;
+}
+
 // @route POST api/inquiries
 // @desc Create an inquiry
 // @access Private
 router.post("/", [
-  auth,
   [
     check("phone", "Phone is required!").not().isEmpty(),
     check("title", "Title is required!").not().isEmpty(),
@@ -27,13 +33,13 @@ router.post("/", [
 
     try {
       // Getting the user who creates the inquiry
-      const customer = await VehicleOwner.findById(req.user.id).select(
-        "-password"
-      );
+      // const customer = await VehicleOwner.findById(req.user.id).select(
+      //   "-password"
+      // );
 
       // Creating an new inquiry
       const newInquiry = new Inquiry({
-        email: customer.email,
+        email: req.body.email,
         phone: req.body.phone,
         title: req.body.title,
         description: req.body.description,
@@ -115,12 +121,19 @@ router.put("/:id", [
         return res.status(400).json({ msg: "Inquiry Not Found!" });
       }
 
-      // Getting the user who updates the inquiry
-      // const customer = await Customer.findById(req.customer.id).select(
-      //   "-password"
-      // );
+      // Format the phone number before sending a message
+      const formattedPhone = formatPhoneNumber(inquiry.phone);
 
       const updatedInquiry = await Inquiry.findById(id);
+
+      // Generate a dynamic message based on the inquiry status
+      const status = updatedInquiry.status;
+      const title = updatedInquiry.title;
+      const message = `Subject: Inquiry Status Update \n\n\n\Dear Customer, \n\nYour inquiry titled "${title}" at Negombo Motor Shop has been updated to ${status}. Thank you for your patience. If you have any questions or need further assistance, please contact us at 032 22 65638. \n\nBest Regards,\nNegombo Motor Shop Support Team`;
+
+      // Send a confirmation message to the client's phone
+      await sendMessage(formattedPhone, message);
+      // console.log(message);
 
       // Get the updated inquiry as response
       res.json(updatedInquiry);
@@ -154,5 +167,36 @@ router.delete("/:id", auth, async (req, res) => {
     res.status(500).send("Server Error!");
   }
 });
+
+// Function to send a message using the notify.lk API
+async function sendMessage(to, message) {
+  const apiUrl = "https://app.notify.lk/api/v1/send";
+  const userId = "27075"; // Replace with your user ID
+  const apiKey = "iavgguXxPi6LGJ4C5dVg"; // Replace with your API key
+  const senderId = "NotifyDEMO"; // Replace with your sender ID
+
+  const data = {
+    user_id: userId,
+    api_key: apiKey,
+    sender_id: senderId,
+    to: to,
+    message: message,
+  };
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const responseData = await response.json(); // Assuming the API responds with JSON
+    console.log("Success:", responseData);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
 
 module.exports = router;

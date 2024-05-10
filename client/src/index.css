@@ -23,3 +23,7 @@ code {
 .text-primary {
   color: #2c44cc;
 }
+
+.border-primary {
+  border-color: #2c44cc;
+}

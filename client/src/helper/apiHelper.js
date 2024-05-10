@@ -41,7 +41,10 @@ class ApiHelper {
       const response = await axios.post(`${this.baseUrl}/${endpoint}`, data, {
         headers,
       });
+      
+      localStorage.setItem("userId", response.data.userID);
       //   console.log("response=>", response);
+      localStorage.setItem("userId", response.data.userID);
       return response.data;
     } catch (error) {
       this.handleAxiosError(error);

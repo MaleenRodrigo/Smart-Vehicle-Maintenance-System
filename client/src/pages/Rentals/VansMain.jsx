@@ -1,349 +1,69 @@
-import React from 'react'
-import Navbar from '../../components/Navbar'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
+const ListVehicle = () => {
+  const [vehicles, setVehicles] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('/api/rentalVehicles'); // Replace with your API endpoint to fetch all vehicles
+        const vans = res.data.filter(vehicle => vehicle.vehiclecategory === 'van'); // Filter only vans
+        setVehicles(vans); // Set the list of vans
+      } catch (err) {
+        console.error(err.response.data);
+      }
+    };
 
-import Image17 from '../../assets/RentalsImages/Vans/caravan.png'
-import Image18 from '../../assets/RentalsImages/Vans/hiace.png'
-import Image19 from '../../assets/RentalsImages/Vans/kdh2.png'
-import Image20 from '../../assets/RentalsImages/Vans/caravan2.png'
-import Image21 from '../../assets/RentalsImages/Vans/hiace2.png'
-import Image22 from '../../assets/RentalsImages/Vans/kdh.png'
+    fetchData();
+  }, []);
 
+  const handleDelete = async id => {
+    try {
+      await axios.delete(`/api/rentalVehicles/delete/${id}`); // Replace with your API endpoint to delete a vehicle by ID
+      setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle._id !== id)); // Remove the deleted vehicle from the list
+    } catch (err) {
+      console.error(err.response.data);
+      // Optionally, you can show an error message here
+    }
+  };
 
+  const handleSearch = e => {
+    setSearchTerm(e.target.value);
+  };
 
-const ImageList8 = [
-    {
-        id: 17,
-        href: "#",
-        title: "Vehicle Model - Caravan",
-        color: "Color - White",
-        price: "Distance Price - 100km/Rs:4800/=",
-        passengers: "Eighteen (18)"
-    },
-]
-const ImageList9 = [
-    {
-        id: 18,
-        href: "#",
-        title: "Vehicle Model - hiace",
-        color: "Color - Baige",
-        price: "Distance Price - 200km/Rs:3000/=",
-        passengers: "Eleven (11)"
-    },
+  const filteredVehicles = vehicles.filter(vehicle =>
+    vehicle.numberplate.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-]
-const ImageList10 = [
-    {
-        id: 19,
-        href: "#",
-        title: "Vehicle Model - kdh2",
-        color: " Color - Black",
-        price: "Distance Price - 100km/Rs:5500/=",
-        passengers: "Eleven (11)"
-    },
+  return (
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">List of Vans</h2>
+      
+      <input
+        type="text"
+        placeholder="Search by number plate"
+        value={searchTerm}
+        onChange={handleSearch}
+        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md"
+      />
 
-]
-const ImageList11 = [
-    {
-        id: 20,
-        href: "#",
-        title: "Vehicle Model - caravan2",
-        color: " Color - Black",
-        price: "Distance Price - 100km/Rs:5500/=",
-        passengers: "Eighteen (18)"
-    },
-
-]
-const ImageList12 = [
-    {
-        id: 21,
-        href: "#",
-        title: "Vehicle Model - hiace2",
-        color: " Color - Black",
-        price: "Distance Price - 100km/Rs:5500/=",
-        passengers: "Eleven (11)"
-    },
-
-]
-const ImageList13 = [
-    {
-        id: 22,
-        href: "#",
-        title: "Vehicle Model - kdh",
-        color: " Color - Black",
-        price: "Distance Price - 100km/Rs:5500/=",
-        passengers: "Eleven (11)"
-    },
-
-]
-
-
-export const VansMain = () => {
-    return (
-        <>
-            <div className="container mx-auto">
-
-                <Navbar />
-                <div className="bg-white">
-                    <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-                        <div className=' mt-10 h-10 px-8 flex justify-between'>
-                            <a
-                                href="../../NewVehicleForm"
-                                className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                            >
-                                Add a New Vehicle
-                            </a>
-                        </div>
-
-                        <div className=' mt-5 flex gap-3 justify-between'>
-                            <div className=" mt-5 flex ">
-                                {ImageList8.map((V1) => (
-                                    <div key={V1.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image17}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={V1.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {V1.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{V1.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V1.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V1.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        href="../../vansdetails"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Make Changes Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                <div>
-
-                                </div>
-
-                            </div>
-                            {/* Vehicle number 2 */}
-                            <div className="mt-5 flex  ">
-
-                                {ImageList9.map((V2) => (
-                                    <div key={V2.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image18}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={V2.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {V2.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{V2.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V2.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V2.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Rent Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                            </div>
-                            {/* Vehicle number 3 */}
-                            <div className="mt-5 flex  ">
-
-                                {ImageList10.map((V3) => (
-                                    <div key={V3.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image19}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={V3.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {V3.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{V3.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V3.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V3.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Rent Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                            </div>
-
-
-                        </div>
-                        {/* Vehicle number 4 */}
-                        <div>
-                            <div className='mt-5 flex gap-3 justify-between'>
-                                <div className=" mt-5 flex ">
-
-                                {ImageList11.map((V4) => (
-                                    <div key={V4.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image20}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={V4.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {V4.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{V4.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V4.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V4.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Rent Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                </div>
-                                <div className="mt-5 flex  ">
-
-                                {ImageList12.map((V5) => (
-                                    <div key={V5.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image21}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={V5.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {V5.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{V5.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V5.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V5.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Rent Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                </div>
-                                <div className="mt-5 flex  ">
-
-                                {ImageList13.map((V6) => (
-                                    <div key={V6.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image22}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={V6.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {V6.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{V6.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V6.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{V6.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Rent Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                </div>
-                                <div className="mt-5 flex  ">
-
-                                
-
-                                </div>
-
-
-                            </div>
-
-
-                        </div>
-
-
-
-                    </div>
-
-                </div>
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {filteredVehicles.map(vehicle => (
+          <li key={vehicle._id} className="border border-gray-200 rounded p-4">
+            <p className="font-bold">{vehicle.vehiclemodel}</p>
+            <p className="text-gray-600">{vehicle.numberplate}</p>
+            <div className="mt-2 flex justify-between">
+              <Link to={`/updateVehicle/${vehicle._id}`} className="text-blue-600 hover:text-blue-800">Update</Link>
+              <button onClick={() => handleDelete(vehicle._id)} className="text-red-600 hover:text-red-800">Delete</button>
             </div>
-        </>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-    )
-}
-
+export default ListVehicle;

@@ -1,393 +1,71 @@
-import React from 'react'
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
+const ListVehicle = () => {
+  const [vehicles, setVehicles] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('/api/rentalVehicles'); // Replace with your API endpoint to fetch all vehicles
+        const cars = res.data.filter(vehicle => vehicle.vehiclecategory === 'car'); // Filter only cars
+        setVehicles(cars); // Set the list of cars
+      } catch (err) {
+        console.error(err.response.data);
+      }
+    };
 
-import Image10 from '../../assets/RentalsImages/Cars/premio.png'
-import Image11 from '../../assets/RentalsImages/Cars/WagonR.png'
-import Image12 from '../../assets/RentalsImages/Cars/bmw1.png'
-import Image13 from '../../assets/RentalsImages/Cars/Axio.png'
-import Image14 from '../../assets/RentalsImages/Cars/WagonR2.png'
-import Image15 from '../../assets/RentalsImages/Cars/BMW2.png'
-import Image16 from '../../assets/RentalsImages/Cars/Axio2.png'
+    fetchData();
+  }, []);
 
+  const handleDelete = async id => {
+    try {
+      await axios.delete(`/api/rentalVehicles/delete/${id}`); // Replace with your API endpoint to delete a vehicle by ID
+      setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle._id !== id)); // Remove the deleted vehicle from the list
+    } catch (err) {
+      console.error(err.response.data);
+      // Optionally, you can show an error message here
+    }
+  };
 
-const ImageList1 = [
-    {
-        id: 10,
-        href: "../../pages/Rentals/CarsDetails",
-        title: "Vehicle Model - Premio",
-        color: "Color - White",
-        price: "Distance Price - 100km/Rs:3500/=",
-        passengers: "Four (04)"
-    },
-]
-const ImageList2 = [
-    {
-        id: 11,
-        href: "#",
-        title: "Vehicle Model - WagonR",
-        color: "Color - Baige",
-        price: "Distance Price - 200km/Rs:3000/=",
-        passengers: "Four (04)"
-    },
+  const filteredVehicles = vehicles.filter(vehicle =>
+    vehicle.numberplate.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-]
-const ImageList3 = [
-    {
-        id: 12,
-        href: "#",
-        title: "Vehicle Model - BMW",
-        color: " Color - Black",
-        price: "Distance Price - 100km/Rs:5500/=",
-        passengers: "Four (04)"
-    },
+  return (
+    <div className='container pl-48 mt-28'>
+      <h2 className="text-2xl font-bold mb-4">List of Cars</h2>
 
-]
-const ImageList4 = [
-    {
-        id: 13,
-        href: "#",
-        title: "Vehicle Model - BMW",
-        color: " Color - Black",
-        price: "Distance Price - 100km/Rs:5500/=",
-        passengers: "Four (04)"
-    },
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search by Number Plate"
+          className="border border-gray-300 rounded-md p-2 w-full"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-]
-const ImageList5 = [
-    {
-        id: 14,
-        href: "#",
-        title: "Vehicle Model - BMW",
-        color: " Color - Black",
-        price: "Distance Price - 100km/Rs:5500/=",
-        passengers: "Four (04)"
-    },
-
-]
-const ImageList6 = [
-    {
-        id: 15,
-        href: "#",
-        title: "Vehicle Model - BMW",
-        color: " Color - Black",
-        price: "Distance Price - 100km/Rs:5500/=",
-        passengers: "Four (04)"
-    },
-
-]
-const ImageList7 = [
-    {
-        id: 16,
-        href: "#",
-        title: "Vehicle Model - BMW",
-        color: " Color - Black",
-        price: "Distance Price - 100km/Rs:5500/=",
-        passengers: "Four (04)"
-    },
-
-]
-
-export const CarsMain = () => {
-    return (
-        <>
-        <Navbar />
-            <div className="container mx-auto">
-
-                
-                <div className="bg-white">
-                    <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-                        <div className=' mt-10 h-10 px-8 flex justify-between'>
-                            <a
-                                href="../../NewVehicleForm"
-                                className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                            >
-                                Add a New Vehicle
-                            </a>
-                        </div>
-
-                        <div className=' mt-5 flex gap-3 justify-between'>
-                            <div className=" mt-5 flex ">
-                                {ImageList1.map((Car1) => (
-                                    <div key={Car1.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image10}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={Car1.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {Car1.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{Car1.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car1.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car1.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        href="../../carsdetails"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Make Changes Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                <div>
-
-                                </div>
-
-                            </div>
-                            {/* Vehicle number 2 */}
-                            <div className="mt-5 flex  ">
-
-                                {ImageList2.map((Car2) => (
-                                    <div key={Car2.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image11}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={Car2.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {Car2.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{Car2.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car2.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car2.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Make Changes Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                            </div>
-                            {/* Vehicle number 3 */}
-                            <div className="mt-5 flex  ">
-
-                                {ImageList3.map((Car3) => (
-                                    <div key={Car3.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image12}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={Car3.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {Car3.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{Car3.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car3.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car3.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                       Make Changes Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                            </div>
-
-
-                        </div>
-                        {/* Vehicle number 4 */}
-                        <div>
-                            <div className='mt-5 flex gap-3 justify-between'>
-                                <div className=" mt-5 flex ">
-
-                                {ImageList4.map((Car4) => (
-                                    <div key={Car4.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image13}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={Car4.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {Car4.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{Car4.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car4.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car4.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Make Changes Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                </div>
-                                <div className="mt-5 flex  ">
-
-                                {ImageList5.map((Car5) => (
-                                    <div key={Car5.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image14}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={Car5.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {Car5.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{Car5.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car5.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car5.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Make Changes Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                </div>
-                                <div className="mt-5 flex  ">
-
-                                {ImageList6.map((Car6) => (
-                                    <div key={Car6.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image15}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={Car6.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {Car6.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{Car6.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car6.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car6.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Make Changes Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                </div>
-                                <div className="mt-5 flex  ">
-
-                                {ImageList7.map((Car7) => (
-                                    <div key={Car7.id} className="group relative">
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-55 lg:h-64">
-                                            <img
-                                                src={Image16}
-
-                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                            />
-                                        </div>
-                                        <div className="mt-4 flex ">
-                                            <div>
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    <a href={Car7.href}>
-                                                        <span aria-hidden="true" className="absolute inset-0" />
-                                                        {Car7.title}
-                                                    </a>
-                                                </div>
-                                                <div className="mt-1 text-sm font-medium text-gray-900">{Car7.color}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car7.price}</div>
-                                                <div className=" text-sm font-medium text-gray-900">{Car7.passengers}</div>
-                                                <div className='mt-2  flex h-10  '>
-                                                    <a
-                                                        // href="../../CarsMain"
-                                                        className="inline-block rounded-md border border-transparent bg-blue-700 px-10 py-1 text-center font-semibold text-white hover:bg-blue-800"
-                                                    >
-                                                        Make Changes Now
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-
-                                </div>
-
-
-                            </div>
-
-
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-                
+      <ul>
+        {filteredVehicles.map(vehicle => (
+          <li key={vehicle._id} className="border-b border-gray-300 py-2">
+            <p className="text-lg font-medium">{vehicle.vehiclemodel}</p>
+            <p className="text-sm text-gray-500">{vehicle.numberplate}</p>
+            <div className="mt-2">
+              <Link to={`/updateVehicle/${vehicle._id}`} className="text-blue-500 hover:text-blue-700 mr-2">Update</Link>
+              <button onClick={() => handleDelete(vehicle._id)} className="text-red-500 hover:text-red-700">Delete</button>
             </div>
-            <Footer/>
-        </>
+          </li>
+        ))}
+      </ul>
+     
+    </div>
+  
+  );
+};
 
-    )
-}
+export default ListVehicle;

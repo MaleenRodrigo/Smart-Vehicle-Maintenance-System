@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
   function getStatusClassName(status) {
@@ -18,18 +18,39 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
 
   const [loader, setLoader] = useState(false);
 
-  const downloadPDF = () => {
-    const capture = document.querySelector(".actual-inquiry");
-    setLoader(true);
-    html2canvas(capture).then((canvas) => {
-      const imgData = canvas.toDataURL("img/png");
-      const doc = new jsPDF("p", "mm", "a4");
-      const componentWidth = doc.internal.pageSize.getWidth();
-      const componentHeight = doc.internal.pageSize.getHeight();
-      doc.addImage(imgData, "PNG", 0, 0, componentWidth, componentHeight);
-      setLoader(false);
-      doc.save("inquiry.pdf");
+  const downloadPDF = (inquiry) => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(20);
+    doc.text("Inquiry PDF", 14, 22);
+
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+
+    // Customer Details
+    doc.text(`Inquiry ID: ${inquiry._id}`, 14, 32);
+    doc.text(`Email: ${inquiry.email}`, 14, 42);
+    doc.text(`Phone: ${inquiry.phone}`, 14, 52);
+    doc.text(`Generated Date: ${new Date().toLocaleString()}`, 14, 62);
+
+    // Table for Items
+    autoTable(doc, {
+      startY: 72,
+      head: [["Title", "Description", "Type", "Status"]],
+      body: [
+        [
+          inquiry.title,
+          inquiry.description,
+          inquiry.inquiryType,
+          inquiry.status,
+        ],
+      ],
+      theme: "grid",
     });
+    setLoader(false);
+
+    // Save the PDF
+    doc.save("Inquiry_HardCopy.pdf");
   };
 
   return (
@@ -37,7 +58,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
       id="default-modal"
       className="absolute top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
     >
-      <div className="actual-inquiry relative p-4 w-full max-w-xl ">
+      <div className="relative p-4 w-full max-w-xl ">
         <div className="relative bg-white rounded-lg shadow :bg-gray-700">
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t :border-gray-600">
             <h3 className="text-xl font-semibold text-gray-900 :text-white">
@@ -92,8 +113,8 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
                 value={inquiry.title}
               />
             </div>
-            <div className="flex justify-between">
-              <div className="mb-5">
+            <div className="flex w-full gap-3">
+              <div className="mb-5 w-full">
                 <label
                   for="password"
                   className="block mb-2 text-sm font-medium text-gray-900 :text-white"
@@ -109,7 +130,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
                   value={inquiry.inquiryType}
                 />
               </div>
-              <div className="mb-5">
+              <div className="mb-5 w-full">
                 <label
                   for="password"
                   className="block mb-2 text-sm font-medium text-gray-900 :text-white"
@@ -146,7 +167,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
 
           <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b :border-gray-600">
             <button
-              onClick={downloadPDF}
+              onClick={() => downloadPDF(inquiry)}
               disabled={!(loader === false)}
               data-modal-hide="default-modal"
               type="button"
@@ -164,7 +185,7 @@ export const InquiryModal = ({ inquiry, toggleInquiryModal }) => {
               type="button"
               className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 :focus:ring-gray-700 :bg-gray-800 :text-gray-400 :border-gray-600 :hover:text-white :hover:bg-gray-700"
             >
-              Decline
+              Cancel
             </button>
           </div>
         </div>

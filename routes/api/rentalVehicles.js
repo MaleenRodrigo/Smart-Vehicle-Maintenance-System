@@ -6,7 +6,7 @@ const Rental = require('../../models/RentalV');
 // @route   POST api/RentalV/add
 // @desc    Add a new RentalV
 // @access  Public
-router.post("/add", [
+router.post("/", [
       check("vehiclecategory", "vehiclecategory is required!").not().isEmpty(),
       check("vehiclemodel", "vehiclename is required!").not().isEmpty(),
       check("numberplate", "numberplate is required!").not().isEmpty(),
@@ -15,6 +15,7 @@ router.post("/add", [
       check("condition", "condition is required!").not().isEmpty(),
       check("distance", "distance Type is required!").not().isEmpty(),
       check("additionaldetails", "additionaldetails Type is required!").not().isEmpty(),
+      check("color", "color is required!").not().isEmpty(),
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -22,7 +23,7 @@ router.post("/add", [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { vehiclecategory, vehiclemodel, numberplate, passengersno, condition, distance, additionaldetails} = req.body;
+    const { vehiclecategory, vehiclemodel, numberplate, passengersno, condition, distance, additionaldetails, color} = req.body;
 
     const newRentalVehicles = new Rental({
       vehiclecategory,
@@ -31,7 +32,8 @@ router.post("/add", [
       passengersno,
       condition,
       distance,
-      additionaldetails
+      additionaldetails,
+      color
     });
 
     await newRentalVehicles.save();
@@ -61,7 +63,7 @@ router.get("/", async (req, res) => {
 // @access  Public
 router.put("/update/:id", async (req, res) => {
   try {
-    const { vehiclecategory, vehiclemodel, numberplate, passengersno, condition, distance, additionaldetails} = req.body;
+    const { vehiclecategory, vehiclemodel, numberplate, passengersno, condition, distance, additionaldetails, color} = req.body;
     const rentalId = req.params.id;
 
     const updatedRentalV = {
@@ -71,7 +73,8 @@ router.put("/update/:id", async (req, res) => {
       passengersno,
       condition,
       distance,
-      additionaldetails
+      additionaldetails,
+      color
     };
 
     const RentalV = await Rental.findByIdAndUpdate(rentalId, updatedRentalV, { new: true });
@@ -84,6 +87,26 @@ router.put("/update/:id", async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
+  }
+});
+
+// @route   GET api/RentalV/:id
+// @desc    Get a specific Rental Vehicle by ID
+// @access  Public
+
+router.get('/:id', async (req, res) => {
+  try {
+    const rentalId = req.params.id;
+    const rental = await Rental.findById(rentalId); // Find the rental vehicle by its ID
+
+    if (!rental) {
+      return res.status(404).json({ message: 'Rental vehicle not found' });
+    }
+
+    res.json(rental); // Return the rental vehicle data
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 });
 

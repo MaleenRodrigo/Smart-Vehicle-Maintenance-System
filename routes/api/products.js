@@ -10,8 +10,7 @@
 // // @desc Test route
 // // @access Public
 
-// http://localhost:8070/product/add
-
+// http://localhost:5000/product/add
 
 // //add product
 
@@ -22,7 +21,6 @@
 //     const description = req.body.description;
 //     const price = Number(req.body.price);
 //     const stock = Number(req.body.stock);
-
 
 //     const newProduct = new Product({
 //         name,
@@ -39,7 +37,6 @@
 //     })
 // })
 
-
 // //display products
 
 // router.route("/").get((req,res)=>{
@@ -50,10 +47,9 @@
 //     })
 // })
 
-
 // //update product
 
-// http://localhost:8070/student/update
+// http://localhost:5000/student/update
 // router.route("/update/:id").put(async (req,res)=> {
 //     let productId = req.params.id;
 //     const {name, brand, model, description, price, stock} = req.body;
@@ -74,7 +70,6 @@
 //     })
 // })
 
-
 // //delete
 
 // router.route("/delete/:id").delete(async (req,res) => {
@@ -88,7 +83,6 @@
 //     })
 // })
 
-
 // // router.get('/', (req, res) => res.send('Products route'));
 // // [
 // //     check("name", "Product name is required!").not().isEmpty(),
@@ -98,48 +92,72 @@
 // //     check("price","Product price is required!").not().isEmpty(),
 // // ],
 
-
 // module.exports = router;
 
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
-const Product = require('../../models/product');
+const { check, validationResult } = require("express-validator");
+const Product = require("../../models/product");
+const product = require("../../models/product");
 
 // @route   POST api/products/add
 // @desc    Add a new product
 // @access  Public
-router.post("/add", [
-  check("name", "Product name is required").not().isEmpty(),
-  check("brand", "Product brand is required").not().isEmpty(),
-  check("model", "Product model is required").not().isEmpty(),
-  check("description", "Product description is required").not().isEmpty(),
-  check("price", "Product price must be a number").isNumeric(),
-  check("stock", "Product stock must be a number").isNumeric()
-], async (req, res) => {
+router.post(
+  "/add",
+  [
+    check("name", "Product name is required").not().isEmpty(),
+    check("brand", "Product brand is required").not().isEmpty(),
+    check("model", "Product model is required").not().isEmpty(),
+    check("description", "Product description is required").not().isEmpty(),
+    check("price", "Product price must be a number").isNumeric(),
+    check("stock", "Product stock must be a number").isNumeric(),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      const { name, brand, model, description, price, stock } = req.body;
+
+      const newProduct = new Product({
+        name,
+        brand,
+        model,
+        description,
+        price,
+        stock,
+      });
+
+      await newProduct.save();
+      res.json({ message: "Product added successfully", product: newProduct });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+//get single product from the database
+
+router.get("/get/:id", async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      // If product with the given ID is not found
+      return res.status(404).json({ status: "Product not found" });
     }
 
-    const { name, brand, model, description, price, stock } = req.body;
-
-    const newProduct = new Product({
-      name,
-      brand,
-      model,
-      description,
-      price,
-      stock
-    });
-
-    await newProduct.save();
-    res.json({ message: "Product added successfully", product: newProduct });
+    // If product is found, return it in the response
+    res.status(200).json({ status: "Product Fetched", product: product });
   } catch (err) {
+    // Handle errors during product retrieval
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).json({ status: "Error with getting product" });
   }
 });
 
@@ -170,10 +188,12 @@ router.put("/update/:id", async (req, res) => {
       model,
       description,
       price,
-      stock
+      stock,
     };
 
-    const product = await Product.findByIdAndUpdate(productId, updatedProduct, { new: true });
+    const product = await Product.findByIdAndUpdate(productId, updatedProduct, {
+      new: true,
+    });
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
@@ -202,6 +222,76 @@ router.delete("/delete/:id", async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/products/feedback
+// @desc    PUT a product feedback
+// @access  Private
+
+router.put(
+  "/feedback/:id",
+  [
+    [
+      check("userName", "Name is required").not().isEmpty(),
+      check("email", "Email is required").not().isEmpty(),
+      check("comment", "Feedback is required").not().isEmpty(),
+      check("rating", "Rating is required").not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const pID = req.params.id;
+
+    const { userName, email, comment, rating } = req.body;
+
+    const newFeedback = {
+      userName,
+      email,
+      comment,
+      rating,
+    };
+
+    try {
+      const product = await Product.findById(pID);
+
+      product.feedback.unshift(newFeedback);
+
+      await product.save();
+
+      res.json(product);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error!!");
+    }
+  }
+);
+
+// @route   DELETE api/products/:p_ID/feedback:fb_id
+// @desc    Delete a product feedback
+// @access  Private
+router.delete("/feedback/:p_ID/:fb_id", async (req, res) => {
+  const pID = req.params.p_ID;
+
+  try {
+    const product = await Product.findById(pID);
+
+    // Get remove index of feedback
+    const removeIndex = product.feedback
+      .map((item) => item.id)
+      .indexOf(req.params.fb_id);
+
+    product.feedback.splice(removeIndex, 1);
+    await product.save();
+
+    res.json(product);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error!");
   }
 });
 

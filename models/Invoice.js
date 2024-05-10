@@ -1,45 +1,45 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const invoiceSchema = new mongoose.Schema({
-  invoiceId: {
-    type: String,
-    required: true,
-    unique: true
-  },
   customerName: {
     type: String,
-    required: true
+    required: true,
   },
   billingAddress: {
     type: String,
-    required: true
+    required: true,
   },
   issuedDate: {
     type: String,
     required: true,
-    default: Date.now
+    default: Date.now,
   },
   contactNumber: {
     type: String,
-    required: true
+    required: true,
   },
-  items: [{
-    itemName: String,
-    price: Number,
-    quantity: Number,
-    amount: Number
-  }],
+  items: [
+    {
+      itemName: String,
+      price: Number,
+      quantity: Number,
+      amount: Number,
+    },
+  ],
   subtotal: {
     type: Number,
-    required: true
+    required: true,
   },
   total: {
     type: Number,
-    required: true
+    required: true,
   },
-
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-const Invoice = mongoose.model('Invoice', invoiceSchema);
+const Invoice = mongoose.model("Invoice", invoiceSchema);
 
 module.exports = Invoice;
