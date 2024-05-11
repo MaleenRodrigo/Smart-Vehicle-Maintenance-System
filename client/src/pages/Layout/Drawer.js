@@ -29,6 +29,7 @@ import StoreRoundedIcon from "@mui/icons-material/StoreRounded";
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import CarRentalIcon from "@mui/icons-material/CarRental";
 import ReceiptIcon from "@mui/icons-material/Receipt";
+import PersonIcon from '@mui/icons-material/Person';
 
 // Custom Components
 import AccountMenuComponent from "../Admin/Components/buttons/Menu";
@@ -70,6 +71,11 @@ function ResponsiveDrawer({ children }) {
       <List>
         {[
           {
+            icon: <PersonIcon sx={iconStyle} />,
+            text: "Vehicle Owners",
+            link: "/admin/Profile/AdminVehicleOwners",
+          },
+          {
             icon: <PaidRoundedIcon sx={iconStyle} />,
             text: "Orders",
             link: "/orders",
@@ -109,6 +115,9 @@ function ResponsiveDrawer({ children }) {
             text: "Feedbacks",
             link: "/admin/products/feedback",
           },
+
+          
+          
         ].map((item) => (
           <ListItem
             key={item.text}

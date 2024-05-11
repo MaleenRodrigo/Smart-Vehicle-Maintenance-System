@@ -19,6 +19,7 @@ import CreateProfile from "./pages/Profile/CreateProfile";
 import AddVehicles from "./pages/Profile/AddVehicles";
 import UpdateVehicle from "./pages/Profile/UpdateVehicle";
 import ShowVehicle from "./pages/Profile/ShowVehicle";
+import AdminVehicleOwners from "./pages/Admin/Profile/AdminVehicleOwners";
 
 import Card from "./pages/Card/Card";
 import { RentalService } from "./pages/Rentals/RentalService";
@@ -52,8 +53,6 @@ import ReservationList from "./pages/Admin/Reservation/AdminReservation";
 import ReservationUpdate from "./pages/Admin/Reservation/ReservationUpdate";
 // import ResUpdate from "./pages/Admin/Reservation/ResUpdate";
 
-
-
 function App() {
   useEffect(() => {
     Crisp.configure("472b8c52-0771-4647-8563-c4c3ead5b1ce");
@@ -75,6 +74,8 @@ function App() {
           <Route exact path="/AddVehicles" Component={AddVehicles} />
           <Route exact path="/UpdateVehicle/:v_id" Component={UpdateVehicle} />
           <Route exact path="/ShowVehicle" Component={ShowVehicle} />
+          <Route exact path="/Admin/VehicleOwners" Component={AdminVehicleOwners} />
+          
 
           <Route exact path="/profile/card" Component={Card} />
           <Route exact path="/profile/card/:cardId" Component={Card} />
