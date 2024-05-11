@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import ResponsiveDrawer from '../../Layout/Drawer';
 
 function UpdateProduct() {
+    const location = useLocation();
+  const productID = location.state?.productId;
   const { productId } = useParams(); // Get the product ID from the URL
-  const [product, setProduct] = useState({
+  const [updateProduct, setUpdateProduct] = useState({
     name: '',
     brand: '',
     model: '',
@@ -18,10 +20,10 @@ function UpdateProduct() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:8070/api/products/get/${productId}`);
-        setProduct(response.data.product); // Set product data in the state
+        const response = await axios.get(`http://localhost:8070/api/products/get/${productID}`);
+        setUpdateProduct(response.data.product); // Set product data in the state
       } catch (error) {
-        console.error('Error fetching product:', error);
+        console.error("Error fetching product:", error);
       }
     };
 
@@ -30,7 +32,7 @@ function UpdateProduct() {
 
   // Handle input changes
   const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    setUpdateProduct({ ...updateProduct, [e.target.name]: e.target.value });
   };
 
   // Handle form submission
@@ -38,12 +40,11 @@ function UpdateProduct() {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`http://localhost:8070/api/products/update/${productId}`, product);
+      const response = await axios.put(`http://localhost:8070/api/products/update/${productID}`, updateProduct);
       console.log(response.data); // Log the response after updating product
-      // Optionally, you can redirect or show a success message here
+      window.alert("Product Updated Successfull")
     } catch (error) {
-      console.error('Error updating product:', error);
-      // Handle error state or display an error message
+      console.error("Error updating product:", error);
     }
   };
     return (
@@ -60,7 +61,7 @@ function UpdateProduct() {
                       type="text"
                       name="name"
                       id="name"
-                      value={product.name}
+                      value={updateProduct.name}
                       onChange={handleChange}
                       className="bg-gray border border-gray-300 text-light-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-primary-500 light:focus:border-primary-500"
                       placeholder="Type product name"
@@ -73,7 +74,7 @@ function UpdateProduct() {
                       type="text"
                       name="brand"
                       id="brand"
-                      value={product.brand}
+                      value={updateProduct.brand}
                       onChange={handleChange}
                       className="bg-gray border border-gray-300 text-light-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-primary-500 light:focus:border-primary-500"
                       placeholder="Enter product brand"
@@ -86,7 +87,7 @@ function UpdateProduct() {
                       type="text"
                       name="model"
                       id="model"
-                      value={product.model}
+                      value={updateProduct.model}
                       onChange={handleChange}
                       className="bg-gray border border-gray-300 text-light-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-primary-500 light:focus:border-primary-500"
                       placeholder="Enter product model"
@@ -99,7 +100,7 @@ function UpdateProduct() {
                       type="number"
                       name="price"
                       id="price"
-                      value={product.price}
+                      value={updateProduct.price}
                       onChange={handleChange}
                       className="bg-gray border border-gray-300 text-light-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-primary-500 light:focus:border-primary-500"
                       placeholder="Enter product price"
@@ -112,7 +113,7 @@ function UpdateProduct() {
                       type="number"
                       name="stock"
                       id="stock"
-                      value={product.stock}
+                      value={updateProduct.stock}
                       onChange={handleChange}
                       className="bg-gray border border-gray-300 text-light-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-primary-500 light:focus:border-primary-500"
                       placeholder="Enter product stock"
@@ -125,7 +126,7 @@ function UpdateProduct() {
                       id="description"
                       name="description"
                       rows="8"
-                      value={product.description}
+                      value={updateProduct.description}
                       onChange={handleChange}
                       className="bg-gray border border-gray-300 text-light-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-primary-500 light:focus:border-primary-500"
                       placeholder="Enter product description"

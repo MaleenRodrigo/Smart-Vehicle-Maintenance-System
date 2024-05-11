@@ -4,6 +4,11 @@ import { deleteFeedback, getAllProducts } from "../../../api/product";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import moment from "moment";
+
+function formatDate(dateString) {
+  return moment(dateString).format("dddd, MMMM Do YYYY, h:mm:ss A"); // "Saturday, April 28th 2024, 10:29:19 am"
+}
 
 export const AdminFeedback = () => {
   const [products, setProducts] = useState([]);
@@ -97,22 +102,28 @@ export const AdminFeedback = () => {
           </thead>
           <tbody>
             {products.length > 0 ? (
-              products.map((product) =>
-                product.feedback.map((fb, index) => (
+              products.map((product, productIndex) =>
+                product.feedback.map((fb, feedbackIndex) => (
                   <tr
-                    key={index}
+                    key={`${product._id}-${fb._id}`}
                     className="bg-white border-b :bg-gray-800 :border-gray-700"
                   >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap :text-white"
-                    >
-                      {product.name}
-                    </th>
+                    {/* Render product name only for the first feedback */}
+                    {feedbackIndex === 0 ? (
+                      <th
+                        scope="row"
+                        rowSpan={product.feedback.length}
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap :text-white"
+                      >
+                        {product.name}
+                      </th>
+                    ) : null}
+
+                    {/* Render feedback details */}
                     <td className="px-6 py-4">{fb.comment}</td>
                     <td className="px-6 py-4 capitalize">{fb.rating}</td>
                     <td className="px-6 py-4">{fb.email}</td>
-                    <td className="px-6 py-4">{fb.date}</td>
+                    <td className="px-6 py-4">{formatDate(fb.date)}</td>
                     <td className="px-6 py-4 text-right">
                       <a
                         onClick={() => toggleModal(product._id, fb._id)}
@@ -126,7 +137,7 @@ export const AdminFeedback = () => {
               )
             ) : (
               <div className="w-full text-md text-gray-600 font-semibold m-10 text-center">
-                You dont have any feedbacks!
+                You don't have any feedbacks!
               </div>
             )}
           </tbody>

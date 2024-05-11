@@ -7,6 +7,7 @@ const login = async (userCredentials) => {
     return user;
   } catch (error) {
     console.error("Error fetching user:", error.message);
+    alert("Error fetching user:", error.message);
     throw error; // Rethrow the error for the component to handle
   }
 };

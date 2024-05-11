@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import axios from "axios";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useNavigate } from "react-router-dom";
 
 const formatCardNumber = (cardNumber) => {
   return cardNumber.replace(/.(?=.{4})/g, "*");
@@ -238,12 +239,16 @@ const Cart = () => {
     }));
   };
 
+  const navigate = useNavigate();
+
   const submitInvoice = async () => {
     try {
       const response = await axios.post("/api/invoices", invoiceDetails);
       console.log("Invoice submitted successfully", response.data);
       alert("Invoice submitted successfully");
       generatePDF(invoiceDetails);
+
+      setCartItems([]);
       setInvoiceDetails({
         customerName: "",
         billingAddress: "",
@@ -252,6 +257,11 @@ const Cart = () => {
         subtotal: 0,
         total: 0,
       });
+
+      // Delay navigation for 2 seconds after showing success
+      setTimeout(() => {
+        navigate("/shop");
+      }, 2000);
     } catch (error) {
       console.error("Error submitting invoice:", error);
       alert("Error submitting invoice");
@@ -260,6 +270,8 @@ const Cart = () => {
   return (
     <div>
       <Navbar />
+      <br></br>
+      <br></br>
       <div className="container mx-auto mt-10">
         <div className="flex shadow-md my-10">
           <div className="w-3/4 bg-white px-10 py-10">

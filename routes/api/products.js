@@ -107,6 +107,7 @@ router.post(
   "/add",
   [
     check("name", "Product name is required").not().isEmpty(),
+    check("category", "Product category is required").not().isEmpty(),
     check("brand", "Product brand is required").not().isEmpty(),
     check("model", "Product model is required").not().isEmpty(),
     check("description", "Product description is required").not().isEmpty(),
@@ -120,15 +121,17 @@ router.post(
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const { name, brand, model, description, price, stock } = req.body;
+      const { name, category, brand, model, description, price, stock, date } = req.body;
 
       const newProduct = new Product({
         name,
+        category,
         brand,
         model,
         description,
         price,
         stock,
+        date,
       });
 
       await newProduct.save();
@@ -179,16 +182,18 @@ router.get("/", async (req, res) => {
 // @access  Public
 router.put("/update/:id", async (req, res) => {
   try {
-    const { name, brand, model, description, price, stock } = req.body;
+    const { name, category, brand, model, description, price, stock, date } = req.body;
     const productId = req.params.id;
 
     const updatedProduct = {
       name,
+      category,
       brand,
       model,
       description,
       price,
       stock,
+      date,
     };
 
     const product = await Product.findByIdAndUpdate(productId, updatedProduct, {
@@ -228,6 +233,29 @@ router.delete("/delete/:id", async (req, res) => {
 // @route   PUT api/products/feedback
 // @desc    PUT a product feedback
 // @access  Private
+
+router.put('/addstock/:productId', async (req, res) => {
+  const { productId } = req.params;
+  const { stock } = req.body;
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Update the stock and date
+    product.stock += stock;
+    product.date = Date.now(); // Update date to current timestamp
+    const updatedProduct = await product.save();
+
+
+    res.status(200).json({ message: 'Stock updated successfully', updatedProduct: product });
+  } catch (error) {
+    console.error('Error updating stock:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 router.put(
   "/feedback/:id",

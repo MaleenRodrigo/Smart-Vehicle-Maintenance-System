@@ -5,18 +5,41 @@ const serviceCenterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  owner: {
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phone: {
     type: String,
     required: true,
   },
-  location: {
+  password: {
     type: String,
-    required: true
+    required: true,
   },
-  contact: {
-    type: Number,
-    required: true
+  avatar: {
+    type: String,
   },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  services: [
+    {
+      servicename: {
+        type: String,
+      },
+      serviceprice: {
+        type: String,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      
+    },
+  ],
   
 });
 

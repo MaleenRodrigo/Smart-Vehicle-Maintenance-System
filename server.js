@@ -43,10 +43,12 @@ app.use("/api/reservation", require("./routes/api/reservation"));
 app.use("/api/cart", cartRoutes);
 app.use("/api/invoices", invoiceRoutes);
 
-app.use(
-  "/api/rentalVehicleReport",
-  require("./routes/api/rentalVehicleReport")
-);
+// app.use(
+//   "/api/rentalVehicleReport",ç
+//   require("./routes/api/rentalVehicleReport")
+// );
+
+app.use("/api/report", require("./routes/api/report"));
 
 const PORT = process.env.PORT || 5000;
 

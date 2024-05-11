@@ -16,14 +16,20 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
+import InventoryIcon from '@mui/icons-material/Inventory';
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import LocalShippingRoundedIcon from "@mui/icons-material/LocalShippingRounded";
 import SupportAgentRoundedIcon from "@mui/icons-material/SupportAgentRounded";
 // import ContactPhoneRoundedIcon from "@mui/icons-material/ContactPhoneRounded";
 import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 // import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreRoundedIcon from "@mui/icons-material/StoreRounded";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import CarRentalIcon from "@mui/icons-material/CarRental";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import PersonIcon from '@mui/icons-material/Person';
 
 // Custom Components
 import AccountMenuComponent from "../Admin/Components/buttons/Menu";
@@ -65,6 +71,11 @@ function ResponsiveDrawer({ children }) {
       <List>
         {[
           {
+            icon: <PersonIcon sx={iconStyle} />,
+            text: "Vehicle Owners",
+            link: "/admin/Profile/AdminVehicleOwners",
+          },
+          {
             icon: <PaidRoundedIcon sx={iconStyle} />,
             text: "Orders",
             link: "/orders",
@@ -75,8 +86,8 @@ function ResponsiveDrawer({ children }) {
             link: "/admin/reports/all",
           },
           {
-            icon: <LocalShippingRoundedIcon sx={iconStyle} />,
-            text: "Rental vehicles",
+            icon: <CarRentalIcon sx={iconStyle} />,
+            text: "Rentals",
             link: "/admin/rental",
           },
           {
@@ -84,21 +95,29 @@ function ResponsiveDrawer({ children }) {
             text: "Inquiries",
             link: "/admin/inquiries",
           },
-          // {
-          //   icon: <CreditCardIcon sx={iconStyle} />,
-          //   text: "Manage cards",
-          //   link: "/admin/cards",
-          // },
           {
             icon: <StoreRoundedIcon sx={iconStyle} />,
-            text: "Products",
-            link: "/admin/products",
+            text: "Transactions",
+            link: "/admin/transactions",
+          },
+          {
+            icon: <BookmarkAddedIcon sx={iconStyle} />,
+            text: "Reservations",
+            link: "/admin/reservation",
+          },
+          {
+            icon: <InventoryIcon sx={iconStyle} />,
+            text: "Inventory",
+            link: "/admin/inventory",
           },
           {
             icon: <FeedbackIcon sx={iconStyle} />,
             text: "Feedbacks",
             link: "/admin/products/feedback",
           },
+
+          
+          
         ].map((item) => (
           <ListItem
             key={item.text}

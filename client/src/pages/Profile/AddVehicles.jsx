@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { PaperClipIcon } from '@heroicons/react/20/solid';
 import ApiHelper from "../../helper/apiHelper";
+import { Link } from "react-router-dom";
 import Navbar from "../../components/NavbarAfter";
+import Footer from "../../components/Footer";
+
 
 const AddVehicle = () => {
   const navigate = useNavigate();
@@ -44,12 +46,24 @@ const AddVehicle = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    const licenseexpiryDate = new Date(formData.licenseexpiry);
+    const insuranceDate = new Date(formData.expirydate);
+    const currentDate = new Date();
+
+    if (licenseexpiryDate <= currentDate) {
+      alert("License expiry date is in the past. Please enter a valid expiry date.");
+      return;
+    }
+    else if(insuranceDate <= currentDate){
+      alert("Insurance expiry date is in the past. Please enter a valid expiry date.");
+    }
+
     try {
       const api = new ApiHelper();
-      const token = localStorage.getItem("token"); // Assuming you are storing the token in localStorage
+      const token = localStorage.getItem("token"); 
       await api.put("profile/vehicle", formData, token);
 
-      // Redirect to profile page
       navigate("/ShowVehicle");
     } catch (error) {
       console.error("Error:", error.message);
@@ -65,11 +79,14 @@ const AddVehicle = () => {
           Add Vehicle
         </h3>
       </div>
-      <form onSubmit={onSubmit} className="max-w-2xl mx-auto px-4 py-6">
-        <div className="mb-4">
+
+      
+      <form onSubmit={onSubmit} className="max-w-md mx-auto">
+        
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="make"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Make:
           </label>
@@ -79,15 +96,17 @@ const AddVehicle = () => {
             name="make"
             value={make}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
             required
           />
         </div>
 
-        <div className="mb-4">
+        <div class="grid md:grid-cols-2 md:gap-6">
+
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="model"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Model:
           </label>
@@ -97,15 +116,15 @@ const AddVehicle = () => {
             name="model"
             value={model}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
 
-        <div className="mb-4">
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="year"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Year:
           </label>
@@ -115,15 +134,19 @@ const AddVehicle = () => {
             name="year"
             value={year}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            pattern="\d{4}" title="Please enter a valid year (4 digits)"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
+        </div>
 
-        <div className="mb-4">
+        
+
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="registrationnumber"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Registration Number:
           </label>
@@ -133,51 +156,62 @@ const AddVehicle = () => {
             name="registrationnumber"
             value={registrationnumber}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            pattern="[a-zA-Z]{3}-\d{4}|[a-zA-Z]{2}-\d{4}|\d{2}-\d{3}|\d{3}-\d{3}" title="Please enter a valid registration number"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
 
-        <div className="mb-4">
+        <div class="grid md:grid-cols-2 md:gap-6">
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="fueltype"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Fuel Type:
           </label>
-          <input
-            type="text"
+          <select
             id="fueltype"
             name="fueltype"
             value={fueltype}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
-          />
+          >
+            <option value="">Select Fuel Type</option>
+            <option value="Gasoline">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric">Hybrid</option>
+            <option value="Electric">Electric</option>
+          </select>
         </div>
 
-        <div className="mb-4">
+        
+
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="dailyusage"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
-            Daily Usage:
+            Daily Usage in KM:
           </label>
           <input
-            type="text"
+            type="number"
             id="dailyusage"
             name="dailyusage"
             value={dailyusage}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            max="200"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
+        </div>
 
-        <div className="mb-4">
+        <div className="relative z-0 w-full mb-5 mt-12 group">
           <label
             htmlFor="licensenumber"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             License Number:
           </label>
@@ -187,15 +221,17 @@ const AddVehicle = () => {
             name="licensenumber"
             value={licensenumber}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
 
-        <div className="mb-4">
+        <div class="grid md:grid-cols-2 md:gap-6">
+
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="licenseissued"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             License Issued Date:
           </label>
@@ -205,15 +241,15 @@ const AddVehicle = () => {
             name="licenseissued"
             value={licenseissued}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
 
-        <div className="mb-4">
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="licenseexpiry"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             License Expiry Date:
           </label>
@@ -223,15 +259,16 @@ const AddVehicle = () => {
             name="licenseexpiry"
             value={licenseexpiry}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
+        </div>
 
-        <div className="mb-4">
+        <div className="relative z-0 w-full mb-5 mt-12 group">
           <label
             htmlFor="insurancenumber"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Insurance Number:
           </label>
@@ -241,15 +278,15 @@ const AddVehicle = () => {
             name="insurancenumber"
             value={insurancenumber}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
 
-        <div className="mb-4">
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="insurancetype"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Insurance Type:
           </label>
@@ -259,33 +296,16 @@ const AddVehicle = () => {
             name="insurancetype"
             value={insurancetype}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
 
-        <div className="mb-4">
-          <label
-            htmlFor="expirydate"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Insurance Expiry Date:
-          </label>
-          <input
-            type="date"
-            id="expirydate"
-            name="expirydate"
-            value={expirydate}
-            onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
+        <div class="grid md:grid-cols-2 md:gap-6">
+        <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="issueddate"
-            className="block text-sm font-medium text-gray-700"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Insurance Issued Date:
           </label>
@@ -295,18 +315,43 @@ const AddVehicle = () => {
             name="issueddate"
             value={issueddate}
             onChange={onChange}
-            className="mt-1 p-2 block w-full rounded-md border border-gray-300"
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             required
           />
         </div>
-
+        
+        <div className="relative z-0 w-full mb-5 group">
+          <label
+            htmlFor="expirydate"
+            className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
+            Insurance Expiry Date:
+          </label>
+          <input
+            type="date"
+            id="expirydate"
+            name="expirydate"
+            value={expirydate}
+            onChange={onChange}
+            className="block py-2.5 px-0 w-full text-xm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            required
+          />
+        </div>
+        </div>
         <button
           type="submit"
-          className="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 block mx-auto mt-8"
-        >
+          className="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 block mx-auto mt-8 mb-4">
           Add Vehicle
         </button>
+
+        <Link to="/Profile" className="block ">
+          <button className="border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-100  block mx-auto mb-16">
+            Go back
+          </button>
+        </Link> 
+
       </form>
+      <Footer />
     </>
   );
 };

@@ -7,8 +7,9 @@ import Inquiries from "./pages/Inquiries/Inquiries";
 import { Crisp } from "crisp-sdk-web";
 import Shop from "./pages/Shop/Shop";
 import AddProduct from "./pages/Admin/Products/Addproduct";
-// import Productlist from "./pages/Admin/Products/Products";
+import ProductList from "./pages/Admin/Products/Products";
 import UpdateProduct from "./pages/Admin/Products/Updateproduct";
+import Stock from "./pages/Admin/Inventory/stock";
 // import AddProduct from "./pages/Products/Addproduct";
 
 import Profile from "./pages/Profile/Profile";
@@ -18,6 +19,7 @@ import CreateProfile from "./pages/Profile/CreateProfile";
 import AddVehicles from "./pages/Profile/AddVehicles";
 import UpdateVehicle from "./pages/Profile/UpdateVehicle";
 import ShowVehicle from "./pages/Profile/ShowVehicle";
+import AdminVehicleOwners from "./pages/Admin/Profile/AdminVehicleOwners";
 
 import Card from "./pages/Card/Card";
 import { RentalService } from "./pages/Rentals/RentalService";
@@ -43,6 +45,13 @@ import Rental from "./pages/Admin/Rental/Rental";
 import Cart from "./pages/Cart/Cart";
 import { AdminFeedback } from "./pages/Admin/Feedback/AdminFeedback";
 import { FeedbackForm } from "./pages/Shop/FeedbackForm";
+import { AdminTransaction } from "./pages/Admin/Transaction/AdminTransaction";
+
+import Reservation from "./pages/Reservation/Reservation";
+import ReservationStatus from "./pages/Reservation/ReservationStatus";
+import ReservationList from "./pages/Admin/Reservation/AdminReservation";
+import ReservationUpdate from "./pages/Admin/Reservation/ReservationUpdate";
+// import ResUpdate from "./pages/Admin/Reservation/ResUpdate";
 
 function App() {
   useEffect(() => {
@@ -63,16 +72,20 @@ function App() {
           <Route exact path="/UpdateProfile" Component={UpdateProfile} />
           <Route exact path="/CreateProfile" Component={CreateProfile} />
           <Route exact path="/AddVehicles" Component={AddVehicles} />
-          <Route exact path="/UpdateVehicle" Component={UpdateVehicle} />
+          <Route exact path="/UpdateVehicle/:v_id" Component={UpdateVehicle} />
           <Route exact path="/ShowVehicle" Component={ShowVehicle} />
+          <Route exact path="/Admin/VehicleOwners" Component={AdminVehicleOwners} />
+          
 
           <Route exact path="/profile/card" Component={Card} />
           <Route exact path="/profile/card/:cardId" Component={Card} />
           <Route exact path="/profile/cart" Component={Cart} />
           <Route exact path="/shop" Component={Shop} />
           <Route exact path="/shop/feedback" Component={FeedbackForm} />
+          <Route exact path="/admin/products" Component={ProductList} />
           <Route exact path="/admin/addproduct" Component={AddProduct} />
           <Route exact path="/admin/UpdateProduct/" Component={UpdateProduct} />
+          <Route exact path="/admin/inventory/" Component={Stock} />
 
           <Route exact path="/rentalservice" Component={RentalService} />
 
@@ -88,6 +101,15 @@ function App() {
           {/* Admin Panel Routes */}
           <Route exact path="/admin" Component={AdminPanel} />
           <Route exact path="/admin/inquiries" Component={AdminInquiry} />
+
+          <Route exact path="/reservation" Component={Reservation} />
+          <Route
+            exact
+            path="/reservationStatus"
+            Component={ReservationStatus}
+          />
+          <Route exact path="/admin/reservation" Component={ReservationList} />
+          <Route exact path="/admin/resupdate" Component={ReservationUpdate} />
           <Route exact path="/admin/reports/all" Component={Reports} />
           <Route
             exact
@@ -100,6 +122,11 @@ function App() {
             exact
             path="/admin/products/feedback"
             Component={AdminFeedback}
+          />
+          <Route
+            exact
+            path="/admin/transactions"
+            Component={AdminTransaction}
           />
 
           {/* Why is this not getting tagged */}

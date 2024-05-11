@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import ResponsiveDrawer from "../../Layout/Drawer";
 
 function AddProduct() {
+  const navigate = useNavigate();
   const initialProductState = {
     name: '',
     brand: '',
@@ -20,19 +22,18 @@ function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const response = await axios.post('http://localhost:5000/api/products/add', product);
+      const response = await axios.post('http://localhost:8070/api/products/add', product);
       console.log(response.data); // Assuming you want to log the response
   
       // Optionally, you can redirect or show a success message here
       setProduct(initialProductState); // Reset form fields after successful submission
     } catch (error) {
-      console.error('Error adding product:', error);
+      console.error("Error adding product:", error);
       // Handle error state or display an error message
     }
   };
-  
 
   return (
     <div>
