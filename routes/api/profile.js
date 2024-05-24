@@ -248,8 +248,6 @@ router.get("/vehicles", auth, async (req, res) => {
   }
 });
 
-////////////////////////////////////////////////////////////////////////////////
-
 
 // @route   PUT api/profile/vehicle/:v_id
 // @desc    Update vehicle by vehicle ID
