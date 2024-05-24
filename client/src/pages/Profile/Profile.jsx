@@ -16,7 +16,6 @@ const Profile = () => {
   const [remainingTime, setRemainingTime] = useState(null);
   const [confirmLogout, setconfirmLogout] = useState(false);
 
-  // State to hold remaining time
   const navigate = useNavigate();
 
   const [cards, setCards] = useState([]);
@@ -28,7 +27,6 @@ const Profile = () => {
         "/api/cards/user/" + localStorage.getItem("userId")
       );
       console.log(res);
-      // console.log(res);
       setCards(res.data?.cards);
     } catch (err) {
       console.error("Error fetching cards");

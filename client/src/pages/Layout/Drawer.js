@@ -73,7 +73,7 @@ function ResponsiveDrawer({ children }) {
           {
             icon: <PersonIcon sx={iconStyle} />,
             text: "Vehicle Owners",
-            link: "/admin/Profile/AdminVehicleOwners",
+            link: "/admin/vehicleowners",
           },
           {
             icon: <PaidRoundedIcon sx={iconStyle} />,

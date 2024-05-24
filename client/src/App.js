@@ -74,8 +74,11 @@ function App() {
           <Route exact path="/AddVehicles" Component={AddVehicles} />
           <Route exact path="/UpdateVehicle/:v_id" Component={UpdateVehicle} />
           <Route exact path="/ShowVehicle" Component={ShowVehicle} />
-          <Route exact path="/Admin/VehicleOwners" Component={AdminVehicleOwners} />
-          
+          <Route
+            exact
+            path="/admin/vehicleowners"
+            Component={AdminVehicleOwners}
+          />
 
           <Route exact path="/profile/card" Component={Card} />
           <Route exact path="/profile/card/:cardId" Component={Card} />

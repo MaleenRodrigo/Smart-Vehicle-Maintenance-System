@@ -9,6 +9,21 @@ const { check, validationResult } = require("express-validator");
 
 const VehicleOwner = require("../../models/VehicleOwner");
 
+
+// @route   GET api/vehicleOwner
+// @desc    Get all vehicle owners
+// @access  Public
+
+router.get("/", async (req, res) => {
+  try {
+    const vehicleOwners = await VehicleOwner.find();
+    res.json(vehicleOwners);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 // @route   POST api/vehicleOwner
 // @desc    Register Vehicle Owner
 // @access  Public

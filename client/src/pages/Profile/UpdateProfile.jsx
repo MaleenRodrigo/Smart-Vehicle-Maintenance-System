@@ -39,7 +39,6 @@ const Profile = () => {
       navigate("/");
     } catch (error) {
       console.error("Error deleting profile:", error);
-      // Handle error as needed
     }
   };
 
@@ -80,7 +79,6 @@ const Profile = () => {
   }, [token]);
 
   const updateInfo = async () => {
-    // Validate inputs
     if (!updatedOwnerInfo.name || !updatedOwnerInfo.email || !updatedOwnerInfo.phone || !updatedProfile.nic || !updatedProfile.address) {
       alert("All fields are required.");
       return;
@@ -111,7 +109,6 @@ const Profile = () => {
     }
   
     try {
-      // Update profile
       const profileResponse = await axios.post("/api/profile", updatedProfile, {
         headers: {
           "x-auth-token": token,
@@ -119,7 +116,6 @@ const Profile = () => {
       });
       setProfile(profileResponse.data);
   
-      // Update owner info
       const ownerInfoResponse = await axios.put(
         "/api/auth/update",
         updatedOwnerInfo,
@@ -153,15 +149,11 @@ const Profile = () => {
   };
 
   function formatDateToISO(dateString) {
-      // Create a new Date object from the provided date string
       const date = new Date(dateString);
 
-      // Check if the date is valid
       if (isNaN(date.getTime())) {
-          // If the date is invalid, return null or throw an error
           return null;
       } else {
-          // Format the date as "YYYY-MM-DD"
           const formattedDate = date.toISOString().split('T')[0];
           return formattedDate;
       }
@@ -214,7 +206,7 @@ const Profile = () => {
   class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
   required
   value={updatedProfile.nic}
-  pattern="[0-9]{9}[vVxX]|[0-9]{12}" // NIC pattern validation
+  pattern="[0-9]{9}[vVxX]|[0-9]{12}" 
   title="NIC should be 9 digits followed by 'v', 'V', 'x', 'X' or 12 digits"
   onChange={(e) => handleInputChange(e, "nic")}
 />

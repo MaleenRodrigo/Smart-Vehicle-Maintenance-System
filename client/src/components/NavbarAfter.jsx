@@ -135,7 +135,7 @@ const Navbar = () => {
   return (
     <>
       <header>
-        <nav className="bg-gray-200 border-b border-gray-200 backdrop-filter backdrop-blur-lg bg-opacity-30 fixed w-full px-4 lg:px-6 py-5 :bg-gray-800 rounded-b-3xl">
+        <nav className="fixed z-50 bg-gray-200 border-b border-gray-200 backdrop-filter backdrop-blur-lg bg-opacity-30  w-full px-4 lg:px-6 py-5 :bg-gray-800 rounded-b-3xl">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a to="https://flowbite.com" className="flex items-center">
               <img

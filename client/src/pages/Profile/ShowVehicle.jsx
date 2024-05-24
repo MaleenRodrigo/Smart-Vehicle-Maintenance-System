@@ -5,7 +5,7 @@ import jsPDF from 'jspdf';
 import Navbar from "../../components/NavbarAfter";
 import Footer from "../../components/Footer";
 
-const api = new ApiHelper(); // Initialize an instance of ApiHelper
+const api = new ApiHelper(); 
 
 const ShowVehicle = () => {
   const [vehicles, setVehicles] = useState([]);
@@ -31,7 +31,6 @@ const ShowVehicle = () => {
   }, []);
 
   const handleDelete = async (vehicleId) => {
-    // Store the vehicle ID to delete in state and show the confirmation modal
     setVehicleToDelete(vehicleId);
     setConfirmDelete(true);
   };
@@ -41,18 +40,16 @@ const ShowVehicle = () => {
       const token = localStorage.getItem("token");
       await api.delete(`profile/vehicle/${vehicleToDelete}`, token);
       setVehicles(vehicles.filter((vehicle) => vehicle._id !== vehicleToDelete));
-      setConfirmDelete(false); // Hide the confirmation modal after deletion
+      setConfirmDelete(false); 
     } catch (error) {
       console.error("Error deleting vehicle:", error.message);
     }
   };
 
   const handleCancelDelete = () => {
-    // Hide the confirmation modal
     setConfirmDelete(false);
   };
 
-  // Filter vehicles based on the search term
   const filteredVehicles = vehicles.filter((vehicle) =>
     vehicle.make.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -65,15 +62,11 @@ const ShowVehicle = () => {
     return days;
 };
 function formatDateToISO(dateString) {
-  // Create a new Date object from the provided date string
   const date = new Date(dateString);
 
-  // Check if the date is valid
   if (isNaN(date.getTime())) {
-      // If the date is invalid, return null or throw an error
       return null;
   } else {
-      // Format the date as "YYYY-MM-DD"
       const formattedDate = date.toISOString().split('T')[0];
       return formattedDate;
   }
@@ -83,12 +76,11 @@ function formatDateToISO(dateString) {
 const generateReportPDF = () => {
   const doc = new jsPDF();
 
-  doc.text("Vehicles Report", 105, 10, { align: 'center' }); // Center the title horizontally
+  doc.text("Vehicles Report", 105, 10, { align: 'center' }); 
 
   let startY = 20;
   doc.setFontSize(12);
 
-  // Table headers
   const headers = [
     "Make",
     "Model",

@@ -27,7 +27,6 @@ const CreateProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate license before submitting
     const expiryDate = new Date(newProfile.expirydate);
     const currentDate = new Date();
 
@@ -44,10 +43,8 @@ const CreateProfile = () => {
       });
       console.log("Profile created:", response.data);
       navigate("/profile");
-      // Optionally, you can perform additional actions here, such as redirecting the user
     } catch (error) {
       console.error("Error creating profile:", error);
-      // Handle error as needed
     }
   };
 

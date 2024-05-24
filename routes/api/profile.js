@@ -130,6 +130,25 @@ router.delete("/", auth, async (req, res) => {
   }
 });
 
+
+// @route   DELETE api/vehicleOwner/:vehicleOwnerId
+// @desc    Delete vehicle owner by ID
+// @access  Private
+
+router.delete("/:vehicleOwnerId", async (req, res) => {
+  try {
+    await Profile.findOneAndDelete({ user: req.params.vehicleOwnerId });
+    await VehicleOwner.findOneAndDelete({ _id: req.params.vehicleOwnerId });
+
+    res.json({ msg: "Vehicle Owner Deleted" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+
+
 // @route   PUT api/profile/vehicle
 // @desc    Add Vehicle
 // @access  Private
